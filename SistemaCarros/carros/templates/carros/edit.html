@@ -1,0 +1,566 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Edit...</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                                            <li class="breadcrumb-item"><a href="{% url 'carros:list_cars' %}l">Vehicles</a></li>
+                                            <li class="breadcrumb-item active">Edit</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Vehicle information</h4>
+
+
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-pills nav-justified bg-light" role="tablist">
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#general"
+                                                    role="tab">
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block">General</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#pictures" role="tab">
+                                                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                                    <span class="d-none d-sm-block">Pictures</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#records" role="tab">
+                                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                    <span class="d-none d-sm-block">Records</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#warranty" role="tab">
+                                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                                    <span class="d-none d-sm-block">Warranty</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+
+                                        <!-- Tab panes -->
+                                        <div class="tab-content p-3 text-muted">
+                                            <div class="tab-pane active" id="general" role="tabpanel">
+                                                <p class="mb-0">
+                                                    <form class="needs-validation" novalidate>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-12">
+                                                                <h6>VEHICLE</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom01">License plate</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the License plate.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom01">Type</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the type's name.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom01">Make</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the make's name.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label" for="validationCustom06">Model</label>
+                                                                    <input type="text" class="form-control" id="validationCustom06" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a model.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom01">Year</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the year.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom01">VIN</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the maker's name.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div>
+                                                                    <label class="form-label" for="validationCustom06">Color</label>
+                                                                    <input type="text" class="form-control" id="validationCustom06" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a model.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mb-3">
+                                                                <hr>
+                                                                <h6>INSURANCE INFORMATION</h6>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label" for="validationCustom06">Insurance agent</label>
+                                                                    <input type="text" class="form-control" id="validationCustom06" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the insurance agent.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label" for="validationCustom01">Insurance company</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the insurance company.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label" for="validationCustom01">Policy No.</label>
+                                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="" value="" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide the policy number.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mb-3">
+                                                                <hr>
+                                                                <h6>CUSTOMER INFORMATION</h6>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label" for="validationCustom06">Current customer:</label>
+                                                                    <form action="" method="post">
+                                                                        <input type="text" id="buah" name="buah" placeholder="Type the customer's name">
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <button class="btn btn-primary mb-3" type="submit">Save</button>
+                                                    </form>
+                                                </p>
+                                            </div>
+
+                                            <!-- GALLERY CONTENT -->
+                                            <div class="tab-pane" id="pictures" role="tabpanel">
+                                                <fieldset class="form-group">
+                                                    <a href="javascript:void(0)" onclick="$('#pro-image').click()" class="btn btn-outline-success mb-3"><i class="uil-cloud-upload"></i> Upload images</a>
+                                                    <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+                                                </fieldset>
+                                                <div class="preview-images-zone"></div>
+                                            </div>
+
+                                            <!-- RECORDS CONTENT -->
+                                            <div class="tab-pane" id="records" role="tabpanel">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th>Document</th>
+                                                                <th>Summary</th>
+                                                                <th>Total</th>
+                                                                <th>Details</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>30 Nov, 2021</td>
+                                                                <td>8542</td>
+                                                                <td>REMOVE/REPLACE BRAKE PADS, FRONT HUB AND SPARK PLUGS.</td>
+                                                                <td>$3,500.00</td>
+                                                                <td><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="uil-search"></i></a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>15 Aug, 2021</td>
+                                                                <td>6315</td>
+                                                                <td>REMOVE/REPLACE BRAKE PADS, FRONT HUB AND SPARK PLUGS.</td>
+                                                                <td>$1,500.00</td>
+                                                                <td><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="uil-search"></i></a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>22 Feb, 2021</td>
+                                                                <td>3249</td>
+                                                                <td>REMOVE/REPLACE BRAKE PADS, FRONT HUB AND SPARK PLUGS.</td>
+                                                                <td>$900.00</td>
+                                                                <td><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="uil-search"></i></a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <!-- Warranty CONTENT -->
+                                            <div class="tab-pane" id="warranty" role="tabpanel">
+                                                <fieldset class="form-group">
+                                                    <a href="javascript:void(0)" onclick="$('#pro-image').click()" class="btn btn-outline-success mb-3"><i class="uil-cloud-upload"></i> Upload Images</a>
+                                                    <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+                                                </fieldset>
+                                                <div class="preview-images-zones"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+
+
+                        </div>
+                        <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+                <!-- The Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <h5 class="modal-title" id="exampleModalLabel"></h5> -->
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="table-responsive">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="invoice-title">
+                                                <h4 class="float-end font-size-16">Invoice #0003 <span class="badge bg-success font-size-12 ms-2">Paid</span></h4>
+
+                                                <div class="mb-4">
+                                                    <strong>LOGO</strong>
+                                                </div>
+                                                <div class="text-muted">
+                                                    <p class="mb-1">WASHINGTON BLVD SW No. 9413, LAKEWOOD, C.P. 98498</p>
+                                                    <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> email@domain.com</p>
+                                                    <p><i class="uil uil-phone me-1"></i> 012-345-6789</p>
+                                                </div>
+                                            </div>
+
+                                            <hr class="my-4">
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="text-muted">
+                                                        <h5 class="font-size-16 mb-3">Customer information:</h5>
+                                                        <h5 class="font-size-15 mb-2">David Hammet</h5>
+                                                        <p>License: <strong>KLJFD838F88</strong></p>
+                                                        <p class="mb-1">4450 Fancher Drive Dallas, TX 75247</p>
+                                                        <p class="mb-1">davidhammet@domain.com</p>
+                                                        <p>0123-456-7890</p>
+                                                        <p class="mb-1">Insurance company: <strong>Insurance company name</strong></p>
+                                                        <p class="mb-1">Insurance agent: <strong>Insurance agent name</strong></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="text-muted">
+                                                        <h5 class="font-size-16 mb-3">Vehicle information:</h5>
+                                                        <h5 class="font-size-15 mb-2">License plate: 5BWT273</h5>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p class="mb-1">Make: <strong>Susuki</strong></p>
+                                                                <p class="mb-1">Model: <strong>XL-7</strong></p>
+                                                                <p class="mb-1">Color: <strong>Red</strong></p>
+                                                                <p class="mb-1">Year: <strong>Red</strong></p>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p class="mb-1">Type: <strong>Sedan</strong></p>
+                                                                <p class="mb-1">VIN number: <strong>XDLKJFE090</strong></p>
+                                                                <p class="mb-1">Odometer: <strong>0Ml.</strong></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="text-muted text-sm-end">
+                                                        <div>
+                                                            <h5 class="font-size-16 mb-1">Invoice Date:</h5>
+                                                            <p>09 Jul, 2020</p>
+                                                        </div>
+                                                        <div class="mt-4">
+                                                            <h5 class="font-size-16 mb-3">Summary:</h5>
+                                                            <p class="mb-1">Remove / replace brake pads, front hub and spark plugs.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Labor table -->
+                                            <div class="py-2 my-4">
+                                                <h5 class="font-size-15">Labor summary</h5>
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-nowrap table-centered mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Description</th>
+                                                                <th>Labor rate</th>
+                                                                <th>Hours:Min</th>
+                                                                <th>Disc.%</th>
+                                                                <th>Total Disc.</th>
+                                                                <th class="text-end" style="width: 120px;">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="first-column">Remove/Replace spark plugs</th>
+                                                                <td>70.00</td>
+                                                                <td>1:18</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$91.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="first-column">Remove/Replace front hub</th>
+                                                                <td>70.00</td>
+                                                                <td>1:17</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$89.83</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="first-column">Remove/Replace change oil & filter</th>
+                                                                <td>70.00</td>
+                                                                <td>0:17</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$19.83</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end">Total</th>
+                                                                <td class="border-0 text-end"><h4 class="m-0">$200.66</h4></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+
+                                            <!-- Parts table -->
+                                            <div class="py-2 my-4">
+                                                <h5 class="font-size-15">Parts summary</h5>
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-nowrap table-centered mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Quantity</th>
+                                                                <th>Description</th>
+                                                                <th>Price</th>
+                                                                <th>Disc.%</th>
+                                                                <th>Total Disc.</th>
+                                                                <th class="text-end" style="width: 120px;">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="quantity-column">2</th>
+                                                                <td>Front hub</td>
+                                                                <td>77.62</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$155.24</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="quantity-column">1</th>
+                                                                <td>Brake pads</td>
+                                                                <td>38.37</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$38.37</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="quantity-column">6</th>
+                                                                <td>Sparks plugs</td>
+                                                                <td>5.48</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$32.88</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="quantity-column">4</th>
+                                                                <td>10W40 motor oil</td>
+                                                                <td>77.62</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                                <td class="text-end">$155.24</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end">Total</th>
+                                                                <td class="border-0 text-end"><h4 class="m-0">$253.89</h4></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th colspan="6">
+                                                                   <strong>*</strong> Part supplied by the insurance company or the customer.
+                                                                </th>
+                                                            </tr>
+
+
+
+
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="text-end">Total sum: </th>
+                                                                <td class="text-end">$454.55</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end">Discount: </th>
+                                                                <td class="border-0 text-end">- $50.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="text-end">Subtotal: </th>
+                                                                <td class="text-end">$454.55</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end">Tax 9.5% :</th>
+                                                                <td class="border-0 text-end">$24.12</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>
+                                                                <td class="border-0 text-end"><strong>$478.67</strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
+                                                                <td class="border-0 text-end"><h4 class="m-0">$0.00</h4></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <!-- Legal -->
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <small>I authorize the above repairs and necessary materials. I agree to pay reasonable storage on vehicle left more than 2 working days after notification that the job is completed.</small>
+                                                        <br><br>
+                                                        <small>This company does not assume any responsibility whatsoever for vehicles or other equipment left for repairs, or for articles left in vehicles or equipment.
+                                                            Vehicles driven by our employees at owners risk. In the event of non-payment of the said total charge, the owner authorizes this company to repossess
+                                                            the vehicle or article and hold it until this total bill is paid. All warranty work must be done by this company who will accept no financial responsibility
+                                                            whatsoever if warranty work is done elsewhere. 90 days warranty covers malfunction in labor job.
+                                                            Authorized by:</small>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end main content-->
+
+
+
+
+
+{% endblock %}

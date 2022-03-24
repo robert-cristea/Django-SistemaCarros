@@ -1,0 +1,126 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Adding...</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                                            <li class="breadcrumb-item"><a href="{% url 'inventory:list_inventory' %}">Inventory</a></li>
+                                            <li class="breadcrumb-item active">Add</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Part information</h4>
+                                        <form enctype="multipart/form-data" method="post">
+                                            {% csrf_token %}
+                                            <div class="row mb-3 align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="mb-3">
+                                                        <label for="dealer-input">Dealer</label>
+                                                        {{ form.dealer }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="code-list">Code</label>
+                                                        {{ form.codigoInventory }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="description-input">Invoice Number</label>
+                                                        {{ form.invoiceNumber }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="mb-3">
+                                                        <label for="quantity-input">Description</label>
+                                                        {{ form.descriptionInventory }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="unit-price-input">Quantity</label>
+                                                        {{ form.quantityInventory }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="unit-price-input">Unit Price</label>
+                                                        {{ form.unitPriceInventory }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="unit-price-input">Minimum available</label>
+                                                        {{ form.minimumInventory }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label for="unit-price-input">Status</label>
+                                                        {{ form.status }}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- <div class="row mb-5">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="autoSizingCheck2">
+                                                        <label class="form-check-label" for="autoSizingCheck2">
+                                                          Brought by client
+                                                        </label>
+                                                      </div>
+                                                </div>
+                                            </div> -->
+
+
+                                            <button class="btn btn-primary mb-3" type="submit">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div> <!-- end col -->
+
+
+                        </div>
+                        <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+         </div>
+
+{% endblock %}

@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Edit...</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <!--<link rel="shortcut icon" href="assets/images/favicon.ico">-->
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <!-- Custom Css-->
+        <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <body>
+
+    <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box">
+                            <a href="dashboard.html" class="logo logo-dark">
+                                <!-- <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-dark.png" alt="" height="20">
+                                </span> -->
+                                <strong>LOGO</strong>
+                            </a>
+
+                            <a href="dashboard.html" class="logo logo-light">
+                                <!-- <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-dark.png" alt="" height="20">
+                                </span> -->
+                                <strong>LOGO</strong>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+
+                        <!-- App Search-->
+                        <form class="app-search d-none d-lg-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="uil-search"></span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="d-flex">
+
+                        <div class="dropdown d-inline-block d-lg-none ms-2">
+                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="uil-search"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-search-dropdown">
+                    
+                                <form class="p-3">
+                                    <div class="m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block language-switch">
+                            <button type="button" class="btn header-item waves-effect"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="assets/images/flags/us.jpg" alt="Header Language" height="16">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                    
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                </a>
+
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="dropdown d-none d-lg-inline-block ms-1">
+                            <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
+                                <i class="uil-minus-path"></i>
+                            </button>
+                        </div>
+
+                        
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-6.jpg"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Heriberto</span>
+                                <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a>
+                                <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+                            </div>
+                        </div>
+
+            
+                    </div>
+                </div>
+            </header>
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <!-- LOGO -->
+                <div class="navbar-brand-box">
+                    <a href="dashboard.html" class="logo logo-dark">
+                        <!-- <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="assets/images/logo-dark.png" alt="" height="20">
+                        </span> -->
+                        <strong>LOGO</strong>
+                    </a>
+
+                    <a href="dashboard.html" class="logo logo-light">
+                        <!-- <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="assets/images/logo-light.png" alt="" height="20">
+                        </span> -->
+                        <strong>LOGO</strong>
+                    </a>
+                </div>
+
+                <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+                    <i class="fa fa-fw fa-bars"></i>
+                </button>
+
+                <div data-simplebar class="sidebar-menu-scroll">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title">Menu</li>
+                            
+                            <li>
+                                <a href="dashboard.html" class="waves-effect">
+                                    <i class="uil-home-alt"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="workshops.html" class="waves-effect active">
+                                    <i class="uil-tachometer-fast"></i><span>Workshops</span>
+                                </a>
+                            </li>
+
+                            <li class="mm-active">
+                                <a href="customers.html" class="waves-effect">
+                                    <i class="uil-user-square"></i><span>Customers</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="vehicles.html" class="waves-effect">
+                                    <i class="uil-car-sideview"></i><span>Vehicles</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="inventory.html"  class="waves-effect">
+                                    <i class="uil-cube"></i><span>Inventory</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="estimates.html"  class="waves-effect">
+                                    <i class="uil-clipboard-alt"></i><span>Estimates</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="invoices.html"  class="waves-effect">
+                                    <i class="uil-document-layout-left"></i><span>Invoices</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="reports.html" class="waves-effect">
+                                    <i class="uil-graph-bar"></i><span>Reports</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Estimate preview</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="estimates.html">Estimates</a></li>
+                                            <li class="breadcrumb-item active">Preview</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+
+                                                        <div class="estimatepreview align-items-center">
+                                                            
+                                                            <a href="" class="btn btn-success">Send</a>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="formCheck2">
+                                                                <label class="form-check-label" for="formCheck2">
+                                                                    Spanish translation
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <hr>                                                                   
+
+
+                                                        <div class="invoice-title">
+                                                            <h4 class="float-end font-size-16">Estimate #0001 <span class="badge bg-success font-size-12 ms-2">Paid</span></h4>
+                                                            
+                                                            <div class="mb-4">
+                                                                <strong>LOGO</strong>
+                                                            </div>
+                                                            <div class="text-muted">
+                                                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> email@domain.com</p>
+                                                                <p class="mb-1"><i class="uil uil-phone me-1"></i> 012-345-6789</p>
+                                                            </div>
+                                                        </div>
+                
+                                                        <hr class="my-4">
+                
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="text-muted">
+                                                                    <h5 class="font-size-16 mb-3">Customer information:</h5>
+                                                                    <h5 class="font-size-15 mb-2">Mr. David Hammet</h5>
+                                                                    <p>License: <strong>KLJFD838F88</strong></p>
+                                                                    <p class="mb-1">davidhammet@domain.com</p>
+                                                                    <p>0123-456-7890</p>
+                                                                    <p>0123-456-7890</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="text-muted">
+                                                                    <h5 class="font-size-16 mb-3">Vehicle information:</h5>
+                                                                    <h5 class="font-size-15 mb-2">License plate: 5BWT273</h5>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <p class="mb-1">Make: <strong>Susuki</strong></p>
+                                                                            <p class="mb-1">Model: <strong>XL-7</strong></p>
+                                                                            <p class="mb-1">Color: <strong>Red</strong></p>
+                                                                            <p class="mb-1">Year: <strong>Red</strong></p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <p class="mb-1">Type: <strong>Sedan</strong></p>
+                                                                            <p class="mb-1">VIN number: <strong>XDLKJFE090</strong></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="text-muted text-sm-end">
+                                                                    <div>
+                                                                        <h5 class="font-size-16 mb-1">Estimate Date:</h5>
+                                                                        <p>09 Dec, 2021</p>
+                                                                    </div>
+                                                                    <div class="mt-4">
+                                                                        <h5 class="font-size-16 mb-3">Summary:</h5>
+                                                                        <p class="mb-1">Remove / replace brake pads, front hub and spark plugs.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                
+                                                        <!-- Labor table -->
+                                                        <div class="py-2 my-4">
+                                                            <h5 class="font-size-15">Labor summary</h5>
+                
+                                                            <div class="table-responsive">
+                                                                <table class="table table-nowrap table-centered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Description</th>
+                                                                            <th>Labor rate</th>
+                                                                            <th>Hours:Min</th>
+                                                                            <th>Disc.%</th>
+                                                                            <th>Total Disc.</th>
+                                                                            <th class="text-end" style="width: 120px;">Total</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="first-column">Remove/Replace spark plugs</th>
+                                                                            <td>70.00</td>
+                                                                            <td>1:18</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$91.00</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="first-column">Remove/Replace front hub</th>
+                                                                            <td>70.00</td>
+                                                                            <td>1:17</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$89.83</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="first-column">Remove/Replace change oil & filter</th>
+                                                                            <td>70.00</td>
+                                                                            <td>0:17</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$19.83</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end">Total</th>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">$200.66</h4></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                           
+                                                        </div>
+            
+            
+                                                        <!-- Parts table -->
+                                                        <div class="py-2 my-4">
+                                                            <h5 class="font-size-15">Parts summary</h5>
+                
+                                                            <div class="table-responsive">
+                                                                <table class="table table-nowrap table-centered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Quantity</th>
+                                                                            <th>Description</th>
+                                                                            <th>Price</th>
+                                                                            <th>Disc.%</th>
+                                                                            <th>Total Disc.</th>
+                                                                            <th class="text-end" style="width: 120px;">Total</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="quantity-column">2</th>
+                                                                            <td>Front hub</td>
+                                                                            <td>77.62</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$155.24</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="quantity-column">1</th>
+                                                                            <td>Brake pads</td>
+                                                                            <td>38.37</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$38.37</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="quantity-column">6</th>
+                                                                            <td>Sparks plugs</td>
+                                                                            <td>5.48</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$32.88</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="quantity-column">4</th>
+                                                                            <td>10W40 motor oil</td>
+                                                                            <td>77.62</td>
+                                                                            <td>0.00</td>
+                                                                            <td>0.00</td>
+                                                                            <td class="text-end">$155.24</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end">Total</th>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">$253.89</h4></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th colspan="6">
+                                                                               <strong>*</strong> Part supplied by the insurance company or the customer.
+                                                                            </th>
+                                                                        </tr>
+                                                                        
+                                                                       
+                
+                
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="text-end">Total sum: </th>
+                                                                            <td class="text-end">$454.55</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount: </th>
+                                                                            <td class="border-0 text-end">- $50.00</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="text-end">Subtotal: </th>
+                                                                            <td class="text-end">$454.55</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end">Tax 9.5% :</th>
+                                                                            <td class="border-0 text-end">$24.12</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>
+                                                                            <td class="border-0 text-end"><strong>$478.67</strong></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">$0.00</h4></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+            
+                                                            <!-- Legal -->
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <small>I authorize the above repairs and necessary materials. I agree to pay reasonable storage on vehicle left more than 2 working days after notification that the job is completed.</small>
+                                                                    <br><br>
+                                                                    <small>This company does not assume any responsibility whatsoever for vehicles or other equipment left for repairs, or for articles left in vehicles or equipment.
+                                                                        Vehicles driven by our employees at owners risk. In the event of non-payment of the said total charge, the owner authorizes this company to repossess
+                                                                        the vehicle or article and hold it until this total bill is paid. All warranty work must be done by this company who will accept no financial responsibility
+                                                                        whatsoever if warranty work is done elsewhere. 90 days warranty covers malfunction in labor job.
+                                                                        Authorized by:</small>
+                                                                </div>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div> <!-- end col -->
+        
+                            
+                        </div>
+                        <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+       
+        <!-- JAVASCRIPT -->
+        <script src="assets/libs/jquery/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+        <script src="assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
+
+        <!-- parsleyjs -->
+        <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+
+        <script src="assets/js/pages/form-validation.init.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+
+        <!-- UPLOAD IMAGE js -->
+        <script src="js/upload-image.js"></script>
+
+
+        <!-- SHOW FORM OPTIONS -->
+        <script>
+            var $onlyperson = $(".only-person");
+            var $onlycorp = $(".only-corp");
+            var $both = $(".both");
+
+            
+
+            $("input[type=radio][name=customer-type]").on('change', function() {
+            var radVal = $(this).val();
+            if (radVal == 'person') {
+                $onlyperson.addClass('show-item').removeClass('hide-item');
+                $onlycorp.addClass('hide-item').removeClass('show-item');
+                $both.addClass('show-item');
+            } else if (radVal == 'corporation') {
+                $onlyperson.addClass('hide-item').removeClass('show-item');
+                $onlycorp.addClass('show-item').removeClass('hide-item');
+                $both.addClass('show-item');
+            }
+            });
+        </script>
+
+        <!-- AUTOCOMPLETE MULTIPLE OPTIONS -->
+        <script>
+            let tags = [];
+            const users = [ 'RA8-H5G', 
+                            '804623F', 
+                            '682GRT', 
+                            '468-1378', 
+                            'HJK-4597', 
+                            'HYR-025', 
+                            'FGY-4597', 
+                            '175-GR5', 
+                            'KFD-478', 
+                            'RE-796',
+                            'MH3408', 
+                            '045ATR', 
+                            'HJU DFU' ];
+            const inputTags = document.querySelector('.input-tags');
+            const tagsContainer = document.querySelector('.tags');
+            const tagsDrop = document.querySelector('.tags-drop');
+            const tagListItems = document.querySelectorAll('.tags-drop__item');
+            let usersList = [...tagListItems].map( user => user.textContent);
+            
+            inputTags.addEventListener('input', e => {
+                const newTag = sanitizeNewTag(inputTags.textContent);
+                popupList(inputTags.textContent);
+                if (!newTag) return;
+                addTag(newTag);
+                inputTags.textContent = '';
+            });
+
+            tagsContainer.addEventListener('click', e => {
+                
+                if (!e.target.matches('.tag')) {
+                //inputTags.textContent = '';
+                return;
+                }
+                e.target.remove();
+                tags = tags.filter(tag => tag !== e.target.textContent.slice(0, -2));
+            })
+            
+            const sanitizeNewTag = newTag => {
+                const lastChar = newTag.slice(-1);
+                const tag = newTag.slice(0, -1).trim().toLowerCase();
+                return lastChar === ',' && tag !== ''? tag : false;
+            }
+
+            const addTag = tagToAdd => {
+                if (tags.includes(tagToAdd)) return;
+                
+                const tag = document.createElement('SPAN');
+                tag.setAttribute('class', 'tag');
+                tag.innerHTML = `${tagToAdd} &times;`;
+                tags.push(tagToAdd);
+                inputTags.insertAdjacentElement('beforebegin', tag);
+            }
+            
+            const popupList = tagToCheck => {
+                tagsDrop.innerHTML = '';
+                if (inputTags.textContent.trim() === '') return;
+                const usersFiltered = users.filter(user =>  user.toLowerCase().includes(tagToCheck.toLowerCase()));
+                
+                if (usersFiltered.length === 0 ) return;
+                console.log(usersFiltered);
+                console.log('typing');
+                const fragment = document.createDocumentFragment();
+                usersFiltered.forEach(user => {
+                const li = document.createElement('LI');
+                li.setAttribute('class', 'tags-drop__item');
+                li.setAttribute('tabindex', '0');
+                li.textContent = user;
+                fragment.appendChild(li);
+                })
+                tagsDrop.appendChild(fragment);
+            }
+            
+            tagsDrop.addEventListener('click', e => {
+                if(!e.target.matches('.tags-drop__item')) return;
+                addTag(e.target.textContent);
+                inputTags.textContent = '';
+                tagsDrop.innerHTML = '';
+                inputTags.focus();
+            })
+            tagsDrop.addEventListener('keypress', e => {
+                if(!e.code === 'Enter') return;
+                addTag(e.target.textContent);
+                inputTags.textContent = '';
+                tagsDrop.innerHTML = '';
+                inputTags.focus();
+            })
+            
+            inputTags.addEventListener('dblclick', e => {
+                const fragment = document.createDocumentFragment();
+                users.forEach(user => {
+                const li = document.createElement('LI');
+                li.setAttribute('class', 'tags-drop__item');
+                li.setAttribute('tabindex', '0');
+                li.textContent = user;
+                fragment.appendChild(li);
+                })
+                tagsDrop.appendChild(fragment);
+            })
+            document.addEventListener('keyup', e => {
+                if (!e.code !== 'Escape') return;
+                console.log('pl')
+            })
+        </script>
+
+    </body>
+
+</html>

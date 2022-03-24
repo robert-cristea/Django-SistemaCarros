@@ -1,0 +1,71 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Customers</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">The Shop</a></li>
+                                            <li class="breadcrumb-item active">Customers</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                                            <h4>{{ clientes.nombre }} {{ clientes.apellido }}</h4>
+                                                            <h4>{{ clientes.corporacion }}</h4>
+                                                            <hr>
+                                                            <p><b>Phone 1: </b>{{ clientes.telefono }}</p>
+                                                            <p><b>Phone 2: </b>{{ clientes.tel }}</p>
+                                                            <p><b>FAX: </b>{{ clientes.fax }}</p>
+                                                            <p><b>E-mail: </b>{{ clientes.correo }}</p>
+                                                            <p><b>Website: </b>{{ clientes.website }}</p>
+                                                            <p><b>Social media: </b>{{ clientes.social_media }}</p>
+                                                            <p><b>Social media2: </b>{{ clientes.social_media2 }}</p>
+                                                            <p><b>Social media3: </b>{{ clientes.social_media3 }}</p>
+                                                            <p><b>Alternative contact 1: </b>{{ clientes.contacto_alternativo }}</p>
+                                                            <p><b>Country: </b>{{ clientes.pais }}</p>
+                                                            <p><b>Address: </b>{{ clientes.direccion }}</p>
+                                                            <p><b>City/Town: </b>{{ clientes.ciudad }}</p>
+                                                            <p><b>State: </b>{{ clientes.estado }}</p>
+                                                            <p><b>Zip: </b>{{ clientes.zip }}</p>
+                                                            <p><b>Registration date: </b>{{ clientes.fecha_registro }}</p>
+
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+            </div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'SistemaCarros/base.html' %}
+{% block content %}
+
+
+
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {% if searched %}
+                                        <h1 class="text-dark">You searched for:{{searched}}</h1>
+                                        <br/>
+                                            {% for cliente in clientes %}
+                                                <tr>
+                                                    <td>
+                                                        <a href=""><b>Nombre:</b> {{cliente.nombre}} {{cliente.apellido}} <b>Correo:</b> {{cliente.correo}}</a>
+                                                        <br>
+                                                        <br>
+
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                        {% else %}
+                                        <h1 class="text-dark">Hey! You forgot to search for something</h1>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+{% endblock %}

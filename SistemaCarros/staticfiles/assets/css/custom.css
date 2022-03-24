@@ -1,0 +1,59 @@
+/*FONT */
+body{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* COLORS */
+.color-green-primary{
+    color: #32a841;
+}
+.color-blue-primary{
+    color: #0083fe;
+}
+.color-orange-primary{
+    color: #fe7b00;
+}
+.color-dark-primary{
+    color: #333333;
+}
+.color-purple-primary{
+    color: #5b73e8;
+}
+
+/* ICONS */
+
+.icons40{
+    font-size: 40px;
+}
+
+
+/* NEW CUSTOMER */
+.input-new-customer-code, 
+.input-new-customer-unit-price,
+.input-new-customer-total,
+.input-labor-rate
+.input-labor-code,
+.input-new-customer-sm{
+    width: 110px;
+}
+.input-new-customer-description, 
+.input-labor-description,
+.input-new-customer-md{
+    width: 320px;
+}
+.input-new-customer-quantity, .input-labor-hourly-rate, .input-labor-hours, .input-labor-minutes, .input-new-customer-xs{
+    width: 64px;
+}
+
+.file-upload-section{
+    margin:0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px #c1c1c1;
+}
+.fileinput-remove,
+.fileinput-upload{
+    display: none;
+}
+
+

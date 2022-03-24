@@ -1,0 +1,117 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Pending stock report</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
+                                            <li class="breadcrumb-item active">Pending stock</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column flex-md-row justify-content-end align-items-center mb-3">
+
+
+
+                                <div class="d-flex justify-content-end align-items-center col-12 col-md-4">
+                                    <div class="text-right">
+                                        <label class="m-0">Date range:&nbsp;&nbsp;</label>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Stock</th>
+                                                <th>Dealer</th>
+                                                <th>Invoice number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if inventory %}
+                                        {% for inven in inventory %}
+
+                                            <tr>
+                                               <td>{{inven.codigoInventory}}</td>
+                                               <td>Part Name</td>
+                                               <td>{{ inven.unitPriceInventory }}</td>
+                                               <td><a href="#" class="stock-quantity" data-type="text" data-pk="1">{{ inven.quantityInventory }}</a></td>
+                                               <td>{{ inven.dealer }}</td>
+                                               <td>{{ inven.invoiceNumber }}</td>
+                                            </tr>
+
+                                        {% endfor  %}
+                                        {% endif  %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+{% endblock %}

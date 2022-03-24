@@ -1,0 +1,597 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Debtors report</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
+                                            <li class="breadcrumb-item active">Debtors</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column flex-md-row justify-content-end align-items-center mb-3">
+
+
+
+                                <div class="d-flex justify-content-end align-items-center col-12 col-md-4">
+                                    <div class="text-right">
+                                        <label class="m-0">Date range:&nbsp;&nbsp;</label>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!-- end page title -->
+
+
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+
+                                                <th>Estimate ID</th>
+                                                <th>Date</th>
+                                                <th>Billing Name</th>
+                                                <th>Pending</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                                <th>Download PDF</th>
+                                                <th>Add parts</th>
+                                                <th>Add labor</th>
+                                                <th>Add payment</th>
+                                                <th style="width: 120px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0131</a> </td>
+                                                <td>
+                                                    10 Jul, 2020
+                                                </td>
+                                                <td>Connie Franco</td>
+
+                                                <td class="color-red-primary">$100</td>
+
+                                                <td>
+                                                    $141
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0129</a> </td>
+                                                <td>
+                                                    09 Jul, 2020
+                                                </td>
+                                                <td>Ronald Patterson</td>
+                                                <td class="color-red-primary">$40</td>
+                                                <td>
+                                                    $220
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0127</a> </td>
+                                                <td>
+                                                    07 Jul, 2020
+                                                </td>
+                                                <td>Theresa Mayers</td>
+                                                <td class="color-red-primary">$60</td>
+                                                <td>
+                                                    $160
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0126</a> </td>
+                                                <td>
+                                                    06 Jul, 2020
+                                                </td>
+                                                <td>Michael Wallace</td>
+                                                <td class="color-red-primary">$100</td>
+                                                <td>
+                                                    $150
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0125</a> </td>
+                                                <td>
+                                                    05 Jul, 2020
+                                                </td>
+                                                <td>Oliver Gonzales</td>
+                                                <td class="color-red-primary">$65</td>
+                                                <td>
+                                                    $165
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0124</a> </td>
+                                                <td>
+                                                    05 Jul, 2020
+                                                </td>
+                                                <td>David Burke</td>
+                                                <td class="color-red-primary">$70</td>
+                                                <td>
+                                                    $170
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0123</a> </td>
+                                                <td>
+                                                    04 Jul, 2020
+                                                </td>
+                                                <td>Willie Verner</td>
+                                                <td class="color-red-primary">$40</td>
+                                                <td>
+                                                    $140
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0122</a> </td>
+                                                <td>
+                                                    03 Jul, 2020
+                                                </td>
+                                                <td>Felix Perry</td>
+                                                <td class="color-red-primary">$55</td>
+                                                <td>
+                                                    $155
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0121</a> </td>
+                                                <td>
+                                                    02 Jul, 2020
+                                                </td>
+                                                <td>Virgil Kelley</td>
+                                                <td class="color-red-primary">$35</td>
+                                                <td>
+                                                    $165
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
+                                                <td>
+                                                    02 Jul, 2020
+                                                </td>
+                                                <td>Matthew Lawler</td>
+                                                <td class="color-red-primary">$95</td>
+                                                <td>
+                                                    $170
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
+                                                <td>
+                                                    02 Jul, 2020
+                                                </td>
+                                                <td>Matthew Lawler</td>
+                                                <td class="color-red-primary">$95</td>
+                                                <td>
+                                                    $170
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
+                                                <td>
+                                                    02 Jul, 2020
+                                                </td>
+                                                <td>Matthew Lawler</td>
+                                                <td class="color-red-primary">$95</td>
+                                                <td>
+                                                    $170
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
+                                                <td>
+                                                    02 Jul, 2020
+                                                </td>
+                                                <td>Matthew Lawler</td>
+                                                <td class="color-red-primary">$95</td>
+                                                <td>
+                                                    $170
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                </td>
+
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- end main content-->
+
+{% endblock %}

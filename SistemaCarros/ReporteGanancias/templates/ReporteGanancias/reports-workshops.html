@@ -1,0 +1,342 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+
+
+             <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Workshops report</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
+                                            <li class="breadcrumb-item active">Workshops</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex flex-column flex-md-row justify-content-end align-items-center mb-3">
+
+
+
+                                <div class="d-flex justify-content-end align-items-center col-12 col-md-4">
+                                    <div class="text-right">
+                                        <label class="m-0">Date range:&nbsp;&nbsp;</label>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!-- end page title -->
+
+
+
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Top 10 Vehicles</h4>
+
+                                        <div class="table-responsive my-4">
+                                            <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                                <thead>
+                                                    <tr class="bg-transparent">
+                                                        <th>Position</th>
+                                                        <th>Make</th>
+                                                        <th>Model</th>
+                                                        <th>Type</th>
+                                                        <th>Year</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Honda</td>
+                                                        <td>Civic</td>
+                                                        <td>Sedan</td>
+                                                        <td>2020</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Chevrolet</td>
+                                                        <td>Groove</td>
+                                                        <td>SUV</td>
+                                                        <td>2021</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Nissan</td>
+                                                        <td>Sentra</td>
+                                                        <td>Sedan</td>
+                                                        <td>2019</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Honda</td>
+                                                        <td>Pilot</td>
+                                                        <td>SUV</td>
+                                                        <td>2009</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Nissan</td>
+                                                        <td>Tsuru</td>
+                                                        <td>Sedan</td>
+                                                        <td>2001</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Audi</td>
+                                                        <td>R8</td>
+                                                        <td>Sedan</td>
+                                                        <td>2019</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Nissan</td>
+                                                        <td>Sentra</td>
+                                                        <td>Sedan</td>
+                                                        <td>2019</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Honda</td>
+                                                        <td>Pilot</td>
+                                                        <td>SUV</td>
+                                                        <td>2009</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Nissan</td>
+                                                        <td>Tsuru</td>
+                                                        <td>Sedan</td>
+                                                        <td>2001</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>10</td>
+                                                        <td>Audi</td>
+                                                        <td>R8</td>
+                                                        <td>Sedan</td>
+                                                        <td>2019</td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Top 10 Labors</h4>
+
+                                        <div class="table-responsive my-4">
+                                            <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                                <thead>
+                                                    <tr class="bg-transparent">
+                                                        <th>Position</th>
+                                                        <th>Labor Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Labor Name 1</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Labor Name 2</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Labor Name 3</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Labor Name 4</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Labor Name 5</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Labor Name 6</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Labor Name 7</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Labor Name 8</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Labor Name 9</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>10</td>
+                                                        <td>Labor Name 10</td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Top 10 Services</h4>
+
+                                        <div class="table-responsive my-4">
+                                            <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                                <thead>
+                                                    <tr class="bg-transparent">
+                                                        <th>Position</th>
+                                                        <th>Service Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Service Name 1</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Service Name 2</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Service Name 3</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Service Name 4</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Service Name 5</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Service Name 6</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Service Name 7</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Service Name 8</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>9</td>
+                                                        <td>Service Name 9</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>10</td>
+                                                        <td>Service Name 10</td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- end row -->
+
+
+
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- end main content-->
+
+{% endblock %}
