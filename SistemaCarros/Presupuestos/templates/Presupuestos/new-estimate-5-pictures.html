@@ -57,18 +57,13 @@
                                                             <div class="card">
                                                                 <div class="card-body">
                                                                     <h4 class="card-title">Picture list</h4>
-                                                                    <fieldset class="form-group">
-                                                                        <form method="POST" enctype="multipart/form-data" action="">
-                                                                                {% csrf_token %}
-                                                                                 {{ presupuestosfotosform.imagenes }}
-<!--                                                                                 <a href="javascript:void(0)" onclick="$('#pro-image').click()" class="btn btn-outline-success mb-3">-->
-<!--                                                                                      <i class="uil-cloud-upload"></i> Upload Images</a>-->
-<!--                                                                              <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>-->
+                                                                        <form method="POST">
+                                                                            {% csrf_token %}
+                                                                            <div id="drag_picture"></div>
+                                                                            <textarea id="car-input" name="fotoscarro"></textarea>
                                                                              <a href="{% url 'Presupuestos:step4' %}" class="btn btn-secondary">Previous</a>
-                                                                             <a href="{% url 'Presupuestos:step6' %}" class="btn btn-primary">Next</a>
+                                                                             <a href="{% url 'Presupuestos:step6' %}"><button  class="btn btn-primary" type="submit" value="post">Next</button> </a>
                                                                         </form>
-                                                                    </fieldset>
-                                                                    <div class="preview-images-zone"></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -94,4 +89,101 @@
                     
                 </div>
             </div>         <!-- End Page-content -->
+{% endblock %}
+
+{% block script %}
+<script>
+    // $('#car-input').hide()
+var carros = {};
+//Image Upload using Uppy.io
+    const uppy = new Uppy.Core({
+         id:'picture',
+         restrictions: {
+              maxFileSize: 10000000,        // at most 10 Mb per picture
+              maxTotalFileSize: 100000000,  // 100Mb = 10 x 10 Mb
+              maxNumberOfFiles: 10,         // at most 10 pictures
+              allowedFileTypes: ['.jpg', '.jpeg', '.png'],
+          },
+         onBeforeUpload: (files) => {
+            // we’ll be careful to return a new object, not mutating the original `files`
+            const updatedFiles = {}
+            Object.keys(files).forEach(fileID => {
+                updatedFiles[fileID] = {
+                    ...files[fileID],
+                    meta: {
+                        ...files[fileID].meta,
+                        name: 'car_' + files[fileID].meta.name, // modify filename
+                    },
+                }
+            })
+            return updatedFiles
+        },
+    });
+    const Dashboard = Uppy.Dashboard;
+    const Form = Uppy.Form;
+    const XHRUpload = Uppy.XHRUpload;
+
+    uppy.use(Dashboard, {
+         metaFields: [
+            { id: 'name', name: 'Name', placeholder: 'file name' },
+            {
+              id: 'default',
+              name: 'Default',
+              render ({ value, onChange, required, form }, h) {
+                return h('input', { type: 'checkbox', required, form, onChange: (ev) => onChange(ev.target.checked ? 'on' : ''), defaultChecked: value === 'on' })
+              },
+            },
+        ],
+        showRemoveButtonAfterComplete: false,
+        inline: true,
+        target: '#drag_picture',
+        showProgressDetails: true,
+        width: 1200,
+        height: 350,
+        proudlyDisplayPoweredByUppy:false,
+        locale:{
+              strings: {
+                          browseFiles: 'Upload Car Pictures',
+                          dropPasteFiles: '%{browseFiles}',
+                          editFile: 'Select image as main view',
+                          saveChanges: 'OK',
+                          editing: 'Select %{file} as main view'
+                      }
+                },
+        })
+        .use(XHRUpload, {
+            endpoint: 'http://localhost:8000/carros/addpicture',
+            formData: true,
+            fieldName:"files",
+        })
+        .use(Form, {
+            target: '#filesupload',
+            getMetaFromForm: true,
+            addResultToForm: true,
+            multipleResults: true,
+            submitOnSuccess: true,
+            triggerUploadOnSubmit: true
+        });
+
+        uppy.on('dashboard:file-edit-complete', (currentFile) => {
+            if(currentFile && currentFile.meta.default === 'on') {
+                uppy.getFiles().forEach(file=> {
+                    if(file.id !== currentFile.id) {
+                         uppy.setFileMeta(file.id, { default: "" });
+                    }
+                })
+            }
+        });
+
+        uppy.on('complete', (result) => {
+            console.log('Upload complete! We’ve uploaded these files:', result.successful);
+            for(let i=0; i<result.successful.length; i++){
+                item = result.successful[i].response.body;
+                for (key in item){
+                    carros[key] = [item[key],result.successful[i].meta.default];
+                }
+            }
+            $('#car-input').val(JSON.stringify(carros));
+        })
+</script>
 {% endblock %}

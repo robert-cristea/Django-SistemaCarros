@@ -78,8 +78,8 @@ class PresupuestosVehiculosForm(forms.ModelForm):
 
     class Meta:
         model = Carro
-        fields = ['placas','año','modelo','marca','tipo','motor','vin','color']
-        exclude = ['agente_seguros', 'compañia_seguros','no_politica','fotosCarro','garantia',
+        fields = ['placas','año','modelo','marca','tipo','motor','vin','color','fotosCarro']
+        exclude = ['agente_seguros', 'compañia_seguros','no_politica','garantia',
                    'cliente','fecha_registros']
         widgets = {
             'placas': forms.TextInput(
@@ -123,6 +123,13 @@ class PresupuestosVehiculosForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
+            'fotosCarro':forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'car-input'
+                }
+            ),
+
 
         }
 

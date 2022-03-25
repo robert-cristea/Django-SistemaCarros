@@ -78,11 +78,18 @@ def step2(request):
 
 
 def step3(request):
+
     extra_forms = 1
     ParteFormSet = formset_factory(PresupuestosParteForm, extra=extra_forms, max_num=20)
     presupuestosparteform = PresupuestosParteForm(request.POST or None)
     if request.method == 'POST':
+        print("======")
+        print(request.POST)
         formset = ParteFormSet(request.POST, request.FILES)
+        print("++++")
+        print(formset)
+        print("-------")
+        print(presupuestosparteform)
         # formset = ParteFormSet(request.POST, request.FILES,prefix='__form')
         if formset.is_valid():
             presupuestosparteform.save()
@@ -116,20 +123,12 @@ def step4(request):
     })
 
 def step5(request):
-    presupuestosfotosform = PresupuestosFotosForm(request.POST or None)
-
+    Vehicle=Carro.objects.all().last()
     if request.method == 'POST':
-
-        # formset = ParteFormSet(request.POST, request.FILES,prefix='__form')
-        if presupuestosfotosform.is_valid():
-            presupuestosfotosform.save()
+            Vehicle.fotosCarro=request.POST['fotoscarro']
+            Vehicle.save()
             return redirect('Presupuestos:step6')
-    else:
-        presupuestosfotosform = PresupuestosFotosForm(request.POST or None)
-
-    return render(request, 'Presupuestos/new-estimate-5-pictures.html', {
-        'presupuestosfotosform': presupuestosfotosform,
-    })
+    return render(request, 'Presupuestos/new-estimate-5-pictures.html')
 
 def step6(request):
     extra_forms = 1

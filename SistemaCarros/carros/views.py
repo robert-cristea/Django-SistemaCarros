@@ -70,7 +70,7 @@ def create_carros_picture(request):
         if request.FILES['files']:
             file = request.FILES['files']
             fs = FileSystemStorage()  # defaults to   MEDIA_ROOT
-            new_name = "tome"
+            new_name = "picture"
             new_name = fs.get_valid_name(new_name)+".jpg"
             filename = fs.save(new_name, file)
             return JsonResponse({filename:file.name},safe=False)
@@ -83,8 +83,9 @@ def create_carros_warranty(request):
     if request.FILES['files']:
         file = request.FILES['files']
         fs = FileSystemStorage()  # defaults to   MEDIA_ROOT
+        ext = file.name.split('.')[-1]
         new_name = "warranty"
-        new_name = fs.get_valid_name(new_name) + ".jpg"
+        new_name = fs.get_valid_name(new_name) + '.' + ext
         filename = fs.save(new_name, file)
         return JsonResponse({filename: file.name}, safe=False)
     else:
