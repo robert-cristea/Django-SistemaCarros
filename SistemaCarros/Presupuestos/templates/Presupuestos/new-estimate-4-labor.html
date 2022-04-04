@@ -155,10 +155,10 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="parts_discount">Discounts</label>
                                                                 <div class="mb-3">
-                                                                    {{presupuestosmanoobraform.descuento}}
+                                                                    {{presupuestosform.descuento_manaobra}}
                                                                 </div>
                                                                 <div>
-                                                                    {{presupuestosmanoobraform.numeroDescuento}}
+                                                                    {{presupuestosform.descuentoTotal_manaobra}}
                                                                 </div>
 
                                                             </div>
@@ -168,7 +168,7 @@
                                                         <div class="col-md-3">
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="parts_total"><strong>TOTAL:</strong></label>
-                                                                {{presupuestosmanoobraform.total}}
+                                                                {{presupuestosform.total_manaobra}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -182,7 +182,7 @@
 <!--                                                                </div>-->
 <!--                                                            </div>-->
                                                             <a href="{% url 'Presupuestos:step3' %}" class="btn btn-secondary">Previous</a>
-                                                            <a href="{% url 'Presupuestos:step5' %}" class="btn btn-primary">Next</a>
+                                                            <a href="{% url 'Presupuestos:step5' %}"><button  class="btn btn-primary" type="submit">Next</button> </a>
                                                 </form>
                                             </section>
                                             </div>

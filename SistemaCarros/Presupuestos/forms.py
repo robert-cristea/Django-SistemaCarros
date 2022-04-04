@@ -4,12 +4,13 @@ from django.forms import formset_factory
 from Clientes import models
 from Foto.models import Foto
 from Parte.forms import ParteForm
+from Presupuestos.models import Presupuestos
 from carros.models import Carro
 from  Clientes.models import Clientes
 from  Parte.models import Parte
 from  ManoObra.models import ManoObra
 from  Pagos.models import Pagos
-
+from tecnicos.models import Tecnicos
 
 DESCUENTO = (
     ('Quantity', 'Quantity'),
@@ -61,11 +62,6 @@ class PresupuestosClientesForm(forms.ModelForm):
             ),
 
             'tel': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'notas': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
@@ -139,8 +135,8 @@ class PresupuestosVehiculosForm(forms.ModelForm):
 class PresupuestosParteForm(forms.ModelForm):
     class Meta:
         model = Parte
-        fields = '__all__'
-
+        fields = ['codigo','quantity','unit_price','total_price','tax_free','comprado_cliente','descripcion','descuento_parte']
+        exclude = ['estimate_id']
         widgets = {
             'codigo': forms.TextInput(
                 attrs={
@@ -188,20 +184,6 @@ class PresupuestosParteForm(forms.ModelForm):
                     'id': 'id__form-0-descripcion',
                 }
             ),
-            'descuento': forms.RadioSelect(choices=DISCOUNT,
-                 attrs={
-                    'class': "custom-radio-list"
-                 }
-            ),
-            'descuentoTotal': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'onchange': 'descuentoTotalFuncion()',
-                    'placeholder': 'put the number',
-
-                }
-            ),
-
             'descuento_parte': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
@@ -209,20 +191,6 @@ class PresupuestosParteForm(forms.ModelForm):
                     'onchange': 'descuentoParte(multiplicar())',
                 }
             ),
-            'total': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': '$0.00',
-                }
-            ),
-
-            'resumen': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    'rows': 2, 'cols': 5,
-                }
-            ),
-
         }
     # def __init__(self):
     #     helper = FormHelper()
@@ -233,7 +201,8 @@ class PresupuestosParteForm(forms.ModelForm):
 class PresupuestosManoObraForm(forms.ModelForm):
     class Meta:
         model = ManoObra
-        fields = '__all__'
+        fields = ['codigo','tecnico','tarifa','tarifa_total','horas','minutos','libre_impuestos','descripcion']
+        exclude = ['estimate_ids']
         widgets = {
             'codigo': forms.NumberInput(
                 attrs={
@@ -247,12 +216,7 @@ class PresupuestosManoObraForm(forms.ModelForm):
                     'id': 'id__manoobra-0-tecnico',
                 }
             ),
-            'tarifa_hora': forms.NumberInput(
-                attrs={
-                    'class': 'form-control'
 
-                }
-            ),
             'horas': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
@@ -287,33 +251,6 @@ class PresupuestosManoObraForm(forms.ModelForm):
 
                 }
             ),
-
-            'descuento': forms.RadioSelect(choices=DESCUENTO,
-                 attrs={
-                    'class': "custom-radio-list"
-                 }
-            ),
-            'numeroDescuento': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'put the number',
-                    'onchange': 'Discountz(taxes_freez())',
-
-                }
-            ),
-            'total': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder':'$0.00',
-                    'id':'totals',
-                }
-            ),
-            'partsDiscount': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-
-                }
-            ),
             'descripcion': forms.TextInput(
                 attrs={
                     'class': 'form-control'
@@ -321,13 +258,19 @@ class PresupuestosManoObraForm(forms.ModelForm):
             ),
 
         }
+    def __init__(self, *args, **kwargs):
+        super(PresupuestosManoObraForm, self).__init__(*args, **kwargs)
+        technicans = Tecnicos.objects.all()
+        technico = [(i.nombreTecnico,i.apellidoTecnico) for i in technicans]
+        self.fields['tecnico'] = forms.ChoiceField(choices=technico)
 
 
 
 class PresupuestosPagosForm(forms.ModelForm):
     class Meta:
         model = Pagos
-        fields = '__all__'
+        fields = ['tipo_pago','cantidad_pagada','numero_transaccion']
+        exclude = ['estimate']
         widgets = {
             'tipo_pago': forms.Select(
                 attrs={
@@ -347,15 +290,55 @@ class PresupuestosPagosForm(forms.ModelForm):
 
         }
 
-class PresupuestosFotosForm(forms.ModelForm):
+class PresupuestosForm(forms.ModelForm):
     class Meta:
-        model = Foto
-        fields = '__all__'
+        model = Presupuestos
+        fields = ['descuento_parte','descuentoTotal_parte','total_parte','resumen','descuento_manaobra','descuentoTotal_manaobra','total_manaobra']
         widgets = {
-            'imagenes': forms.FileInput(
+             'descuento_parte': forms.RadioSelect(choices=DISCOUNT,
+                 attrs={
+                    'class': "custom-radio-list"
+                 }
+            ),
+            'descuentoTotal_parte': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'multiple': True
+                    'onchange': 'descuentoTotalFuncion()',
+                    'placeholder': 'put the number',
+
                 }
             ),
+            'total_parte': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '$0.00',
+                }
+            ),
+
+            'resumen': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 2, 'cols': 5,
+                }
+            ),
+            'descuento_manaobra': forms.RadioSelect(choices=DISCOUNT,
+                attrs={
+                    'class': "custom-radio-list"
+                }
+            ),
+            'descuentoTotal_manaobra': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'onchange': 'descuentoTotalFuncion()',
+                    'placeholder': 'put the number',
+
+                }
+            ),
+            'total_manaobra': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '$0.00',
+                }
+            ),
+
         }

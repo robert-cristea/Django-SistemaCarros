@@ -1,5 +1,7 @@
 from django.db import models
 
+from Presupuestos.models import Presupuestos
+
 
 class Pagos(models.Model):
 
@@ -19,6 +21,7 @@ class Pagos(models.Model):
     #saldo_adeudado = models.CharField(max_length=255)
     numero_transaccion=models.IntegerField()
     cantidad_pagada=models.IntegerField()
+    estimate=models.ForeignKey(Presupuestos, on_delete=models.SET_NULL, null=True)
 
 
 

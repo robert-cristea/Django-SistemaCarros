@@ -53,7 +53,7 @@
                                             <div class="col-md-9">
 
                                                 <section>
-                                                    <form>
+                                                    <form method="post">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="card">
@@ -71,13 +71,11 @@
                                                                         <div class="estimatepreview">
                                                                             <div>
                                                                                 <p class="mb-0">Choose technician:&nbsp; &nbsp;&nbsp;</p>
-                                                                                 <select name="" id="" class="form-control">
+                                                                                 <select name="technican_select" id="" class="form-control">
                                                                                         <option value="">Select a technician</option>
-                                                                                        <option value="">Technician Name 1</option>
-                                                                                        <option value="">Technician Name 2</option>
-                                                                                        <option value="">Technician Name 3</option>
-                                                                                        <option value="">Technician Name 4</option>
-                                                                                        <option value="">Technician Name 5</option>
+                                                                                        {% for technican in technicans %}
+                                                                                            <option value="">{{technican.nombreTecnico}}</option>
+                                                                                        {% endfor%}
                                                                                  </select>
                                                                             </div>
                                                                             <div class="form-check">
@@ -97,8 +95,10 @@
                                                                             </div>
 
                                                                             <div class="text-muted">
-                                                                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestosclientes}}</p>
-                                                                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestoscarros}}</p>
+                                                                                {% load static %}
+                                                                                <img src="{% get_media_prefix %}{{step_vehicle.new_name}}" height="68"></div>
+                                                                                <!--<p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestosclientes}}</p>-->
+                                                                                <!--<p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestoscarros}}</p>-->
                                                                             </div>
                                                                         </div>
 
@@ -108,27 +108,27 @@
                                                                             <div class="col-sm-4">
                                                                                 <div class="text-muted">
                                                                                     <h5 class="font-size-16 mb-3">Customer information:</h5>
-                                                                                    <h5 class="font-size-15 mb-2">Mr. David Hammet</h5>
-                                                                                    <p>License: <strong>KLJFD838F88</strong></p>
-                                                                                    <p class="mb-1">davidhammet@domain.com</p>
-                                                                                    <p>0123-456-7890</p>
-                                                                                    <p>0123-456-7890</p>
+                                                                                    <h5 class="font-size-15 mb-2">{{step_client.titulo}}.{{step_client.apellido}}{{step_client.nombre}}</h5>
+                                                                                    <!--<p>License: <strong>KLJFD838F88</strong></p>-->
+                                                                                    <p class="mb-1">{{step_client.correo}}</p>
+                                                                                    <p>{{step_client.tel}}</p>
+                                                                                    <p>{{step_client.telefona}}</p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-sm-4">
                                                                                 <div class="text-muted">
                                                                                     <h5 class="font-size-16 mb-3">Vehicle information:</h5>
-                                                                                    <h5 class="font-size-15 mb-2">License plate: 5BWT273</h5>
+                                                                                    <h5 class="font-size-15 mb-2">License plate:{{step_vehicle.placas}}</h5>
                                                                                     <div class="row">
                                                                                         <div class="col-md-6">
-                                                                                            <p class="mb-1">Make: <strong>Susuki</strong></p>
-                                                                                            <p class="mb-1">Model: <strong>XL-7</strong></p>
-                                                                                            <p class="mb-1">Color: <strong>Red</strong></p>
-                                                                                            <p class="mb-1">Year: <strong>Red</strong></p>
+                                                                                            <p class="mb-1">Make: <strong>{{step_vehicle.marca}}</strong></p>
+                                                                                            <p class="mb-1">Model: <strong>{{step_vehicle.modelo}}</strong></p>
+                                                                                            <p class="mb-1">Color: <strong>{{step_vehicle.color}}</strong></p>
+                                                                                            <p class="mb-1">Year: <strong>{{step_vehicle.año}}</strong></p>
                                                                                         </div>
                                                                                         <div class="col-md-6">
-                                                                                            <p class="mb-1">Type: <strong>Sedan</strong></p>
-                                                                                            <p class="mb-1">VIN number: <strong>XDLKJFE090</strong></p>
+                                                                                            <p class="mb-1">Type: <strong>{{step_vehicle.tipo}}</strong></p>
+                                                                                            <p class="mb-1">VIN number: <strong>{{step_vehicle.vin}}</strong></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -137,11 +137,11 @@
                                                                                 <div class="text-muted text-sm-end">
                                                                                     <div>
                                                                                         <h5 class="font-size-16 mb-1">Estimate Date:</h5>
-                                                                                        <p>09 Dec, 2021</p>
+                                                                                        <p>{{time}}</p>
                                                                                     </div>
                                                                                     <div class="mt-4">
                                                                                         <h5 class="font-size-16 mb-3">Summary:</h5>
-                                                                                        <p class="mb-1">Remove / replace brake pads, front hub and spark plugs.</p>
+                                                                                        <p class="mb-1">{{request.session.resumen}}</p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -155,42 +155,30 @@
                                                                                 <table class="table table-nowrap table-centered mb-0">
                                                                                     <thead>
                                                                                         <tr>
+                                                                                            <th>Code</th>
                                                                                             <th>Description</th>
                                                                                             <th>Labor rate</th>
                                                                                             <th>Hours:Min</th>
-                                                                                            <th>Disc.%</th>
-                                                                                            <th>Total Disc.</th>
                                                                                             <th class="text-end" style="width: 120px;">Total</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
+                                                                                    {% for labor in step_manoobra%}
                                                                                         <tr>
-                                                                                            <th class="first-column">Remove/Replace spark plugs</th>
-                                                                                            <td>70.00</td>
-                                                                                            <td>1:18</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$91.00</td>
+                                                                                            <td class="first-column">{{labor.codigo}}</td>
+                                                                                            <td>{{labor.descripcion}}</td>
+                                                                                            <td>{{labor.tarifa}}</td>
+                                                                                            <td>{{labor.horas}}:{{labor.minutos}}</td>
+                                                                                            <td class="text-end">{{labor.tarifa_total}}</td>
                                                                                         </tr>
+                                                                                    {% endfor %}
+
                                                                                         <tr>
-                                                                                            <th class="first-column">Remove/Replace front hub</th>
-                                                                                            <td>70.00</td>
-                                                                                            <td>1:17</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$89.83</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th class="first-column">Remove/Replace change oil & filter</th>
-                                                                                            <td>70.00</td>
-                                                                                            <td>0:17</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$19.83</td>
-                                                                                        </tr>
-                                                                                        <tr>
+                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount</th>
+                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuentoTotal_manaobra}}</h5></td>
+                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuento_manaobra}}</h5></td>
                                                                                             <th scope="row" colspan="5" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">$200.66</h4></td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{request.session.total_monaobra}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -207,80 +195,39 @@
                                                                                 <table class="table table-nowrap table-centered mb-0">
                                                                                     <thead>
                                                                                         <tr>
-                                                                                            <th>Quantity</th>
+                                                                                            <th>Code</th>
                                                                                             <th>Description</th>
                                                                                             <th>Price</th>
+                                                                                            <th>Quantity</th>
                                                                                             <th>Disc.%</th>
-                                                                                            <th>Total Disc.</th>
                                                                                             <th class="text-end" style="width: 120px;">Total</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-
+                                                                                        {% for parte in step_parte %}
                                                                                         <tr>
-                                                                                            <th class="quantity-column">2</th>
-                                                                                            <td>Front hub</td>
-                                                                                            <td>77.62</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$155.24</td>
+                                                                                            <th class="quantity-column">{{parte.codigo}}</th>
+                                                                                            <td>{{parte.descripcion}}</td>
+                                                                                            <td>{{parte.unit_price}}</td>
+                                                                                            <td>{{parte.quantity}}</td>
+                                                                                            <td>{{parte.discuento_parte}}</td>
+                                                                                            <td class="text-end">${{parte.total_price}}</td>
                                                                                         </tr>
-                                                                                        <tr>
-                                                                                            <th class="quantity-column">1</th>
-                                                                                            <td>Brake pads</td>
-                                                                                            <td>38.37</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$38.37</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th class="quantity-column">6</th>
-                                                                                            <td>Sparks plugs</td>
-                                                                                            <td>5.48</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$32.88</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th class="quantity-column">4</th>
-                                                                                            <td>10W40 motor oil</td>
-                                                                                            <td>77.62</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td>0.00</td>
-                                                                                            <td class="text-end">$155.24</td>
-                                                                                        </tr>
-                                                                                        <tr>
+                                                                                        {% endfor %}
+                                                                                      <tr>
+                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount</th>
+                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuentoTotal_parte}}</h5></td>
+                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuento_parte}}</h5></td>
                                                                                             <th scope="row" colspan="5" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">$253.89</h4></td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th colspan="6">
-                                                                                               <strong>*</strong> Part supplied by the insurance company or the customer.
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th scope="row" colspan="5" class="text-end">Total sum: </th>
-                                                                                            <td class="text-end">$454.55</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount: </th>
-                                                                                            <td class="border-0 text-end">- $50.00</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th scope="row" colspan="5" class="text-end">Subtotal: </th>
-                                                                                            <td class="text-end">$454.55</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Tax 9.5% :</th>
-                                                                                            <td class="border-0 text-end">$24.12</td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{request.session.total_parte}}</h4></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>
-                                                                                            <td class="border-0 text-end"><strong>$478.67</strong></td>
+                                                                                            <td class="border-0 text-end"><strong>${{total}}</strong></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">$0.00</h4></td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{balance}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -303,12 +250,11 @@
 
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                         </div>
 
 
                                                         <a href="{% url 'Presupuestos:step6' %}" class="btn btn-secondary">Previous</a>
-                                                        <a href="{% url 'Presupuestos:step8' %}" class="btn btn-primary">Next</a>
+                                                        <a href="{% url 'Presupuestos:step8' %}"><button class="btn btn-primary" type="submit">Next</button></a>
     
                                                     </form>
                                                 </section>
