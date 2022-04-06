@@ -180,10 +180,10 @@ def step7(request):
         presupuestos.descuentoTotal_manaobra=int(request.session['descuentoTotal_manaobra'])
         presupuestos.descuento_manaobra=request.session['descuento_manaobra']
         presupuestos.register_time=time
-        presupuestos.cliente=request.session['client_id']
-        presupuestos.carro=request.session['car_id']
-        assistant=Tecnicos.objects.filter(nombreTecnico=request.POST['techinican_select'])
-        presupuestos.tecnicos=assistant.id
+        presupuestos.cliente_id=request.session['client_id']
+        presupuestos.carro_id=request.session['car_id']
+        assistant=Tecnicos.objects.filter(nombreTecnico=request.POST['technican_select'])[0]
+        presupuestos.tecnicos_id=assistant.id
         presupuestos.save()
         return redirect('Presupuestos:step8')
     else:
