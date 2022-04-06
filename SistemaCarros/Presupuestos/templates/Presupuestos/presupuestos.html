@@ -61,7 +61,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            {% for presupuesto in prespuestos%}
                                             <tr>
                                                 <td>
                                                     <div class="form-check text-center font-size-16">
@@ -70,14 +70,14 @@
                                                     </div>
                                                 </td>
 
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0131</a> </td>
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN{{presupuesto.id}}</a> </td>
                                                 <td>
-                                                    10 Jul, 2020
+                                                    {{presupuesto.register_time}}
                                                 </td>
-                                                <td>Connie Franco</td>
+                                                <td>{{presupuesto.cliente.nombre}}</td>
 
                                                 <td>
-                                                    $141
+                                                    {{presupuesto.total}}
                                                 </td>
                                                 <td>
                                                     <div class="badge bg-soft-warning font-size-12">Pending</div>
@@ -104,6 +104,7 @@
                                                     <a data-bs-toggle="modal" data-bs-target="#deleteEstimate" class="px-3 text-danger"><i class="uil uil-trash-alt font-size-18"></i></a>
                                                 </td>
                                             </tr>
+                                        {% endfor%}
                                         </tbody>
                                     </table>
                                 </div>

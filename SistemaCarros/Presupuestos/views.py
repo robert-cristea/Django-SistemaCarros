@@ -219,8 +219,7 @@ class addLabor(CreateView):
 
 
 
-class presupuestosIndex(ListView):
-    model=Presupuestos
-    template_name = 'Presupuestos/presupuestos.html'
-    context_object_name='presupuestos'
-    queryset=Presupuestos.objects.all()
+def presupuestosIndex(request):
+    presupuestos_all=Presupuestos.objects.all()
+    temp=Presupuestos.objects.all().last()
+    return render(request, 'Presupuestos/presupuestos.html',{'prespuestos':presupuestos_all})
