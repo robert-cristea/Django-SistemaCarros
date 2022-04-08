@@ -28,13 +28,14 @@ SECRET_KEY = 'django-insecure-a^bzz$c36-ei(c&ja_#(9kzh@^x2w6z=koo*$jy6s1r&3yv$uj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 MESSAGE_STORAGE="django.contrib.messages.storage.cookie.CookieStorage"
 
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     'carros.apps.CarrosConfig',
     'Presupuestos.apps.PresupuestosConfig',
     'ClienteEmpresas.apps.ClienteempresasConfig',
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,7 +78,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware'
 
 ]
-
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 ROOT_URLCONF = 'SistemaCarros.urls'
