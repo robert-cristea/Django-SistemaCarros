@@ -74,7 +74,7 @@
                                                                                  <select name="technican_select" id="" class="form-control">
                                                                                         <option value="">Select a technician</option>
                                                                                         {% for technican in technicans %}
-                                                                                            <option value="">{{technican.nombreTecnico}}</option>
+                                                                                            <option value="{{technican.id}}">{{technican.nombreTecnico}}</option>
                                                                                         {% endfor%}
                                                                                  </select>
                                                                             </div>

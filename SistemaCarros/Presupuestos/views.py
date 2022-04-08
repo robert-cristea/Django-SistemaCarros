@@ -182,8 +182,8 @@ def step7(request):
         presupuestos.register_time=time
         presupuestos.cliente_id=request.session['client_id']
         presupuestos.carro_id=request.session['car_id']
-        assistant=Tecnicos.objects.filter(nombreTecnico=request.POST['technican_select'])[0]
-        presupuestos.tecnicos_id=assistant.id
+        print(request.POST['technican_select'])
+        presupuestos.tecnicos_id=request.POST['technican_select']
         presupuestos.save()
         return redirect('Presupuestos:step8')
     else:
