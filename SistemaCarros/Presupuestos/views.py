@@ -112,7 +112,7 @@ def step4(request):
     if request.method == 'POST':
         request.session['descuento_manaobra'] = request.POST['descuento_manaobra']
         request.session['descuentoTotal_manaobra'] = request.POST['descuentoTotal_manaobra']
-        request.session['total_manaobra'] = request.POST['total_manaobra']
+        request.session['total_monaobra'] = request.POST['total_manaobra']
         manoObra_formset = ManoObraFormSet(request.POST, request.FILES, prefix='manoobra')
         request.session['number_labor'] = request.POST['manoobra-TOTAL_FORMS']
         print(manoObra_formset.errors)

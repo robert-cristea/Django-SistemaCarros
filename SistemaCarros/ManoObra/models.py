@@ -16,8 +16,8 @@ class ManoObra(models.Model):
 
 
     codigo=models.IntegerField()
-    descripcion=models.TextField(blank=True,default=0)
-    tecnico=models.CharField(max_length=200, choices=OPERATOR,default='Operator ')
+    descripcion=models.TextField(blank=True,default='')
+    tecnico=models.CharField(max_length=200,default='')
     horas=models.IntegerField()
     minutos=models.IntegerField(default=0)
     tarifa=models.IntegerField()
