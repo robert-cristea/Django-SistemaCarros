@@ -152,7 +152,7 @@ var carros = {};
                 },
         })
         .use(XHRUpload, {
-            endpoint: 'http://localhost:8000/carros/addpicture',
+            endpoint: '{% url "carros:create_carros_picture" %}',
             formData: true,
             fieldName:"files",
         })

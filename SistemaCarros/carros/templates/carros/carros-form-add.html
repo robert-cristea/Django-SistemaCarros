@@ -250,7 +250,7 @@ var warranty = {};
                 },
         })
         .use(XHRUpload, {
-            endpoint: 'http://localhost:8000/carros/addpicture',
+            endpoint: '{% url "carros:create_carros_picture" %}',
             formData: true,
             fieldName:"files",
         })
@@ -324,7 +324,7 @@ var warranty = {};
                 },
         })
         .use(XHRUpload, {
-            endpoint: 'http://localhost:8000/carros/addwarranty',
+            endpoint: '{% url "carros:create_carros_warranty" %}',
             formData: true,
             fieldName:"files",
         })
