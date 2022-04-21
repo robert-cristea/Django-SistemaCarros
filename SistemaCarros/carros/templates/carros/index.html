@@ -62,7 +62,7 @@
                                  {% for carro in carros %}
                                  <tr>
                                     <td>{{carro.fecha_registros}}</td>
-                                    {% if carro.fotosCarro %}
+                                    {% if carro.new_name %}
                                     <td>
                                        <a data-id="{{carro.id}}" class="btn_view_gallery">
                                           <img src="{% get_media_prefix %}{{carro.new_name}}" height="68">

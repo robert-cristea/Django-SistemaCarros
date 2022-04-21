@@ -25,7 +25,11 @@ class Carro(models.Model):
 #customize model property for main view of fotosCarro
     @property
     def new_name(self):
+        if self.fotosCarro == '':
+            return None
         temp=json.loads(self.fotosCarro)
+        if len(temp) == 0:
+            return None
         tempkey=sorted(temp.keys())
         for item in reversed(tempkey):
             if temp[item][1]=="on":
