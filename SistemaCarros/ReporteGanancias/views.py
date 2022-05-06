@@ -3,8 +3,9 @@ from django.views.generic import TemplateView, ListView
 
 from inventory.models import Inventory
 from .forms import ReporteGananciasForm
-
-
+from carros.models import Carro
+from ManoObra.models import ManoObra
+from Presupuestos.models import Presupuestos
 # Create your views here.
 from .models import ReporteGanancias
 
@@ -14,10 +15,10 @@ class IndexReporteGanancias(TemplateView):
 
 
 class reportsDebtors(ListView):
-    model=ReporteGanancias
+    model=Presupuestos
     template_name = 'ReporteGanancias/reports-debtors.html'
-    # context_object_name='debtors'
-    queryset=ReporteGanancias.objects.all()
+    context_object_name='debtors'
+    queryset=Presupuestos.objects.all()
 
 
 class pendingStock(ListView):
@@ -40,8 +41,12 @@ class Technicians(ListView):
     queryset=ReporteGanancias.objects.all()
 
 
-class Workshops(ListView):
-    model=ReporteGanancias
+class Workshops(TemplateView):
     template_name = 'ReporteGanancias/reports-workshops.html'
     # context_object_name='workshops'
-    queryset=ReporteGanancias.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['top_vehicles'] = Carro.objects.values('marca', 'modelo', 'tipo', 'año')[:10]
+        context['top_labors'] = ManoObra.objects.all()[:10]
+        return context;
+

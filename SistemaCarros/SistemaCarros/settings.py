@@ -126,7 +126,7 @@ DATABASES = {
         'ENGINE':'django.db.backends.postgresql_psycopg2',
         'NAME':'sistemacarros_db',
         'USER':'postgres',
-        'PASSWORD':'admin',
+        'PASSWORD':'password',
         'HOST':'localhost',
         'PORT':'5432',
     }

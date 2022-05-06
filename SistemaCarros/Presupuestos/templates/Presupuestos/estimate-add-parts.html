@@ -1,0 +1,194 @@
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                       <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Adding...</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="estimates.html">Estimates</a></li>
+                                            <li class="breadcrumb-item active">Add</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+                        <!-- end page title -->
+
+
+                        <div class="row">
+                            <form method="post">
+                            {% csrf_token %}
+                            <div class="col-md-10">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="verticalnav-email-input">Summary</label>
+                                                    {{ presupuestosForm.resumen }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title">Parts list</h4>
+                                        <p class="card-title-desc">Add the parts that you need to include.</p>
+
+                                        <input type="button" class="btn btn-block btn-default btn-success mb-4" id="addrow" onclick="addForm()" value="+ Add part" />
+
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-nowrap align-middle" id="childTable1">
+                                                <thead class="table-info">
+                                                  <tr>
+                                                    <th scope="col">Code</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Unit Price</th>
+                                                    <th scope="col">Discount</th>
+                                                    <th scope="col">Total Price</th>
+                                                    <th scope="col">Tax - Free</th>
+                                                    <th scope="col">Brought by client</th>
+                                                    <th scope="col">Actions</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{ formset.management_form }}
+                                                {% for form in formset %}
+                                                      <tr>
+                                                        <td>
+                                                            {{form.codigo}}
+<!--                                                                                        <input type="text" name="parts_code" class="form-control input-new-customer-sm" />-->
+                                                        </td>
+                                                        <td>
+                                                            {{form.descripcion}}
+<!--                                                                                      <input type="text" name="parts_description" class="form-control  input-new-customer-description" />-->
+                                                        </td>
+                                                        <td>
+                                                            {{form.quantity}}
+<!--                                                                                      <input type="text" name="parts_quantity" class="form-control input-new-customer-quantity" />-->
+                                                        </td>
+                                                        <td>
+                                                            {{form.unit_price}}
+<!--                                                                                      <input type="text" name="parts_unit_price" class="form-control input-new-customer-unit-price" />-->
+                                                        </td>
+                                                        <td>
+                                                            {{form.descuento_parte}}
+<!--                                                                                        <input type="text" name="parts_discount_per_part" class="form-control input-new-customer-total" />-->
+                                                        </td>
+                                                        <td>
+                                                            {{form.total_price}}
+<!--                                                                                      <input type="text" name="parts_total_price" class="form-control input-new-customer-total" />-->
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                   {{form.tax_free}}
+<!--                                                                                            <input type="checkbox" class="form-check-input" id="formrow-customCheck">-->
+                                                                <label class="form-check-label" for="formrow-customCheck"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                    {{form.comprado_cliente}}
+<!--                                                                                            <input type="checkbox" class="form-check-input" id="formrow-customCheck2">-->
+                                                                <label class="form-check-label" for="formrow-customCheck2"></label>
+                                                            </div>
+                                                        </td>
+                                                      <td scope="col">
+                                                            {{ form.DELETE|add_class:"d-none" }}
+                                                            <button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button>
+                                                        </td>
+                                                      </tr>
+                                                {% endfor %}
+                                                        <tr id="empty-row" class="part-form">
+                                                            <td scope="col">{{formset.empty_form.codigo}}</td>
+                                                            <td scope="col">{{formset.empty_form.descripcion}}</td>
+                                                            <td scope="col">{{formset.empty_form.quantity}}</td>
+                                                            <td scope="col">{{formset.empty_form.unit_price}}</td>
+                                                            <td scope="col">{{formset.empty_form.descuento_parte}}</td>
+                                                            <td scope="col">{{formset.empty_form.total_price}}</td>
+                                                            <td scope="col">{{formset.empty_form.tax_free}}</td>
+                                                            <td scope="col">{{formset.empty_form.comprado_cliente}}</td>
+                                                            <td scope="col">{{ formset.empty_form.DELETE|add_class:"d-none" }}<button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button></td>
+
+                                                        </tr>
+                                                </tbody>
+
+                                              </table>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="parts_discount">Discount</label>
+                                                <div class="mb-3">
+                                                    <div class="form-check form-check-inline">
+                                                            {{presupuestosForm.descuento_parte}}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                        {{presupuestosForm.descuentoTotal_parte}}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="parts_total"><strong>TOTAL:</strong></label>
+                                                {{presupuestosForm.total_parte}}
+    <!--                                                                    <input type="text" class="form-control" id="parts_total" placeholder="$0.00">-->
+                                        </div>
+
+                                        <input type="submit" class="btn btn-block btn-default btn-success mb-4" value="Save" />
+                                    </div>
+                                </div>
+
+
+
+                            </div> <!-- end col -->
+                            </form>
+                        </div> <!-- end row -->
+                        <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+
+
+                </div>
+                <!-- End Page-content -->
+
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+{% endblock %}

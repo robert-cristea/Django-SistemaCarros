@@ -50,7 +50,7 @@
                                                         <th data-priority="1">Workshop name</th>
                                                         <th data-priority="3">Plan</th>
                                                         <th data-priority="3">Status</th>
-<!--                                                        <th data-priority="1">Details</th>-->
+                                                        <th data-priority="1">Details</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -59,10 +59,18 @@
                                                             <th>{{tienda.registro_desde}}</th>
                                                             {% if tienda.logo %}
                                                             <td><img src="{{tienda.logo.url}}" height="68"></td>
+                                                            {% else %}
+                                                                <td>No Logo</td>
                                                             {% endif %}
                                                             <td>{{tienda.nombre_taller}}</td>
                                                             <td>{{tienda.plan}}</td>
-                                                            <td>{{tienda.status}}</td>
+                                                            <td>
+                                                                {% if tienda.status == "Active" %}
+                                                                    <span class="badge bg-success">{{tienda.status}}</span> </td>
+                                                                {% else %}
+                                                                    <span class="badge bg-danger">{{tienda.status}}</span> </td>
+                                                                {% endif %}
+
                                                             <td>
 <!--                                                                <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="uil-search-alt"></i></a>-->
                                                                 <a href="{% url 'InformacionTiendas:tiendas_detail' tienda.id%}">Detail</a>

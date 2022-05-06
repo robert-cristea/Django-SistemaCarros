@@ -15,13 +15,13 @@ function totales(){
 function updateEmptyFormIDs(element,totalForms){
     //get current form input name
     var thisInput=element
-    console.log("thisInput en updateEmptyFormIDs:",{thisInput})
+    //console.log("thisInput en updateEmptyFormIDs:",{thisInput})
     //get current form input name
     var currentName=element.attr('name')
-    console.log("currentName en updateEmptyFormIDs:",{currentName})
+    //console.log("currentName en updateEmptyFormIDs:",{currentName})
     //replace "prefix" with actual number
     var newName=currentName.replace(/__prefix__/g,totalForms)
-    console.log("newName en updateEmptyFormIDs:",{newName})
+    //console.log("newName en updateEmptyFormIDs:",{newName})
 
     //update input w/new name
     thisInput.attr('name',newName)
@@ -31,8 +31,8 @@ function updateEmptyFormIDs(element,totalForms){
 
     var newRowId="row_id_"+newName
     newFormRow.attr("id",newRowId)
-    console.log('newRowId:',{newRowId})
-    console.log('newFormRow:',{newFormRow})
+    //console.log('newRowId:',{newRowId})
+    //console.log('newFormRow:',{newFormRow})
 
     newFormRow.addClass("new-parent-row")
     var parentDiv=element.parent();
@@ -42,7 +42,6 @@ function updateEmptyFormIDs(element,totalForms){
     var inputLabel=parentDiv.find("label")
     inputLabel.attr("for","id_"+newName)
 //    console.log('inputLabel:',{inputLabel})
-
     return newFormRow
 
 }
@@ -78,7 +77,13 @@ function addForm(){
 }
 //    });
 
-
+function deleteForm(e) {
+    // var value = Number.parseInt($("#id_form-TOTAL_FORMS").val()) - 1;
+    // $("#id_form-TOTAL_FORMS").val(value);
+    console.log(e.previousSibling);
+    e.previousSibling.checked = true;
+    e.parentNode.parentNode.style.display='none';
+}
 
 function multiplicar(){
 

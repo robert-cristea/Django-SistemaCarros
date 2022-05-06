@@ -13,8 +13,6 @@ class ManoObra(models.Model):
         ('Operator 3', 'Operator 3'),
 
     )
-
-
     codigo=models.IntegerField()
     descripcion=models.TextField(blank=True,default='')
     tecnico=models.CharField(max_length=200,default='')

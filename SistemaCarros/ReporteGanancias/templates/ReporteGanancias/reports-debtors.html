@@ -78,15 +78,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                        {% for debtor in debtors %}
                                             <tr>
 
 
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0131</a> </td>
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN{{ debtor.id }}</a> </td>
                                                 <td>
+                                                    {{ debtor.register_time }}
                                                     10 Jul, 2020
                                                 </td>
-                                                <td>Connie Franco</td>
+                                                <td>{{ debtor.cliente.nombre}}</td>
 
                                                 <td class="color-red-primary">$100</td>
 
@@ -118,7 +119,7 @@
 
                                                 </td>
                                             </tr>
-
+                                            {% endfor %}
                                             <tr>
 
 

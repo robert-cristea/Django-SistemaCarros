@@ -92,7 +92,6 @@ def step3(request):
         formset = ParteFormSet(request.POST, request.FILES, prefix='form')
         request.session['number_parte'] = request.POST['form-TOTAL_FORMS']
         if formset.is_valid():
-
             for form in formset:
                 form.save()
             return redirect('Presupuestos:step4')
@@ -112,7 +111,7 @@ def step4(request):
     if request.method == 'POST':
         request.session['descuento_manaobra'] = request.POST['descuento_manaobra']
         request.session['descuentoTotal_manaobra'] = request.POST['descuentoTotal_manaobra']
-        request.session['total_monaobra'] = request.POST['total_manaobra']
+        request.session['total_manaobra'] = request.POST['total_manaobra']
         manoObra_formset = ManoObraFormSet(request.POST, request.FILES, prefix='manoobra')
         request.session['number_labor'] = request.POST['manoobra-TOTAL_FORMS']
         print(manoObra_formset.errors)
@@ -167,6 +166,7 @@ def step7(request):
     payment = 0
     for step in step_pago:
         payment += step.cantidad_pagada
+    print(request.session['total_manaobra'])
     total = int(request.session['total_parte']) + int(request.session['total_manaobra'])
     balance = total - payment
     time=datetime.datetime.now()
@@ -182,9 +182,21 @@ def step7(request):
         presupuestos.register_time=time
         presupuestos.cliente_id=request.session['client_id']
         presupuestos.carro_id=request.session['car_id']
-        print(request.POST['technican_select'])
         presupuestos.tecnicos_id=request.POST['technican_select']
         presupuestos.save()
+        for parte_item in step_parte:
+            parte_item.estimate_id = presupuestos;
+            parte_item.save()
+        for manaobra_item in step_manoobra:
+            manaobra_item.estimate_ids = presupuestos;
+            manaobra_item.save()
+        for pago_item in step_pago:
+            pago_item.estimate = presupuestos;
+            pago_item.save()
+
+        for key in request.session.keys():
+            del request.session[key]
+
         return redirect('Presupuestos:step8')
     else:
         return render(request, 'Presupuestos/new-estimate-7-preview.html',
@@ -204,18 +216,60 @@ class addPay(CreateView):
     success_url=reverse_lazy('InformacionTiendas:list_tiendas')
 
 
-class addPart(CreateView):
-    model=Presupuestos
-    form_class=PresupuestosParteForm
-    template_name='Presupuestos/presupuestos-add-parts.html'
-    success_url=reverse_lazy('InformacionTiendas:list_tiendas')
+def addPart(request, pk):
+    extra_forms = 1
+    ParteFormSet = formset_factory(PresupuestosParteForm, extra=extra_forms, max_num=20, can_delete=True)
+    presupuestos = Presupuestos.objects.filter(id=pk).values()[0]
+    presupuestosForm = PresupuestosForm(initial=presupuestos)
+    if request.method == 'POST':
+        formset = ParteFormSet(request.POST, request.FILES, prefix='form')
+        if formset.is_valid():
+            for form in formset:
+                if not form.cleaned_data["DELETE"]:
+                    model_instance = form.save(commit=False)
+                    model_instance.estimate_id = Presupuestos.objects.get(pk=pk)
+                    model_instance.save()
+            presupuestos = Presupuestos.objects.get(pk=pk)
+            presupuestos.descuento_parte = request.POST['descuento_parte']
+            presupuestos.descuentoTotal_parte = request.POST['descuentoTotal_parte']
+            presupuestos.total_parte = request.POST['total_parte']
+            presupuestos.save()
+            return redirect('Presupuestos:presupuestos')
+    else:
+        formset = ParteFormSet()
+
+    return render(request, 'Presupuestos/estimate-add-parts.html', {
+        'presupuestosForm': presupuestosForm,
+        'formset': formset,
+    })
 
 
-class addLabor(CreateView):
-    model=Presupuestos
-    form_class=PresupuestosManoObraForm
-    template_name='Presupuestos/presupuestos-add-labor.html'
-    success_url=reverse_lazy('InformacionTiendas:list_tiendas')
+def addLabor(request, pk):
+    extra_forms = 1
+    ManoObraFormSet = formset_factory(PresupuestosManoObraForm, extra=extra_forms, max_num=20, can_delete=True)
+    presupuestos = Presupuestos.objects.filter(id=pk).values()[0]
+    presupuestosForm = PresupuestosForm(initial=presupuestos)
+    if request.method == 'POST':
+        formset = ManoObraFormSet(request.POST, request.FILES, prefix='form')
+        print(formset.errors)
+        if formset.is_valid():
+            for form in formset:
+                if not form.cleaned_data["DELETE"]:
+                    model_instance = form.save(commit=False)
+                    model_instance.estimate_ids = Presupuestos.objects.get(pk=pk)
+                    model_instance.save()
+            presupuestos = Presupuestos.objects.get(pk=pk)
+            presupuestos.descuento_manaobra = request.POST['descuento_manaobra']
+            presupuestos.descuentoTotal_manaobra = request.POST['descuentoTotal_manaobra']
+            presupuestos.total_manaobra = request.POST['total_manaobra']
+            presupuestos.save()
+            return redirect('Presupuestos:presupuestos')
+    else:
+        formset = ManoObraFormSet()
+    return render(request, 'Presupuestos/estimate-add-labor.html', {
+        'presupuestosForm': presupuestosForm,
+        'formset': formset,
+    })
 
 
 
