@@ -10,6 +10,7 @@ from ManoObra.models import ManoObra
 from Parte.models import Parte
 from carros.models import Carro
 from Pagos.models import Pagos
+from invoices.models import Invoices
 from tecnicos.models import Tecnicos
 from .forms import PresupuestosClientesForm, PresupuestosVehiculosForm, PresupuestosParteForm, PresupuestosManoObraForm, \
     PresupuestosPagosForm, PresupuestosForm
@@ -186,17 +187,24 @@ def step7(request):
     total = float(request.session['total_parte']) + float(request.session['total_manaobra'])
     balance = total - payment
     if request.method=='POST':
+        #create completed estimate
         presupuestos=Presupuestos.objects.all().last()
         presupuestos.total_parte=float(request.session['total_parte'])
         presupuestos.total_manaobra=float(request.session['total_manaobra'])
         # presupuestos.descuento_parte=request.session['descuento_parte']
         presupuestos.descuentoTotal_parte=float(request.session['descuentoTotal_parte'])
         presupuestos.descuentoTotal_manaobra=float(request.session['descuentoTotal_manaobra'])
-        # presupuestos.descuento_manaobra=request.session['descuento_manaobra']
+
         presupuestos.cliente_id=request.session['client_id']
         presupuestos.carro_id=request.session['car_id']
         presupuestos.tecnicos_id=request.POST['technican_select']
         presupuestos.save()
+        #create invoice related to estimate
+        invoice_instance=Invoices()
+        invoice_instance.estimate=presupuestos.id
+        invoice_instance.amount=presupuestos.total
+        invoice_instance.status=presupuestos.status
+        invoice_instance.save()
         return redirect('Presupuestos:step8')
     else:
         return render(request, 'Presupuestos/new-estimate-7-preview.html',
