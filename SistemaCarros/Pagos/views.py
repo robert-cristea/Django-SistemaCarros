@@ -9,5 +9,5 @@ def create_Pagos(request):
     if form.is_valid():
         form.save()
         return redirect('parte:index')
-    return render(request,'Pagos/pagos-form.html',{'form':form})
+    return render(request,'Pagos/pagos-form.html',{'form':form}) 
 

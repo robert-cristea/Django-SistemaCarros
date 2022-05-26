@@ -41,17 +41,29 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <section class="steppernav">
-                                                    <a href="{% url 'Presupuestos:step1' %}"><span>1</span> Customer details</a>
-                                                    <a href="{% url 'Presupuestos:step2' %}"><span>2</span> Vehicle</a>
-                                                    <a href="{% url 'Presupuestos:step3' %}"><span>3</span> Parts</a>
-                                                    <a href="{% url 'Presupuestos:step4' %}" class="active"><span>4</span> Labor</a>
-                                                    <a href="{% url 'Presupuestos:step5' %}"><span>5</span> Pictures</a>
-                                                    <a href="{% url 'Presupuestos:step6' %}"><span>6</span> Payments</a>
-                                                    <a href="{% url 'Presupuestos:step7' %}"><span>7</span> Preview</a>
-                                                    <a href="{% url 'Presupuestos:step8' %}"><span>8</span> Confirm</a>
+                                                    <a href=""><span>1</span> Customer details</a>
+                                                    <a href=""><span>2</span> Vehicle</a>
+                                                    <a href=""><span>3</span> Parts</a>
+                                                    <a href="" class="active"><span>4</span> Labor</a>
+                                                    <a href=""><span>5</span> Pictures</a>
+                                                    <a href=""><span>6</span> Payments</a>
+                                                    <a href=""><span>7</span> Preview</a>
+                                                    <a href=""><span>8</span> Confirm</a>
+{#                                                    <a href="{% url 'Presupuestos:step1' %}"><span>1</span> Customer details</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step2' %}"><span>2</span> Vehicle</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step3' %}"><span>3</span> Parts</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step4' %}" class="active"><span>4</span> Labor</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step5' %}"><span>5</span> Pictures</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step6' %}"><span>6</span> Payments</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step7' %}"><span>7</span> Preview</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step8' %}"><span>8</span> Confirm</a>#}
                                                 </section>
                                             </div>
                                             <div class="col-md-9">
+                                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <section>
                                                 <form  method="post">
                                                      {% csrf_token %}
@@ -63,7 +75,7 @@
                                                                     <h4 class="card-title">Labors list</h4>
                                                                     <p class="card-title-desc">Add labors you need to include.</p>
 
-                                                                    <input type="button" class="btn btn-block btn-success mb-4 add-new-forms" onclick="addForms()" value="+ Add labor" />
+                                                                    <input type="button" class="btn btn-block btn-success mb-4 add-new-forms" onclick="addForm()" value="+ Add labor" />
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered table-nowrap align-middle" id="childTable2">
                                                                             <thead class="table-info">
@@ -76,11 +88,12 @@
                                                                                 <th scope="col">Rate</th>
                                                                                 <th scope="col">Total Rate</th>
                                                                                 <th scope="col">Tax - Free</th>
+                                                                                <th scope="col">Actions</th>
                                                                               </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                            {{ manoObra_formset.management_form }}
-                                                                            {% for form in manoObra_formset %}
+                                                                            {{ formset.management_form }}
+                                                                            {% for form in formset %}
                                                                             <div class="form-rows">
                                                                             <tr>
                                                                                 <td>
@@ -88,35 +101,26 @@
                                                                                 </td>
                                                                                 <td>
                                                                                     {{form.descripcion}}
-<!--                                                                                  <input type="text" name="parts_description" class="form-control input-labor-description" />-->
                                                                                 </td>
                                                                                 <td>
-                                                                                        {{form.tecnico}}
-<!--                                                                                    <select class="form-select input-new-customer-md">-->
-<!--                                                                                        <option>Select</option>-->
-<!--                                                                                        <option>Operator 1</option>-->
-<!--                                                                                        <option>Operator 2</option>-->
-<!--                                                                                        <option>Operator 3</option>-->
-<!--                                                                                        <option>Operator 4</option>-->
-<!--                                                                                        <option>Operator 5</option>-->
-<!--                                                                                    </select>-->
+{#                                                                                    <div>#}
+{#                                                                                        {% render_field form.tecnico class="form-select" %}#}
+{#                                                                                    </div>#}
+                                                                                    {{ form.tecnico }}
+
                                                                                 </td>
 
                                                                                 <td>
                                                                                       {{form.horas}}
-<!--                                                                                    <input type="text" name="parts_unit_price" class="form-control input-labor-hours" />-->
                                                                                   </td>
                                                                                 <td>
                                                                                        {{form.minutos}}
-<!--                                                                                    <input type="text" name="parts_unit_price" class="form-control input-labor-minutes" />-->
                                                                                 </td>
                                                                                 <td>
                                                                                        {{form.tarifa}}
-<!--                                                                                    <input type="text" name="parts_unit_price" class="form-control input-new-customer-sm" />-->
                                                                                 </td>
                                                                                 <td>
                                                                                     {{form.tarifa_total}}
-<!--                                                                                    <input type="text" name="total_rate" class="form-control input-new-customer-sm" />-->
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="form-check">
@@ -124,26 +128,28 @@
                                                                                         <label class="form-check-label" for="formrow-customCheck"></label>
                                                                                     </div>
                                                                                 </td>
+                                                                                <td scope="col">
+                                                                                    {{ form.DELETE|add_class:"d-none" }}
+                                                                                    <button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button>
+                                                                                </td>
                                                                               </tr>
                                                                             </div>
                                                                             {% endfor %}
+                                                                            <tr id="empty-row" class="part-form">
+                                                                                <td scope="col">{{formset.empty_form.codigo}}</td>
+                                                                                <td scope="col">{{formset.empty_form.descripcion}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tecnico}}</td>
+                                                                                <td scope="col">{{formset.empty_form.horas}}</td>
+                                                                                <td scope="col">{{formset.empty_form.minutos}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tarifa}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tarifa_total}}</td>
+                                                                                <td scope="col">{{formset.empty_form.libre_impuestos}}</td>
+                                                                                <td scope="col">{{ formset.empty_form.DELETE|add_class:"d-none" }}<button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button></td>
+
+                                                                            </tr>
                                                                             </tbody>
                                                                           </table>
-                                                                        <div class="form-rows table-responsive" id="empty-rows">
-                                                                                    <table class="table table-bordered table-nowrap align-middle">
-                                                                                        <tr>
-                                                                                            <td>{{manoObra_formset.empty_form.codigo}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.descripcion}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.tecnico}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.horas}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.minutos}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.tarifa}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.tarifa_total}}</td>
-                                                                                            <td>{{manoObra_formset.empty_form.libre_impuestos}}</td>
-                                                                                        </tr>
 
-                                                                                    </table>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -155,10 +161,26 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="parts_discount">Discounts</label>
                                                                 <div class="mb-3">
-                                                                    {{presupuestosForm.descuento_manaobra}}
+                                                                    <ul id="id_descuento_manaobra" class="custom-radio-list">
+                                                                                    <li>
+                                                                                        <label for="id_descuento_manaobra_0">
+                                                                                            <input type="radio" onchange="descuentoTotalManaobraFuncion()" name="descuento_manaobra" value="Quantity" class="custom-radio-list" maxlength="255" required="" id="id_descuento_manaobra_0" checked="">
+                                                                                            Quantity
+                                                                                        </label>
+
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <label for="id_descuento_manaobra_1">
+                                                                                            <input type="radio" onchange="descuentoTotalManaobraFuncion()" name="descuento_manaobra" value="Percentage" class="custom-radio-list" maxlength="255" required="" id="id_descuento_manaobra_1" >
+                                                                                            Percentage
+                                                                                        </label>
+
+                                                                                    </li>
+                                                                    </ul>
                                                                 </div>
                                                                 <div>
-                                                                    {{presupuestosForm.descuentoTotal_manaobra}}
+                                                                    <input type="number" name="descuentoTotal_manaobra" class="form-control" onchange="descuentoTotalManaobraFuncion()" placeholder="put the number" min="0" value="0" id="id_descuentoTotal_manaobra">
+
                                                                 </div>
 
                                                             </div>
@@ -167,8 +189,9 @@
                                                     <div class="row justify-content-start">
                                                         <div class="col-md-3">
                                                             <div class="mb-3">
-                                                                <label class="form-label" for="parts_total"><strong>TOTAL:</strong></label>
-                                                                {{presupuestosForm.total_manaobra}}
+                                                                <label class="form-label" for="total_manaobra"><strong>TOTAL:</strong></label>
+                                                                <input type="number" name="total_manaobra" class="form-control" placeholder="$0.00" readonly step="any" id="id_total_manaobra">
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,10 +204,15 @@
 <!--                                                                    </div>-->
 <!--                                                                </div>-->
 <!--                                                            </div>-->
-                                                            <a href="{% url 'Presupuestos:step3' %}" class="btn btn-secondary">Previous</a>
-                                                            <a href="{% url 'Presupuestos:step5' %}"><button  class="btn btn-primary" type="submit">Next</button> </a>
+                                                    <a href="{% url 'Presupuestos:step3' %}" class="btn btn-secondary">Previous</a>
+                                                        <a href="{% url 'Presupuestos:step5' %}"><button class="btn btn-primary" type="submit">Next</button></a>
                                                 </form>
                                             </section>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                                             </div>
                                         </div>
 

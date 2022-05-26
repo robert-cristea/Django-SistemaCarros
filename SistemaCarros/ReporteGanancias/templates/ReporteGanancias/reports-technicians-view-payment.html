@@ -1,0 +1,130 @@
+
+{% extends 'SistemaCarros/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Viewing payment...</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                                            <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
+                                            <li class="breadcrumb-item"><a href="reports-technicians.html">Technicians payments</a></li>
+                                            <li class="breadcrumb-item active">Viewing payments</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!-- end page title -->
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-md-8">
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12"><h5>Technician name</h5></div>
+                                                    <div class="col-md-4">
+                                                        <p><strong>Total payment:</strong> $9,999.99
+                                                        <br>
+                                                        <strong>Document number:</strong> 12345
+                                                        <br>
+                                                        <strong>Percentage:</strong> 10%</p>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p><strong>Labors:</strong>
+                                                            <br>Labor name 1
+                                                            <br>Labor name 2
+                                                            <br>Labor name 3
+                                                            <br>Labor name 4</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="table-rep-plugin">
+                                                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                                        <table id="tech-companies-1" class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th data-priority="1">Concept</th>
+                                                                <th data-priority="2" class="text-right">Payment</th>
+                                                                <th data-priority="3">Actions</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Apr 2, 2022</th>
+                                                                    <td>Here´s the payment concept</td>
+                                                                    <td class="text-right">$400.00</td>
+                                                                    <td><a href="" data-bs-toggle="modal" data-bs-target="#deletepay">Delete</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Mar 29, 2022</th>
+                                                                    <td>Here´s the payment concept</td>
+                                                                    <td class="text-right">$400.00</td>
+                                                                    <td><a href="" data-bs-toggle="modal" data-bs-target="#deletepay">Delete</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Mar 27, 2022</th>
+                                                                    <td>Here´s the payment concept</td>
+                                                                    <td class="text-right">$400.00</td>
+                                                                    <td><a href="" data-bs-toggle="modal" data-bs-target="#deletepay">Delete</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Mar 22, 2022</th>
+                                                                    <td>Here´s the payment concept</td>
+                                                                    <td class="text-right">$400.00</td>
+                                                                    <td><a href="" data-bs-toggle="modal" data-bs-target="#deletepay">Delete</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Mar 19, 2022</th>
+                                                                    <td>Here´s the payment concept</td>
+                                                                    <td class="text-right">$400.00</td>
+                                                                    <td><a href="" data-bs-toggle="modal" data-bs-target="#deletepay">Delete</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3" class="text-right"><strong>TOTAL: $2,000.00</strong></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div>
+
+
+                            </div>
+
+                        </div> <!-- end row -->
+
+
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+{% endblock %}

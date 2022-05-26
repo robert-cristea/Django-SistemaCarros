@@ -9,4 +9,4 @@ def create_ManoObra(request):
     if form.is_valid():
         form.save()
         return redirect('mano-obra:index')
-    return render(request,'ManoObra/mano-obra-form.html',{'form':form})
+    return render(request,'ManoObra/mano-obra-form.html',{'form':form}) 

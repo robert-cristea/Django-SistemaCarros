@@ -15,7 +15,7 @@ class InventoryForm(forms.ModelForm):
             'dealer': forms.TextInput(
                 attrs={
                     'class': 'autocomplete-input',
-                    'placeholder': "Type your dealer's name",
+                    # 'placeholder': "Type your dealer's name",
                     'id': 'dealer-list',
                     'name': 'dealer-list',
                     'autocomplete': 'off',

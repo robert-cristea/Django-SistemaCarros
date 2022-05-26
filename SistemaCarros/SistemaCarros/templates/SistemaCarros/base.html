@@ -76,13 +76,13 @@
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
                             <a href="{% url 'dashboard:dashboard' %}" class="logo logo-dark">
-                                <!-- <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.png" alt="" height="22">
+                                <span class="logo-sm">
+                                    <img src="{%static 'assets/svg/mechanix-boss-pos-logo-sm.svg' %}" alt="" height="22">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="assets/images/logo-dark.png" alt="" height="20">
-                                </span> -->
-                                <strong>LOGO</strong>
+                                    <img src="{%static 'assets/svg/mechanix-boss-pos-logo.svg' %}" alt="" height="20">
+                                </span>
+
                             </a>
 
                             <a href="{% url 'dashboard:dashboard' %}" class="logo logo-light">
@@ -115,7 +115,7 @@
                                     {% csrf_token %}
                                     <div class="m-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="searched" placeholder="Search Customers, License Plates, Cars" aria-label="Recipient's username">
+                                            <input type="text" class="form-control" name="searched" placeholder="Search Customers" aria-label="Recipient's username">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                                             </div>
@@ -137,12 +137,13 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="{%static 'assets/images/users/avatar-6.jpg' %}"
                                     alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Heriberto</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{user.username}}</span>
                                 <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 {% if user.is_authenticated  %}
+                                <a class="dropdown-item" href="{% url 'profile' %}"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">View Profile</span></a>
                                 <a class="dropdown-item" href="{% url 'logout' %}"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
                                 {% else  %}
                                 <a class="dropdown-item" href="{% url 'login' %}"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Login</span></a>
@@ -158,27 +159,16 @@
             <div class="vertical-menu">
 
                 <!-- LOGO -->
-                <div class="navbar-brand-box">
-                    <a href="{% url 'dashboard:dashboard' %}" class="logo logo-dark">
-                        <!-- <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="assets/images/logo-dark.png" alt="" height="20">
-                        </span> -->
-                        <strong>LOGO</strong>
-                    </a>
-
-                    <a href="{% url 'dashboard:dashboard' %}" class="logo logo-light">
-                        <!-- <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="assets/images/logo-light.png" alt="" height="20">
-                        </span> -->
-                        <strong>LOGO</strong>
-                    </a>
-                </div>
+                        <div class="navbar-brand-box">
+                            <a href="{% url 'dashboard:dashboard' %}" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="{%static 'assets/svg/mechanix-boss-pos-logo-sm.svg' %}" alt="" height="50">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{%static 'assets/svg/mechanix-boss-pos-logo.svg' %}" alt="" height="75">
+                                </span>
+                            </a>
+                        </div>
 
                 <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
                     <i class="fa fa-fw fa-bars"></i>
@@ -217,7 +207,7 @@
                             </li>
 
                             <li>
-                                <a href="{% url 'inventory:list_inventory' %}" class="waves-effect">
+                                <a href="{% url 'parte:list_parte' %}" class="waves-effect">
                                     <i class="uil-cube"></i><span>Inventory</span>
                                 </a>
                             </li>
@@ -265,7 +255,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                                <script>document.write(new Date().getFullYear())</script> © Mechanix Boss POS
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">
@@ -502,25 +492,32 @@
         </script>
 
         <!-- SHOW FORM OPTIONS -->
-        <script>
+
+         <script>
+
             var $onlyperson = $(".only-person");
             var $onlycorp = $(".only-corp");
             var $both = $(".both");
 
+            function showForm(elemento) {
+              $("#show-form").css("display", "block");
 
-
-            $("input[type=radio][name=tipo]").on('change', function() {
-            var radVal = $(this).val();
-            if (radVal == 'Persona') {
+              console.log("lala");
+              var radVal = $(elemento).val();
+              console.log(radVal);
+              if (radVal == 'person') {
                 $onlyperson.addClass('show-item').removeClass('hide-item');
                 $onlycorp.addClass('hide-item').removeClass('show-item');
                 $both.addClass('show-item');
-            } else if (radVal == 'Corporativo') {
+              } else if (radVal == 'corporative') {
                 $onlyperson.addClass('hide-item').removeClass('show-item');
                 $onlycorp.addClass('show-item').removeClass('hide-item');
                 $both.addClass('show-item');
-            }
-            });
+              }
+            };
+
+
+
         </script>
     <!-- Swiper JS -->
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -538,19 +535,19 @@
 {% block script %}
 {% endblock %}
 
-
-               {% if messages %}
-                  {% for m in messages %}
-                       <script>
-                           Swal.fire({
-                                "title":"Congratulations",
-                                "text":"{{m}}",
-                                "icon":"success"
-                           })
-                       </script>
-                   {% endfor %}
-               {% endif %}
+{##}
+{% if messages %}
+  {% for m in messages %}
+       <script>
+           Swal.fire({
+                "title":"Congratulations",
+                "text":"{{m}}",
+                "icon":"success"
+           })
+       </script>
+   {% endfor %}
+{% endif %}
 
     </body>
-
+ 
 </html>

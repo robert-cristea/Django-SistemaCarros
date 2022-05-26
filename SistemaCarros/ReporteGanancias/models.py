@@ -3,6 +3,11 @@ from django.db import models
 # Create your models here.
 from Clientes.models import Clientes
 from Foto.models import Foto
+from django.db import models
+
+# Create your models here.
+from Clientes.models import Clientes
+from Foto.models import Foto
 from ManoObra.models import ManoObra
 from Pagos.models import Pagos
 from Parte.models import Parte
@@ -24,4 +29,8 @@ class ReporteGanancias(models.Model):
     def __str__(self):
         #return f'{self.cliente} {self.presupuesto} {self.mano_obra} {self.parte} {self.subcontratar_trabajos} {self.otros_costos} {self.descuento}'
         return f'{self.cliente} {self.carro}{self.mano_obra} {self.parte}{self.garantia}{self.pago}{self.foto}'
+
+
+
+
 

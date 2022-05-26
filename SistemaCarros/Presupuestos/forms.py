@@ -141,54 +141,63 @@ class PresupuestosParteForm(forms.ModelForm):
             'codigo': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__form-0-codigo',
+                    'id': 'id_form-0-codigo',
                 }
             ),
             'quantity': forms.NumberInput(
                 attrs={
                     'class': 'form-control-quantity',
-                    'id':'id__form-0-quantity',
+                    'id':'id_form-0-quantity',
+                    'onchange':'multiplicar(this)',
                 }
             ),
             'unit_price': forms.NumberInput(
                 attrs={
                     'class': 'form-control-unit-price',
-                    'id': 'id__form-0-unit_price',
-                    'onchange': 'multiplicar()',
+                    'id': 'id_form-0-unit_price',
+                    'onchange':'multiplicar(this)',
+                    'pattern': '[0-9]{1,}\.[0-9]{1,}',
+                    'step':'any',
                 }
             ),
             'total_price': forms.NumberInput(
                 attrs={
                     'class': 'form-control-total-price',
-                    'id': 'id__form-0-total_price',
+                    'id': 'id_form-0-total_price',
+                    'pattern': '[0-9]{1,}\.[0-9]{1,}',
+                    'step': 'any',
+                    'readOnly': True,
 
                 }
             ),
             'tax_free': forms.CheckboxInput(
                 attrs={
                     'class': 'form-check-input',
-                    'onclick': 'taxes_free(multiplicar())',
-                    'id': 'id__form-0-tax_free',
+                    'onclick': 'multiplicar(this)',
+                    'id': 'id_form-0-tax_free',
                 }
             ),
             'comprado_cliente': forms.CheckboxInput(
                 attrs={
                     'class': 'form-check-input',
-                    'onclick': 'taxes_free(descuentoParte())',
-                    'id': 'id__form-0-comprado_cliente',
+                    'onclick': 'multiplicar(this)',
+                    'id': 'id_form-0-comprado_cliente',
                 }
             ),
             'descripcion': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__form-0-descripcion',
+                    'id': 'id_form-0-descripcion',
                 }
             ),
             'descuento_parte': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__form-0-descuento_parte',
-                    'onchange': 'descuentoParte(multiplicar())',
+                    'id': 'id_form-0-descuento_parte',
+                    'onchange': 'multiplicar(this)',
+                    'min':0,
+                    'max':100,
+                    'value':100,
                 }
             ),
         }
@@ -201,53 +210,55 @@ class PresupuestosParteForm(forms.ModelForm):
 class PresupuestosManoObraForm(forms.ModelForm):
     class Meta:
         model = ManoObra
-        fields = ['codigo','tecnico','tarifa','tarifa_total','horas','minutos','libre_impuestos','descripcion']
-        exclude = ['estimate_ids']
+        fields = ['codigo','tarifa','tecnico', 'tarifa_total','horas','minutos','libre_impuestos','descripcion']
+        exclude = ['estimate_id']
         widgets = {
             'codigo': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__manoobra-0-codigo',
+                    'id': 'id_form-0-codigo',
                 }
             ),
-            'tecnico': forms.Select(
-                attrs={
-                    'class': 'form-select',
-                    'id': 'id__manoobra-0-tecnico',
-                }
-            ),
-
             'horas': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__manoobra-0-horas',
+                    'onchange':'convTarifa(this)',
+                    'id': 'id_form-0-horas',
+                    'min':'0',
                 }
             ),
             'minutos': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'onchange': 'convMinHr()',
-                    'id': 'id__manoobra-0-minutos',
+                    'onchange': 'convTarifa(this)',
+                    'id': 'id_form-0-minutos',
+                    'min':'0',
+                    'max':'59',
                 }
             ),
             'tarifa': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'onchange': 'convTarifa(convMinHr())',
-                    'id': 'id__manoobra-0-tarifa',
+                    'onchange': 'convTarifa(this)',
+                    'id': 'id_form-0-tarifa',
+                    'step': 'any',
+                    'pattern': '[0-9]{1,}\.[0-9]{1,}'
                 }
             ),
             'tarifa_total': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'id__manoobra-0-tarifa_total',
-                }
+                    'id': 'id_form-0-tarifa_total',
+                    'step' : 'any',
+                    'pattern' : '[0-9]{1,}\.[0-9]{1,}',
+                    'readOnly':True,
+        }
             ),
             'libre_impuestos': forms.CheckboxInput(
                 attrs={
                     'class': 'form-check-input',
-                    'id': 'id__manoobra-0-libre_impuestos',
-                    'onchange': 'taxes_freez(addFormz())',
+                    'id': 'id_form-0-libre_impuestos',
+                    'onchange': 'convTarifa(this)',
 
                 }
             ),
@@ -260,9 +271,11 @@ class PresupuestosManoObraForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super(PresupuestosManoObraForm, self).__init__(*args, **kwargs)
-        technicans = Tecnicos.objects.all()
-        technico = [(i.nombreTecnico,i.apellidoTecnico) for i in technicans]
-        self.fields['tecnico'] = forms.ChoiceField(choices=technico)
+        self.fields['tecnico'] = forms.ModelChoiceField(queryset=Tecnicos.objects.all(),
+                                                        empty_label=None,
+                                                   widget=forms.Select(attrs={
+                                                       'class': 'form-select',
+                                                       'id': 'id__manoobra-0-tecnico'}))
 
 
 
@@ -293,52 +306,59 @@ class PresupuestosPagosForm(forms.ModelForm):
 class PresupuestosForm(forms.ModelForm):
     class Meta:
         model = Presupuestos
-        fields = ['descuento_parte','descuentoTotal_parte','total_parte','resumen','descuento_manaobra','descuentoTotal_manaobra','total_manaobra']
+        #fields = ['descuento_parte','descuentoTotal_parte','total_parte','resumen','descuento_manaobra','descuentoTotal_manaobra','total_manaobra']
+        fields = ['resumen']
         widgets = {
-             'descuento_parte': forms.RadioSelect(choices=DISCOUNT,
-                 attrs={
-                    'class': "custom-radio-list"
-                 }
-            ),
-            'descuentoTotal_parte': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'onchange': 'descuentoTotalFuncion()',
-                    'placeholder': 'put the number',
-
-                }
-            ),
-            'total_parte': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': '$0.00',
-                }
-            ),
+            #  'descuento_parte': forms.RadioSelect(choices=DISCOUNT,
+            #      attrs={
+            #         'class': "custom-radio-list"
+            #      }
+            # ),
+            # 'descuentoTotal_parte': forms.NumberInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         'onchange': 'descuentoTotalFuncion()',
+            #         'placeholder': 'put the number',
+            #         'min':0,
+            #         'max':100,
+            #         'value':100,
+            #
+            #     }
+            # ),
+            # 'total_parte': forms.NumberInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         'placeholder': '$0.00',
+            #         'disabled':True,
+            #     }
+            # ),
 
             'resumen': forms.Textarea(
                 attrs={
                     'class': 'form-control',
                     'rows': 2, 'cols': 5,
+                    'disabled':True,
                 }
             ),
-            'descuento_manaobra': forms.RadioSelect(choices=DISCOUNT,
-                attrs={
-                    'class': "custom-radio-list"
-                }
-            ),
-            'descuentoTotal_manaobra': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'onchange': 'descuentoTotalFuncion()',
-                    'placeholder': 'put the number',
-
-                }
-            ),
-            'total_manaobra': forms.NumberInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': '$0.00',
-                }
-            ),
+            # 'descuento_manaobra': forms.RadioSelect(choices=DISCOUNT,
+            #     attrs={
+            #         'class': "custom-radio-list"
+            #     }
+            # ),
+            # 'descuentoTotal_manaobra': forms.NumberInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         'onchange': 'descuentoManaObraFuncion()',
+            #         'placeholder': 'put the number',
+            #
+            #     }
+            # ),
+            # 'total_manaobra': forms.NumberInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         'placeholder': '$0.00',
+            #         'disabled': True,
+            #     }
+            # ),
 
         }

@@ -37,7 +37,9 @@
                                     <div class="card-body">
                                         <h4 class="card-title mb-3">Vehicle information</h4>
                                         <br>
-                                        <form enctype="multipart/form-data" method="post" id="car-create-form">
+                                        <div class="tab-content p-3 text-muted">
+                                            <div class="tab-pane active" id="general" role="tabpanel">
+                                            <form enctype="multipart/form-data" method="post" id="car-create-form">
                                                 {% csrf_token %}
                                                <div class="row mb-3">
                                                 <div class="col-md-4">
@@ -168,6 +170,7 @@
 
                                             <button class="btn btn-primary btn-block" type="submit" value="Post">Save</button>
                                             </form>
+                                            </div>
                                             </div>
                                     </div>
                                 </div>

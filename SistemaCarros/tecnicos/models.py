@@ -19,4 +19,4 @@ class Tecnicos(models.Model):
 
 
     def __str__(self):
-        return f'{self.nombreTecnico}{self.apellidoTecnico} {self.emailTecnico}{self.telTecnico}{self.telTecnico2} {self.notasTecnico}{self.fecha_registro}'
+        return f'{self.apellidoTecnico}'

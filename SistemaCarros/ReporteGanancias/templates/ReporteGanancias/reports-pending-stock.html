@@ -1,6 +1,6 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
-
+{% load i18n %}
 
 
 {% block content %}
@@ -19,33 +19,34 @@
                         <div class="row">
                             <div class="col-12 mb-3">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0">Pending stock report</h4>
+                                    <h4 class="mb-0">{% trans "Pending stock report" %}</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
-                                            <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
-                                            <li class="breadcrumb-item active">Pending stock</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                            <li class="breadcrumb-item"><a href="reports.html">{% trans "Reports" %}</a></li>
+                                            <li class="breadcrumb-item active">{% trans "Pending stock" %}</li>
                                         </ol>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-column flex-md-row justify-content-end align-items-center mb-3">
+<!--                            <div class="d-flex flex-column flex-md-row justify-content-end align-items-center mb-3">-->
 
 
 
-                                <div class="d-flex justify-content-end align-items-center col-12 col-md-4">
-                                    <div class="text-right">
-                                        <label class="m-0">Date range:&nbsp;&nbsp;</label>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
-                                    </div>
-                                </div>
+<!--                                <div class="col-md-6 mb-3 d-flex align-items-center justify-content-end">-->
+<!--                                    <div class="span-container d-flex">-->
+<!--                                       <input type="date" name="fromdate" class="form-control" data-date-inline-picker="true">-->
+<!--                                       <input type="date" name="todate" class="form-control" data-date-inline-picker="true">-->
+<!--                                       <input type="submit" value="Search" class="btn btn-secondary">-->
+<!--                                       &lt;!&ndash;                                                <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" id="id_date_range"/>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;                                                <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" id="id_date_range"/>&ndash;&gt;-->
+<!--                                 </div>-->
 
-                            </div>
+<!--                            </div>-->
 
 
                         </div>
@@ -59,25 +60,25 @@
                                         <thead>
                                             <tr class="bg-transparent">
 
-                                                <th>Code</th>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>Stock</th>
-                                                <th>Dealer</th>
-                                                <th>Invoice number</th>
+                                                <th>{% trans "Code" %}</th>
+                                                <th>{% trans "Name" %}</th>
+                                                <th>{% trans "Price" %}</th>
+                                                <th>{% trans "Stock" %}</th>
+                                                <th>{% trans "Dealer" %}</th>
+                                                <th>{% trans "Invoice number" %}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% if inventory %}
-                                        {% for inven in inventory %}
+                                        {% if parte %}
+                                        {% for part in parte %}
 
                                             <tr>
-                                               <td>{{inven.codigoInventory}}</td>
-                                               <td>Part Name</td>
-                                               <td>{{ inven.unitPriceInventory }}</td>
-                                               <td><a href="#" class="stock-quantity" data-type="text" data-pk="1">{{ inven.quantityInventory }}</a></td>
-                                               <td>{{ inven.dealer }}</td>
-                                               <td>{{ inven.invoiceNumber }}</td>
+                                               <td>{{part.codigo}}</td>
+                                               <td>{{part.descripcion}}</td>
+                                               <td>${{ part.unit_price }}</td>
+                                               <td><a href="#" class="stock-quantity" data-type="text" data-pk="1">{{ part.quantity }}</a></td>
+                                               <td>{{ part.dealer }}</td>
+                                               <td>{{ part.invoiceNumber }}</td>
                                             </tr>
 
                                         {% endfor  %}
@@ -101,7 +102,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                                <script>document.write(new Date().getFullYear())</script> © Mechanix Boss POS
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">

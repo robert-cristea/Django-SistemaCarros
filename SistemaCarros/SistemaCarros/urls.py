@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Usuarios import views as user_views
-from Usuarios.views import PasswordsChangeView
+from Usuarios.views import PasswordsChangeView, EditProfilePageView
 from . import views as sistema_views, views
 from django.contrib.auth import views as authentication_views, logout
 from django.conf import settings
 from django.conf.urls.static import static
+
+
 
 
 
@@ -31,7 +33,7 @@ urlpatterns = [
     path('cliente-empresas/',include('ClienteEmpresas.urls')),
     path('clientes/', include('Clientes.urls')),
     #path('presupuestos/', include('Presupuestos.urls')),
-    path('presupuestos/', include('Presupuestos.urls')),
+    path('estimates/', include('Presupuestos.urls')),
     path('mano-obra/', include('ManoObra.urls')),
     path('parte/', include('Parte.urls')),
     path('informacion-tiendas/', include('InformacionTiendas.urls')),
@@ -41,7 +43,7 @@ urlpatterns = [
     path('detalle/', include('Detalle.urls')),
     path('invoices/', include('invoices.urls')),
     path('technicians/', include('tecnicos.urls')),
-    path('inventory/', include('inventory.urls')),
+    # path('inventory/', include('inventory.urls')),
     #Dashboard
     #path('nuevo_cliente',user_views.nuevo_cliente, name='nuevo_cliente'),
 
@@ -51,8 +53,9 @@ urlpatterns = [
     path('login/',authentication_views.LoginView.as_view(template_name='Usuarios/login.html'),name='login'),
     path('logout/',authentication_views.LogoutView.as_view(template_name='Usuarios/logout.html'),name='logout'),
     path('profile/',user_views.profilepage,name='profile'),
-    path('password/',PasswordsChangeView.as_view(template_name='Usuarios/change-password.html'),name='change-password'),
+    path('profile/change-password/',PasswordsChangeView.as_view(template_name='Usuarios/change-password.html'),name='change-password'),
     path('password_success',user_views.password_success,name="password_success"),
+    path('profile/<int:pk>/edit-profile/',EditProfilePageView.as_view(),name='edit-profile'),
 
     #RichFields
     path('djrichtextfield/', include('djrichtextfield.urls')),
@@ -68,4 +71,4 @@ if settings.DEBUG:
     urlpatterns += (
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +
         static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-        )
+        ) 

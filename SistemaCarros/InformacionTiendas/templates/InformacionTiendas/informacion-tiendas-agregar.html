@@ -1,7 +1,7 @@
 
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
-
+{% load i18n %}
 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -16,13 +16,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0">Adding...</h4>
+                                    <h4 class="mb-0">{% trans "Adding" %}...</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="{% url 'InformacionTiendas:list_tiendas' %}">Workshops</a></li>
-                                            <li class="breadcrumb-item active">Add</li>
+                                            <li class="breadcrumb-item"><a href="{% url 'InformacionTiendas:list_tiendas' %}">{% trans "Workshops" %}</a></li>
+                                            <li class="breadcrumb-item active">{% trans "Add" %}</li>
                                         </ol>
                                     </div>
 
@@ -36,13 +36,13 @@
                             <div class="col-xl-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-3">General information</h4>
+                                        <h4 class="card-title mb-3">{% trans "General information" %}</h4>
                                         <form enctype="multipart/form-data" method="post">
                                             {% csrf_token %}
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
                                                     <div>
-                                                        <label class="form-label">Name</label>
+                                                        <label class="form-label">{% trans "Name" %}</label>
                                                         {{ form.nombre_taller }}
                                                     </div>
                                                 </div>
@@ -50,20 +50,20 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Registration</label>
+                                                        <label class="form-label">{% trans "Registration since" %}</label>
                                                         {{ form.registro_desde }}
                                                         <div class="invalid-feedback">
-                                                            Please provide workshop`s registration number.
+                                                            {% trans "Please provide workshop`s registration number" %}
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label">TAX ID</label>
+                                                        <label class="form-label">{% trans "TAX ID" %}</label>
                                                         {{ form.tax_id }}
                                                         <div class="invalid-feedback">
-                                                            Please provide workshop`s registration number.
+                                                            {% trans "Please provide workshop`s registration number." %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +99,7 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
-                                                        <label class="form-label d-block mb-3">Country :</label>
+                                                        <label class="form-label d-block mb-3">{% trans "Country" %} :</label>
                                                         <div class="custom-radio form-check form-check-inline">
                                                            {{ form.pais }}
                                                         </div>
@@ -110,10 +110,10 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom02">Address</label>
+                                                        <label class="form-label" for="validationCustom02">{% trans "Address" %}</label>
                                                         {{ form.direccion }}
                                                         <div class="invalid-feedback">
-                                                            Please provide an address.
+                                                            {% trans "Please provide an address" %}.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,28 +121,28 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom03">City / Town</label>
+                                                        <label class="form-label" for="validationCustom03">{% trans "City / Town" %}</label>
                                                         {{ form.ciudad }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a valid city.
+                                                            {% trans "Please provide a valid city" %}.
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom04">State</label>
+                                                        <label class="form-label" for="validationCustom04">{% trans "State" %}</label>
                                                         {{ form.estado }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a valid state.
+                                                            {% trans "Please provide a valid state" %}.
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom05">Zip</label>
+                                                        <label class="form-label" for="validationCustom05">{% trans "Zip" %}</label>
                                                         {{ form.zip }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a valid zip.
+                                                            {% trans "Please provide a valid zip" %}.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,19 +151,19 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom08">Phone 1</label>
+                                                        <label class="form-label" for="validationCustom08">{% trans "Phone Number 1" %}</label>
                                                         {{ form.telefono_1 }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a phone number.
+                                                            {% trans "Please provide a phone number" %}.
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom09">Phone 2</label>
+                                                        <label class="form-label" for="validationCustom09">{% trans "Phone Number 2" %}</label>
                                                         {{ form.telefono_2 }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a phone number.
+                                                            {% trans "Please provide a phone number" %}.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -172,7 +172,7 @@
                                                         <label class="form-label" for="validationCustom10">FAX</label>
                                                         {{ form.fax }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a fax number.
+                                                            {% trans "Please provide a fax number" %}.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -181,19 +181,19 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom11">E-mail</label>
+                                                        <label class="form-label" for="validationCustom11"> {% trans "E-mail" %}</label>
                                                         {{ form.email }}
                                                         <div class="invalid-feedback">
-                                                            Please provide an e-mail.
+                                                            {% trans "Please provide an e-mail" %}.
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom12">Website</label>
+                                                        <label class="form-label" for="validationCustom12">{% trans "Website" %}</label>
                                                         {{ form.website }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a website.
+                                                            {% trans "Please provide a website" %}.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,37 +208,37 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="validationCustom13">Tax for products and parts.</label>
+                                                        <label class="form-label" for="validationCustom13">{% trans "Tax for products and parts" %}.</label>
                                                         {{ form.tax_productos }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a percentage.
+                                                             {% trans "Please provide a percentage." %}.
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label mb-4" for="validationCustom14">Tax for extras.</label>
+                                                        <label class="form-label mb-4" for="validationCustom14">{% trans "Tax for extras" %}.</label>
                                                         {{ form.tax_precios }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a percentage.
+                                                            {% trans "Please provide a percentage." %}.
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label mb-4" for="validationCustom14">Plan</label>
                                                         {{ form.plan }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a percentage.
+                                                            {% trans "Please provide a plan." %}.
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label mb-4" for="validationCustom14">Status</label>
+                                                        <label class="form-label mb-4" for="validationCustom14">{% trans "Status" %}.</label>
                                                         {{ form.status }}
                                                         <div class="invalid-feedback">
-                                                            Please provide a percentage.
+                                                            {% trans "Please provide a percentage" %}.
                                                         </div>
                                                     </div>
                                             </div>
-                                            <button class="btn btn-primary mb-3" type="submit" value="Post">Save</button>
+                                            <button class="btn btn-primary mb-3" type="submit" value="Post">{% trans "Save" %}</button>
                                         </form>
                                     </div>
                                 </div>

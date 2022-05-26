@@ -22,7 +22,7 @@
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                                             <li class="breadcrumb-item active">Invoices</li>
                                         </ol>
                                     </div>
@@ -59,7 +59,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {%  for invoice in invoices %}
+
+                                            {% for invoice in invoices %}
                                             <tr>
                                                 <td>
                                                     <div class="form-check text-center font-size-16">
@@ -68,32 +69,39 @@
                                                     </div>
                                                 </td>
 
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">{{ invoice.invoiceid }}</a> </td>
+                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN{{ invoice.id  }}</a> </td>
                                                 <td>
-                                                    {{ invoice.fechaInvoice}}
+                                                    {{invoice.date_register.date}}
                                                 </td>
-                                                <td>{{ invoice.fechaInvoice}}</td>
+                                                <td>
+                                                    {{invoice.getBillingName}}
+                                                </td>
+                                                <td>
+                                                    ${{invoice.amount}}
+                                                </td>
 
                                                 <td>
-                                                    $141
+                                                    {% if invoice.status == "pending" %}
+                                                        <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                    {% elif invoice.status == "canceled" %}
+                                                        <div class="badge bg-soft-danger font-size-12">Canceled</div>
+                                                    {% endif %}
                                                 </td>
-                                                <td>
-                                                    <div class="badge bg-soft-success font-size-12">Paid</div>
-                                                </td>
+
                                                 <td>
                                                     <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                        <a href="{% url 'invoices:download-invoice' invoice.id %}" class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></a>
                                                     </div>
                                                 </td>
 
 
                                                 <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary">Detail</a>
+                                                    <a href="{% url 'invoices:detail' invoice.id %}"><i class="uil uil-search font-size-18"></i></a>
 
-                                                    <a data-bs-toggle="modal" data-bs-target="#deleteEstimate" class="px-3 text-danger">Delete</a>
+                                                    <a href="{% url 'invoices:eliminar_invoice' invoice.id%}" class="text-danger" ><i class="uil uil-trash-alt font-size-18"></i></a>
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        {% endfor%}
                                         </tbody>
                                     </table>
                                 </div>
@@ -112,7 +120,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                                <script>document.write(new Date().getFullYear())</script> © Mechanix Boss POS
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">

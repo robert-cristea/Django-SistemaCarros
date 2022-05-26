@@ -3,19 +3,26 @@ from datetime import datetime
 from django.db import models
 
 # Create your models here.
+from Presupuestos.models import Presupuestos
 
-
+from Clientes.models import Clientes
 
 class Invoices(models.Model):
 
-    invoiceId= models.CharField(max_length=255,default=0)
-    fechaInvoice=models.CharField(max_length=255,default=0)
-    cuentaInvoice=models.IntegerField(default=0)
-    cantidadInvoice=models.CharField(max_length=255,default=0)
-    statusInvoice = models.CharField(max_length=255, default=0)
-    fecha_registro = models.DateTimeField(default=datetime.now)
+    # invoiceId= models.CharField(max_length=255,default=0)
+    # fechaInvoice=models.CharField(max_length=255,default=0)
+    # cuentaInvoice=models.IntegerField(default=0)
+    # cantidadInvoice=models.CharField(max_length=255,default=0)
+    # statusInvoice = models.CharField(max_length=255, default=0)
+    # fecha_registro = models.DateTimeField(default=datetime.now)
+    estimate = models.ForeignKey(Presupuestos, on_delete=models.SET_NULL, null=True)
+    date_register=models.DateTimeField(default=datetime.now)
+    amount=models.FloatField(default=0)
+    status=models.CharField(max_length=10,default='pending')
 
+    def getBillingName(self):
+        clientID=Presupuestos.objects.get(pk=self.estimate_id).cliente_id
 
+        return Clientes.objects.get(pk=clientID).nombre
     def __str__(self):
-        return f'{self.invoiceId} {self.fechaInvoice}{self.cuentaInvoice} {self.cantidadInvoice}' \
-               f'{self.statusInvoice}{self.fecha_registro}'
+        return f'{self.estimate} {self.date_register}{self.amount}'

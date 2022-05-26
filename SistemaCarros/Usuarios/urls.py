@@ -3,7 +3,10 @@ from django.urls import path
 
 app_name='Usuarios'
 
-urlpatterns=[
 
+
+
+urlpatterns=[
+   path('profile',views.profilepage,name='profile'),
 
 ]

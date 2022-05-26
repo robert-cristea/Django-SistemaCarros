@@ -1,22 +1,24 @@
 from django import forms
 from .models import InformacionTiendas
+from django.utils.translation import gettext_lazy as _
+
 
 PAIS = (
-    ('EUA', 'EUA'),
-    ('Canada', 'Canada'),
-    ('Other', 'Other'),
+    ('United States', _('United States')),
+    ('Canada', _('Canada')),
+    ('Other', _('Other')),
 )
 
 
 STATUS = (
-    ('Active', 'Active'),
-    ('Inactive', 'Inactive'),
+    ('Active', _('Active')),
+    ('Inactive', _('Inactive')),
 )
 
 
 PLAN=(
-    ('Monthly', 'Monthly'),
-    ('Annual', 'Annual'),
+    ('Monthly', _('Monthly')),
+    ('Annual', _('Annual')),
 )
 
 

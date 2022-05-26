@@ -1,5 +1,6 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
+{% load i18n %}
 
 
 
@@ -18,13 +19,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0">Adding...</h4>
+                                    <h4 class="mb-0">{% trans "Adding" %}...</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-                                            <li class="breadcrumb-item"><a href="{% url 'inventory:list_inventory' %}">Inventory</a></li>
-                                            <li class="breadcrumb-item active">Add</li>
+                                            <li class="breadcrumb-item"><a href="{% url 'inventory:list_inventory' %}">{% trans "Inventory" %}</a></li>
+                                            <li class="breadcrumb-item active">{% trans "Add" %}</li>
                                         </ol>
                                     </div>
 
@@ -38,55 +39,55 @@
                             <div class="col-xl-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-3">Part information</h4>
+                                        <h4 class="card-title mb-3">{% trans "Part information" %}</h4>
                                         <form enctype="multipart/form-data" method="post">
                                             {% csrf_token %}
                                             <div class="row mb-3 align-items-center">
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
-                                                        <label for="dealer-input">Dealer</label>
+                                                        <label for="dealer-input">{% trans "Dealer" %}</label>
                                                         {{ form.dealer }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="code-list">Code</label>
+                                                        <label for="code-list">{% trans "Code" %}</label>
                                                         {{ form.codigoInventory }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="description-input">Invoice Number</label>
+                                                        <label for="description-input">{% trans "Invoice Number" %}</label>
                                                         {{ form.invoiceNumber }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
-                                                        <label for="quantity-input">Description</label>
+                                                        <label for="quantity-input">{% trans "Description" %}</label>
                                                         {{ form.descriptionInventory }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label for="unit-price-input">Quantity</label>
+                                                        <label for="unit-price-input">{% trans "Quantity" %}</label>
                                                         {{ form.quantityInventory }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label for="unit-price-input">Unit Price</label>
+                                                        <label for="unit-price-input">{% trans "Unit Price" %}</label>
                                                         {{ form.unitPriceInventory }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label for="unit-price-input">Minimum available</label>
+                                                        <label for="unit-price-input">{% trans "Minimum available" %}</label>
                                                         {{ form.minimumInventory }}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label for="unit-price-input">Status</label>
+                                                        <label for="unit-price-input">{% trans "Status" %}</label>
                                                         {{ form.status }}
                                                     </div>
                                                 </div>
@@ -105,7 +106,7 @@
                                             </div> -->
 
 
-                                            <button class="btn btn-primary mb-3" type="submit">Save</button>
+                                            <button class="btn btn-primary mb-3" type="submit">{% trans "Save" %}</button>
                                         </form>
                                     </div>
                                 </div>

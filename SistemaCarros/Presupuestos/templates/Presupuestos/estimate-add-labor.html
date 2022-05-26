@@ -1,14 +1,19 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
 
+
+
 {% block content %}
-<div class="main-content">
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
 
                 <div class="page-content">
                     <div class="container-fluid">
 
                         <!-- start page title -->
-                       <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -17,8 +22,7 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
-                                            <li class="breadcrumb-item"><a href="estimates.html">Estimates</a></li>
-                                            <li class="breadcrumb-item active">Add</li>
+                                            <li class="breadcrumb-item active">New estimate</li>
                                         </ol>
                                     </div>
 
@@ -26,134 +30,166 @@
                             </div>
                         </div>
                         <!-- end page title -->
-                        <!-- end page title -->
 
 
                         <div class="row">
-                            <form method="post">
-                            {% csrf_token %}
                             <div class="col-md-10">
                                 <div class="card">
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section>
+                                                <form  method="post">
+                                                     {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
 
-                                        <h4 class="card-title">Labors list</h4>
-                                        <p class="card-title-desc">Add labors you need to include.</p>
+                                                                    <h4 class="card-title">Labors list</h4>
+                                                                    <p class="card-title-desc">Add labors you need to include.</p>
 
-                                        <input type="button" class="btn btn-block btn-default btn-success mb-4" id="addrow" onclick="addForm()" value="+ Add labor" />
+                                                                    <input type="button" class="btn btn-block btn-success mb-4 add-new-forms" onclick="addForm()" value="+ Add labor" />
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered table-nowrap align-middle" id="childTable2">
+                                                                            <thead class="table-info">
+                                                                              <tr>
+                                                                                <th scope="col">Code</th>
+                                                                                <th scope="col">Description</th>
+                                                                                <th scope="col">Technician</th>
+                                                                                <th scope="col">Hours</th>
+                                                                                <th scope="col">Minutes</th>
+                                                                                <th scope="col">Rate</th>
+                                                                                <th scope="col">Total Rate</th>
+                                                                                <th scope="col">Tax - Free</th>
+                                                                                <th scope="col">Actions</th>
+                                                                              </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            {{ formset.management_form }}
+                                                                            {% for form in formset %}
+                                                                            <div class="form-rows">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    {{form.codigo}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{form.descripcion}}
+                                                                                </td>
+                                                                                <td>
+{#                                                                                    <div>#}
+{#                                                                                        {% render_field form.tecnico class="form-select" %}#}
+{#                                                                                    </div>#}
+                                                                                    {{ form.tecnico }}
 
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-nowrap align-middle" id="childTable1">
-                                                <thead class="table-info">
-                                                  <tr>
-                                                    <th scope="col">Code</th>
-                                                    <th scope="col">Description</th>
-                                                    <th scope="col">Technician</th>
-                                                    <th scope="col">Hours</th>
-                                                    <th scope="col">Minutes</th>
-                                                    <th scope="col">Rate</th>
-                                                    <th scope="col">Total Rate</th>
-                                                    <th scope="col">Tax - Free</th>
-                                                    <th scope="col">Actions</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                {{ formset.management_form }}
-                                                {% for form in formset %}
-                                                      <tr>
-                                                        <td>
-                                                            {{form.codigo}}
-<!--                                                                                        <input type="text" name="parts_code" class="form-control input-new-customer-sm" />-->
-                                                        </td>
-                                                        <td>
-                                                            {{form.descripcion}}
-<!--                                                                                      <input type="text" name="parts_description" class="form-control  input-new-customer-description" />-->
-                                                        </td>
-                                                        <td>
-                                                            {{form.tecnico}}
-<!--                                                                                      <input type="text" name="parts_quantity" class="form-control input-new-customer-quantity" />-->
-                                                        </td>
-                                                        <td>
-                                                            {{ form.horas }}
-<!--                                                                                      <input type="text" name="parts_unit_price" class="form-control input-new-customer-unit-price" />-->
-                                                        </td>
-                                                        <td>
-                                                            {{form.minutos}}
-<!--                                                                                        <input type="text" name="parts_discount_per_part" class="form-control input-new-customer-total" />-->
-                                                        </td>
-                                                          <td>
-                                                              {{ form.tarifa_total }}
-                                                          </td>
-                                                        <td>
-                                                            {{form.tarifa}}
-<!--                                                                                      <input type="text" name="parts_total_price" class="form-control input-new-customer-total" />-->
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                   {{form.libre_impuestos}}
-<!--                                                                                            <input type="checkbox" class="form-check-input" id="formrow-customCheck">-->
-                                                                <label class="form-check-label" for="formrow-customCheck"></label>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                      {{form.horas}}
+                                                                                  </td>
+                                                                                <td>
+                                                                                       {{form.minutos}}
+                                                                                </td>
+                                                                                <td>
+                                                                                       {{form.tarifa}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{form.tarifa_total}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="form-check">
+                                                                                        {{form.libre_impuestos}}
+                                                                                        <label class="form-check-label" for="formrow-customCheck"></label>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td scope="col">
+                                                                                    {{ form.DELETE|add_class:"d-none" }}
+                                                                                    <button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button>
+                                                                                </td>
+                                                                              </tr>
+                                                                            </div>
+                                                                            {% endfor %}
+                                                                            <tr id="empty-row" class="part-form">
+                                                                                <td scope="col">{{formset.empty_form.codigo}}</td>
+                                                                                <td scope="col">{{formset.empty_form.descripcion}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tecnico}}</td>
+                                                                                <td scope="col">{{formset.empty_form.horas}}</td>
+                                                                                <td scope="col">{{formset.empty_form.minutos}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tarifa}}</td>
+                                                                                <td scope="col">{{formset.empty_form.tarifa_total}}</td>
+                                                                                <td scope="col">{{formset.empty_form.libre_impuestos}}</td>
+                                                                                <td scope="col">{{ formset.empty_form.DELETE|add_class:"d-none" }}<button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button></td>
+
+                                                                            </tr>
+                                                                            </tbody>
+                                                                          </table>
+
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </td>
-                                                        <td scope="col">
-                                                            {{ form.DELETE|add_class:"d-none" }}
-                                                            <button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button>
-                                                        </td>
-                                                      </tr>
-                                                {% endfor %}
-                                                        <tr id="empty-row" class="part-form">
-                                                            <td scope="col">{{formset.empty_form.codigo}}</td>
-                                                            <td scope="col">{{formset.empty_form.descripcion}}</td>
-                                                            <td scope="col">{{formset.empty_form.tecnico}}</td>
-                                                            <td scope="col">{{formset.empty_form.horas}}</td>
-                                                            <td scope="col">{{formset.empty_form.minutos}}</td>
-                                                            <td scope="col">{{formset.empty_form.tarifa}}</td>
-                                                            <td scope="col">{{formset.empty_form.tarifa_total}}</td>
-                                                            <td scope="col">{{formset.empty_form.libre_impuestos}}</td>
-                                                            <td scope="col">{{ formset.empty_form.DELETE|add_class:"d-none" }}<button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button></td>
-
-                                                        </tr>
-                                                </tbody>
-
-                                              </table>
-
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-                                <div class="row justify-content-end">
-                                    <div class="col-md-3">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="parts_discount">Discount</label>
-                                                <div class="mb-3">
-                                                    <div class="form-check form-check-inline">
-                                                            {{presupuestosForm.descuento_manaobra}}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                        {{presupuestosForm.descuentoTotal_manaobra}}
-                                                </div>
+
+                                                    <div class="row justify-content-start">
+                                                        <div class="col-md-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="parts_discount">Discounts</label>
+                                                                <div class="mb-3">
+                                                                    <ul id="id_descuento_manaobra" class="custom-radio-list">
+                                                                                    <li>
+                                                                                        <label for="id_descuento_manaobra_0">
+                                                                                            <input type="radio" onchange="descuentoTotalManaobraFuncion()" name="descuento_manaobra" value="Quantity" class="custom-radio-list" maxlength="255" required="" id="id_descuento_manaobra_0" checked="">
+                                                                                            Quantity
+                                                                                        </label>
+
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <label for="id_descuento_manaobra_1">
+                                                                                            <input type="radio" onchange="descuentoTotalManaobraFuncion()" name="descuento_manaobra" value="Percentage" class="custom-radio-list" maxlength="255" required="" id="id_descuento_manaobra_1" >
+                                                                                            Percentage
+                                                                                        </label>
+
+                                                                                    </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div>
+                                                                    <input type="number" name="descuentoTotal_manaobra" class="form-control" onchange="descuentoTotalManaobraFuncion()" placeholder="put the number" min="0" value="0" id="id_descuentoTotal_manaobra">
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-start">
+                                                        <div class="col-md-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="total_manaobra"><strong>TOTAL:</strong></label>
+                                                                <input type="number" name="total_manaobra" class="form-control" placeholder="$0.00" readonly step="any" id="id_total_manaobra">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+<!--                                                            <div class="row justify-content-start">-->
+<!--                                                                <div class="col-md-3">-->
+<!--                                                                    <div class="mb-3">-->
+<!--                                                                        <label class="form-label" for="parts_total"><strong>TOTAL:</strong></label>-->
+<!--                                                                        <h4>$1,000.00</h4>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+                                                    <button class="btn btn-primary btn-block" type="submit" value="Post">Save</button>
+                                                </form>
+                                            </section>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
-                                <div class="row justify-content-end">
-                                    <div class="col-md-3">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="parts_total"><strong>TOTAL:</strong></label>
-                                                {{presupuestosForm.total_manaobra}}
-    <!--                                                                    <input type="text" class="form-control" id="parts_total" placeholder="$0.00">-->
-                                        </div>
-
-                                        <input type="submit" class="btn btn-block btn-default btn-success mb-4" value="Save" />
-                                    </div>
-                                </div>
-
-
-
-                            </div> <!-- end col -->
-                            </form>
-                        </div> <!-- end row -->
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
                         <!-- end row -->
 
                     </div> <!-- container-fluid -->
@@ -161,21 +197,5 @@
 
                 </div>
                 <!-- End Page-content -->
-
-
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © The Shop.
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
 {% endblock %}

@@ -3,6 +3,9 @@ from datetime import datetime
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 
+#language
+
+
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView, DetailView
@@ -16,6 +19,13 @@ from django.contrib import messages
 
 def list_clientes(request):
 
+    from django.utils.translation import gettext as _
+    # user_language='es'
+    # translation.activate(user_language)
+    # request.session[translation.LANGUAGE_SESSION_KEY]=user_language
+    # if translation.LANGUAGE_SESSION_KEY in request.session:
+    #     del request.session[translation.LANGUAGE_SESSION_KEY]
+    # title=_('Homepage')
     if request.method == 'POST':
         fromdate=request.POST.get('fromdate')
         todate = request.POST.get('todate')
@@ -92,7 +102,8 @@ class create_clientes(SuccessMessageMixin,CreateView):
     form_class = ClientesForm
     template_name='Clientes/clientes-add.html'
     success_url=reverse_lazy('Clientes:clientes_list')
-    success_message = "%(nombre)s this is was created successfully"
+    success_message = "New customer was created successfully"
+
 
 
 class edit_clientes(UpdateView):

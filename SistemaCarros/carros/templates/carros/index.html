@@ -61,7 +61,7 @@
                               {% load static %}
                                  {% for carro in carros %}
                                  <tr>
-                                    <td>{{carro.fecha_registros}}</td>
+                                    <td>{{carro.fecha_registros.date}}</td>
                                     {% if carro.new_name %}
                                     <td>
                                        <a data-id="{{carro.id}}" class="btn_view_gallery">
@@ -164,4 +164,4 @@
     })
    })
 </script>
-{% endblock %}
+{% endblock %} 

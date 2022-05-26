@@ -1,7 +1,6 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
-
-
+{% load mathfilters %}
 
 {% block content %}
 
@@ -27,7 +26,7 @@
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">The Shop</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                                             <li class="breadcrumb-item"><a href="reports.html">Reports</a></li>
                                             <li class="breadcrumb-item active">Debtors</li>
                                         </ol>
@@ -45,7 +44,18 @@
                                         <label class="m-0">Date range:&nbsp;&nbsp;</label>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
+                                        <form method="post">
+                                        <div class="span-container d-flex">
+
+                                                {% csrf_token %}
+                                                <input type="date" name="fromdate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" name="todate" class="form-control" data-date-inline-picker="true">
+                                                <input type="submit" value="Search" class="btn btn-secondary">
+
+
+                           <!--                                                <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" id="id_date_range"/>-->
+                                        </div>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -78,491 +88,62 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for debtor in debtors %}
+
+                                            {% for presupuesto in presupuestos %}
                                             <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN{{ debtor.id }}</a> </td>
                                                 <td>
-                                                    {{ debtor.register_time }}
-                                                    10 Jul, 2020
-                                                </td>
-                                                <td>{{ debtor.cliente.nombre}}</td>
+                                                    <div class="form-check text-center font-size-16">
+                                                        <input type="checkbox" class="form-check-input" id="invoicecheck1">
+                                                        <label class="form-check-label" for="invoicecheck1"></label>
+                                                        <a href="javascript: void(0);" class="text-dark fw-bold">#MN{{ presupuesto.id  }}</a>
 
-                                                <td class="color-red-primary">$100</td>
-
-                                                <td>
-                                                    $141
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                    {{presupuesto.register_time.date}}
                                                 </td>
+                                                <td>
+                                                    {{presupuesto.cliente.nombre}}
+                                                </td>
+                                                <td>
+                                                    ${{presupuesto.total_parte|add:presupuesto.total_manaobra|sub:presupuesto.total_paid}}
+                                                </td>
+
+                                                <td>
+                                                    ${{ presupuesto.total_parte|add:presupuesto.total_manaobra }}
+                                                </td>
+
+                                                <td>
+                                                    {% if presupuesto.status == "pending" %}
+                                                        <div class="badge bg-soft-warning font-size-12">Pending</div>
+                                                    {% elif presupuesto.status == "canceled" %}
+                                                        <div class="badge bg-soft-danger font-size-12">Canceled</div>
+                                                    {% endif %}
+                                                </td>
+
                                                 <td>
                                                     <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
+                                                        <a href="{% url 'Presupuestos:download-estimate' presupuesto.id %}" class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></a>
                                                     </div>
                                                 </td>
 
                                                 <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                    <a href="{% url 'ReporteGanancias:add-part' presupuesto.id %}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
+                                                    <a href="{% url 'ReporteGanancias:add-labor' presupuesto.id %}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0129</a> </td>
-                                                <td>
-                                                    09 Jul, 2020
-                                                </td>
-                                                <td>Ronald Patterson</td>
-                                                <td class="color-red-primary">$40</td>
-                                                <td>
-                                                    $220
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
+                                                    <a href="{% url 'ReporteGanancias:add-pay' presupuesto.id %}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
                                                 </td>
 
                                                 <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
+                                                    <a href="{% url 'Presupuestos:detail-in-pdf' presupuesto.id %}"><i class="uil uil-search font-size-18"></i></a>
 
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
+                                                    <a href="{% url 'ReporteGanancias:send-email' presupuesto.id %}"><i class="uil uil-mailbox-alt font-size-18"></i></a>
                                                 </td>
                                             </tr>
-
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0127</a> </td>
-                                                <td>
-                                                    07 Jul, 2020
-                                                </td>
-                                                <td>Theresa Mayers</td>
-                                                <td class="color-red-primary">$60</td>
-                                                <td>
-                                                    $160
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0126</a> </td>
-                                                <td>
-                                                    06 Jul, 2020
-                                                </td>
-                                                <td>Michael Wallace</td>
-                                                <td class="color-red-primary">$100</td>
-                                                <td>
-                                                    $150
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0125</a> </td>
-                                                <td>
-                                                    05 Jul, 2020
-                                                </td>
-                                                <td>Oliver Gonzales</td>
-                                                <td class="color-red-primary">$65</td>
-                                                <td>
-                                                    $165
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0124</a> </td>
-                                                <td>
-                                                    05 Jul, 2020
-                                                </td>
-                                                <td>David Burke</td>
-                                                <td class="color-red-primary">$70</td>
-                                                <td>
-                                                    $170
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0123</a> </td>
-                                                <td>
-                                                    04 Jul, 2020
-                                                </td>
-                                                <td>Willie Verner</td>
-                                                <td class="color-red-primary">$40</td>
-                                                <td>
-                                                    $140
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0122</a> </td>
-                                                <td>
-                                                    03 Jul, 2020
-                                                </td>
-                                                <td>Felix Perry</td>
-                                                <td class="color-red-primary">$55</td>
-                                                <td>
-                                                    $155
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0121</a> </td>
-                                                <td>
-                                                    02 Jul, 2020
-                                                </td>
-                                                <td>Virgil Kelley</td>
-                                                <td class="color-red-primary">$35</td>
-                                                <td>
-                                                    $165
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
-                                                <td>
-                                                    02 Jul, 2020
-                                                </td>
-                                                <td>Matthew Lawler</td>
-                                                <td class="color-red-primary">$95</td>
-                                                <td>
-                                                    $170
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
-                                                <td>
-                                                    02 Jul, 2020
-                                                </td>
-                                                <td>Matthew Lawler</td>
-                                                <td class="color-red-primary">$95</td>
-                                                <td>
-                                                    $170
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
-                                                <td>
-                                                    02 Jul, 2020
-                                                </td>
-                                                <td>Matthew Lawler</td>
-                                                <td class="color-red-primary">$95</td>
-                                                <td>
-                                                    $170
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td><a href="javascript: void(0);" class="text-dark fw-bold">#MN0120</a> </td>
-                                                <td>
-                                                    02 Jul, 2020
-                                                </td>
-                                                <td>Matthew Lawler</td>
-                                                <td class="color-red-primary">$95</td>
-                                                <td>
-                                                    $170
-                                                </td>
-                                                <td>
-                                                    <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-light btn-sm w-xs">PDF <i class="uil uil-download-alt ms-2"></i></button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <a href="estimates-add-parts.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-labor.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a href="estimates-add-payment.html" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a>
-                                                </td>
-
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="px-3 text-primary"><i class="uil uil-search font-size-18"></i></a>
-
-
-                                                </td>
-                                            </tr>
+                                        {% endfor%}
                                         </tbody>
                                     </table>
                                 </div>
@@ -581,7 +162,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © The Shop.
+                                <script>document.write(new Date().getFullYear())</script> © Mechanix Boss POS
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">

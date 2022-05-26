@@ -564,8 +564,6 @@ SWIPER
 
 
 
-
-
 #empty-row{
 display:none;
 }
@@ -686,4 +684,114 @@ display:none;
 }
 
 fieldset.inlineLabels ul {list-style:none}
+
+
+.form-control-language{
+    /* display: block; */
+    /* width: 100%; */
+    padding: 0.47rem 0.75rem;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+
+
+#show-form{
+display:none;
+}
+
+
+
+/***********************************************************
+ TOP NAV BAR
+***********************************************************/
+.navbar-brand-box {
+    padding: 0 .6rem;
+}
+
+
+/***********************************************************
+ PROFILE
+***********************************************************/
+.plantype{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 0 0;
+}
+.plantype p{
+  padding: 0 0 0 8px;
+  margin:0;
+  line-height: 16px;
+}
+
+.profilebtns{
+  display: flex;
+  flex-direction: column;
+}
+
+.profilebtns a{
+  border-bottom: 1px solid #dfdfdf;
+  padding: 16px 24px 16px 48px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #74788d;
+}
+
+.profilebtns a:hover{
+  color: #495057;
+}
+
+.profilebtns a:last-child{
+  margin-bottom: 0px;
+}
+
+.profilebtns a.edit_profile{
+  background: url(../svg/edit-profile.svg) no-repeat center left, url(../svg/arrow-right.svg) no-repeat 96% 48%;
+  background-size: 32px, 8px;
+}
+
+.profilebtns a.my_plan{
+  background: url(../svg/my-plan.svg) no-repeat center left, url(../svg/arrow-right.svg) no-repeat 96% 48%;
+  background-size: 32px, 8px;
+}
+
+.profilebtns a.change_password{
+  background: url(../svg/change-password.svg) no-repeat center left, url(../svg/arrow-right.svg) no-repeat 96% 48%;
+  background-size: 32px, 8px;
+}
+
+.profilebtns a.logout{
+  background: url(../svg/logout.svg) no-repeat center left, url(../svg/arrow-right.svg) no-repeat 96% 48%;
+  background-size: 32px, 8px;
+}
+
+.profilebtns a.delete_account{
+  background: url(../svg/delete-account.svg) no-repeat center left;
+  background-size: 16px;
+  color: #b5b5b5;
+  padding-left: 24px;
+  margin-top: 80px;
+  border-bottom: 0;
+}
+
+/***********************************************************
+ TEXT FORMAT
+***********************************************************/
+.text-right{
+  text-align: right !important;
+}
 

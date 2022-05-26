@@ -10,10 +10,13 @@ from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from Presupuestos.models import Presupuestos
 from SistemaCarros import settings
 from carros.forms import CarroForm
 from carros.models import Carro
 from django.core.files.storage import default_storage, FileSystemStorage
+
+from invoices.models import Invoices
 
 
 class IndexClassView(ListView):
@@ -48,20 +51,42 @@ class detail_carro(DetailView):
 
 
 
-class EditClassView(UpdateView):
+class EditClassView(SuccessMessageMixin,UpdateView):
     model = Carro
-    template_name= 'carros/carros-form-add.html'
     form_class=CarroForm
+    template_name = 'carros/edit.html'
     success_url = reverse_lazy('carros:list_cars')
+    success_message = "%(modelo)s this was updated successfully"
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(UpdateView, self).get(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if len(list(Presupuestos.objects.filter(carro_id=self.kwargs.get("pk"))))==0:
+            context['invoices']=[]
+            return context
+        presupuestos_per_car = Presupuestos.objects.values_list('id').filter(carro_id=self.kwargs.get("pk"))
+        car_range=[]
+        for temp in presupuestos_per_car:
+            car_range.append(temp[0])
+        print(presupuestos_per_car)
+        print(presupuestos_per_car[0])
+        print(car_range)
+        invoices_per_car=[]
+        # for presupuesto in presupuestos_per_car:
+        #     invoices_per_car.append(Invoices.objects.filter(estimate_id=presupuesto.id).first())
+        context['invoices'] = Invoices.objects.filter(estimate_id__in=car_range)
+        print(context['invoices'])
 
+        return context
 #
 class create_carros(SuccessMessageMixin,CreateView):
     model=Carro
     form_class=CarroForm
     template_name='carros/carros-form-add.html'
     success_url=reverse_lazy('carros:list_cars')
-    success_message = "%(modelo)s this is was created successfully"
+    success_message = "%(modelo)s this was created successfully"
 
 
 #
@@ -95,8 +120,13 @@ def create_carros_warranty(request):
 
 class delete_carro(DeleteView):
     model = Carro
-    success_url=reverse_lazy('carros:list_cars')
+    success_url=reverse_lazy('carros:list_cars') 
 
+def detail_invoices(request, pk):
+    invoice=Invoices.objects.get(pk=pk)
+    presupuesto=Presupuestos.objects.get(pk=invoice.estimate_id)
+    return render(request, "carros/invoice-detail.html",
+                  {'presupuesto': presupuesto})
 
 
 

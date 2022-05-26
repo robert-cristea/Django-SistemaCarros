@@ -20,7 +20,7 @@ class Pagos(models.Model):
     #total=models.CharField(max_length=255)
     #saldo_adeudado = models.CharField(max_length=255)
     numero_transaccion=models.IntegerField()
-    cantidad_pagada=models.IntegerField()
+    cantidad_pagada=models.FloatField(default=0)
     estimate=models.ForeignKey(Presupuestos, on_delete=models.SET_NULL, null=True)
 
 
@@ -29,4 +29,4 @@ class Pagos(models.Model):
 #        return f'{self.tipo_pago} {self.fecha_pago} {self.cantidad_pago} {self.total} {self.cantidad_pagada} {self.saldo_adeudado}'
 
     def __str__(self):
-        return f'{self.tipo_pago}{self.numero_transaccion}{self.cantidad_pagada}'
+        return f'{self.tipo_pago}{self.numero_transaccion}{self.cantidad_pagada}' 

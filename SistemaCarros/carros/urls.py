@@ -19,6 +19,7 @@ urlpatterns=[
     path('image_detail',views.Imagedetail, name='image_detail'),
     path('<int:pk>/',views.detail_carro.as_view(),name='detail_carro'),
     path('delete/<int:pk>',views.delete_carro.as_view(), name='eliminar_carros'),
+    path('detail_invoice/<int:pk>', views.detail_invoices, name='detail_invoice'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -26,4 +27,4 @@ if settings.DEBUG:
     urlpatterns += (
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +
         static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-        )
+        ) 

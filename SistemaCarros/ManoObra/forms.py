@@ -6,4 +6,4 @@ class ManoObraForm(forms.ModelForm):
     class Meta:
         model=ManoObra
         fields=['codigo','tecnico','horas','minutos','tarifa',
-            'descripcion']
+            'descripcion'] 

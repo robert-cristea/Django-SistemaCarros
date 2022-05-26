@@ -1,16 +1,18 @@
 from django import forms
 from Clientes.models import Clientes
+from django.utils.translation import gettext_lazy as _
 
 
-PAIS = (
-    ('United States', 'United States'),
-    ('Canada', 'Canada'),
-    ('Other', 'Other'),
-)
+
+# PAIS = (
+#     ('United States',  _('United States')),
+#     ('Canada', _('Canada')),
+#     ('Other', _('Other')),
+# )
 
 TIPO = (
-    ('Corporativo', 'Corporativo'),
-    ('Persona', 'Persona'),
+    ('corporative', _('Corporative')),
+    ('person', _('Person')),
 )
 
 
@@ -21,22 +23,22 @@ class ClientesForm(forms.ModelForm):
 
     tipo = forms.ChoiceField(
         choices=TIPO,
-        widget=forms.RadioSelect(attrs={'class':'custom-radio-list'}),
+        widget=forms.RadioSelect(attrs={'class':'custom-radio-list', 'onclick':'showForm(this)'}),
 
     )
-
-    pais = forms.ChoiceField(
-        choices=PAIS,
-        widget=forms.RadioSelect(attrs={'class':'custom-radio-list'}),
-
-    )
+    #
+    # pais = forms.ChoiceField(
+    #     choices=PAIS,
+    #     widget=forms.RadioSelect(attrs={'class':'custom-radio-list'}),
+    #
+    # )
 
 
     class Meta:
         model = Clientes
-        fields = ['titulo','tipo','nombre', 'apellido', 'telefono', 'tel', 'fax', 'correo', 'direccion','pais',
-                  'ciudad','estado','zip','corporacion', 'website','social_media','social_media2','social_media3',
-                   'contacto_alternativo','contacto_alternativo2','contacto_alternativo3',]
+        fields = ['titulo','tipo','nombre', 'apellido', 'telefono', 'alternativeContactName', 'alternativeContactPhoneNumber','fax', 'correo', 'taxId',
+                  'ciudad','estado','zip','corporacion', 'website','social_media','department','tel',
+                   'representative','nameRepresentative','phoneRepresentative','emailRepresentative','notesRepresentative']
         exclude = ['fecha_registro']
         widgets = {
 
@@ -46,38 +48,85 @@ class ClientesForm(forms.ModelForm):
                 }
             ),
             'corporacion': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'nombre': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'apellido': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'telefono': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
             'tel': forms.TextInput(
+                # required=True,
+                attrs={
+                    'class': 'form-control',
+                    # 'required': True,
+
+                }
+            ),
+            'nombre': forms.TextInput(
+                # required=True,
+                attrs={
+                    'class': 'form-control',
+                    # 'required': True,
+
+
+                }
+            ),
+            'apellido': forms.TextInput(
+                # required=True,
+                attrs={
+                    'class': 'form-control',
+                    # 'required': True,
+                }
+            ),
+            'telefono': forms.TextInput(
+                # required=True,
+                attrs={
+                    'class': 'form-control',
+                    # 'required': True,
+                }
+            ),
+            'alternativeContactName': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
-            'fax': forms.TextInput(
+            'alternativeContactPhoneNumber': forms.TextInput(
                 attrs={
                     'class': 'form-control'
+                }
+            ),
+            'department': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'phoneRepresentative': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'emailRepresentative': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'notesRepresentative': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+
+            'fax': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+
                 }
             ),
             'correo': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
 
@@ -91,50 +140,44 @@ class ClientesForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'social_media2': forms.TextInput(
+
+            'representative': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
-            'social_media3': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'contacto_alternativo': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'contacto_alternativo2': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'contacto_alternativo3': forms.TextInput(
+            'nameRepresentative': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
 
-            'direccion': forms.TextInput(
+            'taxId': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
             'ciudad': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
             'estado': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
             'zip': forms.TextInput(
+                # required=True,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    # 'required': True,
                 }
             ),
             'fecha_registro': forms.DateInput(

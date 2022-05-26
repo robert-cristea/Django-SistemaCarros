@@ -40,14 +40,22 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <section class="steppernav">
-                                                    <a href="{% url 'Presupuestos:step1' %}"><span>1</span> Customer details</a>
-                                                    <a href="{% url 'Presupuestos:step2' %}"><span>2</span> Vehicle</a>
-                                                    <a href="{% url 'Presupuestos:step3' %}"><span>3</span> Parts</a>
-                                                    <a href="{% url 'Presupuestos:step4' %}"><span>4</span> Labor</a>
-                                                    <a href="{% url 'Presupuestos:step5' %}"><span>5</span> Pictures</a>
-                                                    <a href="{% url 'Presupuestos:step6' %}"  class="active"><span>6</span> Payments</a>
-                                                    <a href="{% url 'Presupuestos:step7' %}"><span>7</span> Preview</a>
-                                                    <a href="{% url 'Presupuestos:step8' %}"><span>8</span> Confirm</a>
+                                                    <a href=""><span>1</span> Customer details</a>
+                                                    <a href=""><span>2</span> Vehicle</a>
+                                                    <a href=""><span>3</span> Parts</a>
+                                                    <a href=""><span>4</span> Labor</a>
+                                                    <a href=""><span>5</span> Pictures</a>
+                                                    <a href=""  class="active"><span>6</span> Payments</a>
+                                                    <a href=""><span>7</span> Preview</a>
+                                                    <a href=""><span>8</span> Confirm</a>
+{#                                                    <a href="{% url 'Presupuestos:step1' %}"><span>1</span> Customer details</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step2' %}"><span>2</span> Vehicle</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step3' %}"><span>3</span> Parts</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step4' %}"><span>4</span> Labor</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step5' %}"><span>5</span> Pictures</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step6' %}"  class="active"><span>6</span> Payments</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step7' %}"><span>7</span> Preview</a>#}
+{#                                                    <a href="{% url 'Presupuestos:step8' %}"><span>8</span> Confirm</a>#}
                                                 </section>
                                             </div>
                                             <div class="col-md-9">
@@ -61,8 +69,8 @@
                                                                 <div class="card-body">
 
                                                                     <h4 class="card-title">Payments list</h4>
-                                                                    <!-- <p class="card-title-desc">Add labors you need to include.</p> -->
-                                                                    <input type="button" class="btn btn-block btn-success mb-4 add-new-formz"  onclick="addFormz()" value="+ Add pay" />
+                                                                     <p class="card-title-desc">Add payments you need to include.</p>
+                                                                    <input type="button" class="btn btn-block btn-success mb-4 add-new-formz"  onclick="addForm()" value="+ Add pay" />
 
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered table-nowrap align-middle" id="childTable3">
@@ -71,59 +79,58 @@
                                                                                 <th scope="col">Pay type</th>
                                                                                 <th scope="col">Transaction number</th>
                                                                                 <th scope="col">Amount paid</th>
-
+                                                                                <th scope="col">Actions</th>
 
                                                                               </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                            {{ pagos_formset.management_form }}
-                                                                            {% for form in pagos_formset %}
+                                                                            {{ formset.management_form }}
+                                                                            {% for form in formset %}
                                                                             <div class="form-rowz">
                                                                               <tr>
                                                                                 <td>
                                                                                     {{form.tipo_pago}}
-<!--                                                                                    <select class="form-select input-new-customer-sm">-->
-<!--                                                                                        <option>Select</option>-->
-<!--                                                                                        <option>Cash</option>-->
-<!--                                                                                        <option>Credit card</option>-->
-<!--                                                                                        <option>Debit card</option>-->
-<!--                                                                                        <option>Check</option>-->
-<!--                                                                                    </select>-->
                                                                                 </td>
                                                                                 <td>
                                                                                     {{form.numero_transaccion}}
-<!--                                                                                    <input type="text" name="transaction_number" class="form-control input-new-customer-md" />-->
                                                                                 </td>
                                                                                 <td>
                                                                                     {{form.cantidad_pagada}}
-<!--                                                                                    <input type="text" name="payments_amount" class="form-control input-new-customer-sm" />-->
+                                                                                </td>
+                                                                                 <td scope="col">
+                                                                                    {{ form.DELETE|add_class:"d-none" }}
+                                                                                    <button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button>
                                                                                 </td>
                                                                               </tr>
                                                                             </div>
                                                                             {% endfor %}
+                                                                            <tr id="empty-row" class="part-form">
+                                                                                <td scope="col">{{formset.empty_form.tipo_pago}}</td>
+                                                                                <td scope="col">{{formset.empty_form.numero_transaccion}}</td>
+                                                                                <td scope="col">{{formset.empty_form.cantidad_pagada}}</td>
+                                                                                <td scope="col">{{ formset.empty_form.DELETE|add_class:"d-none" }}<button type="button" class="btn btn-danger" onclick="deleteForm(this)">Delete</button></td>
 
+                                                                            </tr>
                                                                             </tbody>
                                                                           </table>
-                                                                            <div class="form-rowz table-responsive" id="empty-rowz">
-                                                                                <table class="table table-bordered table-nowrap align-middle">
-                                                                                    <tr>
-                                                                                        <td>{{pagos_formset.empty_form.tipo_pago}}</td>
-                                                                                        <td>{{pagos_formset.empty_form.numero_transaccion}}</td>
-                                                                                        <td>{{pagos_formset.empty_form.cantidad_pagada}}</td>
-                                                                                        <td></td>
-                                                                                        <td></td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="{% url 'Presupuestos:step5' %}" class="btn btn-secondary">Previous</a>
-                                                    <a href="{% url 'Presupuestos:step6' %}"><button  class="btn btn-primary" type="submit">Next</button> </a>
+                                                        <a href="{% url 'Presupuestos:step4' %}" class="btn btn-secondary">Previous</a>
+                                                        <a href="{% url 'Presupuestos:step6' %}"><button  class="btn btn-primary" type="submit" value="post">Next</button> </a>
+
                                                 </form>
                                                 </section>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                                </div>
 
 
                                             </div>
@@ -141,7 +148,7 @@
 
                     
                 </div>
-                <!-- End Page-content -->
+                <!-- End Page-content --> 
 
             </div>
 {% endblock %}
