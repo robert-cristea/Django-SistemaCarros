@@ -157,11 +157,14 @@ def step6(request):
     if request.method == 'POST':
         formset = ParteFormSet(request.POST, request.FILES, prefix='form')
         if formset.is_valid():
+            current_presupuesto = Presupuestos.objects.all().last()
             for form in formset:
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
-                    model_instance.estimate = Presupuestos.objects.all().last()
+                    model_instance.estimate = current_presupuesto
+                    current_presupuesto.total_paid += model_instance.cantidad_pagada
                     model_instance.save()
+            current_presupuesto.save()
             return redirect('Presupuestos:step7')
     else:
         formset = ParteFormSet(prefix='form')
@@ -185,7 +188,7 @@ def step7(request):
     for step in step_pago:
         payment += step.cantidad_pagada
     total = float(request.session['total_parte']) + float(request.session['total_manaobra'])
-    balance = total - payment
+    balance = step_estimate.total-step_estimate.total_paid
     if request.method=='POST':
         #create completed estimate
         presupuestos=Presupuestos.objects.all().last()
@@ -198,13 +201,15 @@ def step7(request):
         presupuestos.cliente_id=request.session['client_id']
         presupuestos.carro_id=request.session['car_id']
         presupuestos.tecnicos_id=request.POST['technican_select']
-        presupuestos.save()
         #create invoice related to estimate
-        invoice_instance=Invoices()
-        invoice_instance.estimate=presupuestos.id
-        invoice_instance.amount=presupuestos.total
-        invoice_instance.status=presupuestos.status
-        invoice_instance.save()
+        if presupuestos.total_paid==presupuestos.total:
+            presupuestos.status="paid"
+            invoice_instance = Invoices()
+            invoice_instance.estimate = presupuestos.id
+            invoice_instance.amount = presupuestos.total
+            invoice_instance.status = presupuestos.status
+            invoice_instance.save()
+        presupuestos.save()
         return redirect('Presupuestos:step8')
     else:
         return render(request, 'Presupuestos/new-estimate-7-preview.html',
