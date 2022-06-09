@@ -25,23 +25,20 @@ from django.core.mail import send_mail
 
 
 def step1(request):
-    clientes=Clientes.objects.all()
     presupuestosclientesform = PresupuestosClientesForm(request.POST or None)
     if request.method == 'POST':
         if presupuestosclientesform.is_valid():
-            flag=0
-            for cliente in clientes:
-                if cliente.correo==presupuestosclientesform.cleaned_data['correo']:
-                    flag=1
-                    break
-            if flag==0:
-               presupuestosclientesform.save()
-               current_customer=Clientes.objects.all.last()
+            same_cliente = Clientes.objects.filter(correo=presupuestosclientesform.cleaned_data['correo'])
+            if same_cliente:
+                current_customer = same_cliente[0]
             else:
-                current_customer=Clientes.objects.filter(correo=presupuestosclientesform.cleaned_data['correo'])[0]
+                isntance = presupuestosclientesform.save()
+                current_customer = isntance
+
             presupuesto_instance=Presupuestos()
             presupuesto_instance.cliente_id=current_customer.id
             presupuesto_instance.save()
+            request.session['presupuesto_id'] = presupuesto_instance.id
             request.session['client_id']=current_customer.id
             return redirect('Presupuestos:step2')
     else:
@@ -56,25 +53,21 @@ def step1(request):
 
 
 def step2(request):
-    cars=Carro.objects.all()
     presupuestosvehiculosform=PresupuestosVehiculosForm(request.POST or None)
     if request.method == 'POST':
         if presupuestosvehiculosform.is_valid():
-            flag = 0
-            for car in cars:
-                if car.modelo == presupuestosvehiculosform.cleaned_data['modelo'] and car.placas==presupuestosvehiculosform.cleaned_data['placas']:
-                    flag = 1
-                    break
-            if flag == 0:
-                presupuestosvehiculosform.save()
-                current_car = Carro.objects.all.last()
+            cd = presupuestosvehiculosform.cleaned_data
+            same_car = Carro.objects.filter(modelo=cd['modelo'], placas=cd['placas'])
+            if same_car:
+                current_car = same_car[0]
             else:
-                current_car = Carro.objects.filter(modelo=presupuestosvehiculosform.cleaned_data['modelo'])[0]
-            presupuesto_instance = Presupuestos.objects.all().last()
-            presupuesto_instance.cliente_id = current_car.id
+                instance = presupuestosvehiculosform.save()
+                current_car = instance
+
+            request.session['car_id'] = current_car.id
+            presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
+            presupuesto_instance.carro = current_car
             presupuesto_instance.save()
-            presupuestosvehiculosform.save()
-            request.session['car_id']=Carro.objects.all().last().id
             return redirect('Presupuestos:step3')
     else:
         presupuestosvehiculosform=PresupuestosVehiculosForm(request.POST or None)
@@ -84,34 +77,26 @@ def step2(request):
 
     })
 
-
-
-# class step2(CreateView):
-#     model=Carro
-#     form_class=CarroForm
-#     template_name='Presupuestos/new-estimate-2-vehicle.html'
-#     success_url=reverse_lazy('Presupuestos:step3')
-
-
 def step3(request):
-
     extra_forms = 1
     ParteFormSet = formset_factory(PresupuestosParteForm, extra=extra_forms, max_num=20,can_delete=True)
     if request.method == 'POST':
-        request.session['resumen'] = request.POST['resumen']
-        presupuestos_instance = Presupuestos()
-        presupuestos_instance.resumen=request.POST['resumen']
-        presupuestos_instance.save()
-        request.session['descuento_parte'] = request.POST['descuento_parte']
-        request.session['descuentoTotal_parte'] = request.POST['descuentoTotal_parte']
-        request.session['total_parte'] = request.POST['total_parte']
         formset = ParteFormSet(request.POST, request.FILES, prefix='form')
         if formset.is_valid():
             for form in formset:
-                # if not form.cleaned_data["DELETE"]:
+                if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
-                    model_instance.estimate_id = Presupuestos.objects.all().last()
+                    model_instance.estimate_id = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
                     model_instance.save()
+            presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
+            presupuesto_instance.resumen = request.POST['resumen']
+            if (request.POST['descuento_parte'] == "Quantity"):
+                presupuesto_instance.descuentoTotal_parte = float(request.POST['descuentoTotal_parte'])
+            elif (request.POST['descuento_parte'] == "Percentage"):
+                presupuesto_instance.descuentoTotal_parte = (100 - float(request.POST['descuentoTotal_parte'])) * float(
+                    request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
+            presupuesto_instance.total_parte = request.POST['total_parte']
+            presupuesto_instance.save()
             return redirect('Presupuestos:step4')
     else:
         formset = ParteFormSet()
@@ -124,15 +109,21 @@ def step4(request):
     extra_forms = 1
     ManoObraFormSet = formset_factory(PresupuestosManoObraForm, extra=extra_forms, max_num=20, can_delete=True)
     if request.method == 'POST':
-        request.session['total_manaobra']=request.POST['total_manaobra']
         formset = ManoObraFormSet(request.POST, request.FILES, prefix='form')
-
         if formset.is_valid():
             for form in formset:
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
-                    model_instance.estimate_ids = Presupuestos.objects.all().last()
+                    model_instance.estimate_ids = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
                     model_instance.save()
+
+            presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
+            if (request.POST['descuento_manaobra'] == "Quantity"):
+                presupuesto_instance.descuentoTotal_manaobra += float(request.POST['descuentoTotal_manaobra'])
+            elif(request.POST['descuento_manaobra'] == "Percentage"):
+                presupuesto_instance.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
+            presupuesto_instance.total_manaobra = request.POST['total_manaobra']
+            presupuesto_instance.save()
             return redirect('Presupuestos:step5')
     else:
         manoobra_formset = ManoObraFormSet()
@@ -142,7 +133,7 @@ def step4(request):
     })
 
 def step5(request):
-    Vehicle=Carro.objects.all().last()
+    Vehicle=Carro.objects.get(pk=request.session['car_id'])
     if request.method == 'POST':
             Vehicle.fotosCarro=request.POST['fotoscarro']
             Vehicle.save()
@@ -157,18 +148,17 @@ def step6(request):
     if request.method == 'POST':
         formset = ParteFormSet(request.POST, request.FILES, prefix='form')
         if formset.is_valid():
-            current_presupuesto = Presupuestos.objects.all().last()
+            presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
             for form in formset:
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
-                    model_instance.estimate = current_presupuesto
-                    current_presupuesto.total_paid += model_instance.cantidad_pagada
+                    model_instance.estimate = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
+                    presupuesto_instance.total_paid += model_instance.cantidad_pagada
+                    presupuesto_instance.save()
                     model_instance.save()
-            current_presupuesto.save()
             return redirect('Presupuestos:step7')
     else:
         formset = ParteFormSet(prefix='form')
-
 
     return render(request,'Presupuestos/new-estimate-6-payments.html',{
         'formset':formset
@@ -177,7 +167,7 @@ def step6(request):
 
 #
 def step7(request):
-    step_estimate=Presupuestos.objects.all().last()
+    step_estimate=Presupuestos.objects.get(pk=request.session['presupuesto_id'])
     technicans = Tecnicos.objects.all()
     step_client = Clientes.objects.get(pk=request.session['client_id'])
     step_vehicle = Carro.objects.get(pk=request.session['car_id'])
@@ -187,40 +177,25 @@ def step7(request):
     payment = 0
     for step in step_pago:
         payment += step.cantidad_pagada
-    total = float(request.session['total_parte']) + float(request.session['total_manaobra'])
-    balance = step_estimate.total-step_estimate.total_paid
+    total = step_estimate.total_parte + step_estimate.total_manaobra
+    balance = total - payment
     if request.method=='POST':
-        #create completed estimate
-        presupuestos=Presupuestos.objects.all().last()
-        presupuestos.total_parte=float(request.session['total_parte'])
-        presupuestos.total_manaobra=float(request.session['total_manaobra'])
-        # presupuestos.descuento_parte=request.session['descuento_parte']
-        presupuestos.descuentoTotal_parte=float(request.session['descuentoTotal_parte'])
-        presupuestos.descuentoTotal_manaobra=float(request.session['descuentoTotal_manaobra'])
-
-        presupuestos.cliente_id=request.session['client_id']
-        presupuestos.carro_id=request.session['car_id']
-        presupuestos.tecnicos_id=request.POST['technican_select']
-        #create invoice related to estimate
-        if presupuestos.total_paid==presupuestos.total:
-            presupuestos.status="paid"
-            invoice_instance = Invoices()
-            invoice_instance.estimate = presupuestos.id
-            invoice_instance.amount = presupuestos.total
-            invoice_instance.status = presupuestos.status
-            invoice_instance.save()
-        presupuestos.save()
+        step_estimate.tecnicos = Tecnicos.objects.get(pk=request.POST['technican_select'])
+        step_estimate.save()
         return redirect('Presupuestos:step8')
     else:
         return render(request, 'Presupuestos/new-estimate-7-preview.html',
                   {'technicans': technicans, 'step_client': step_client, 'step_vehicle': step_vehicle,
-                   'step_parte': step_parte, 'step_manoobra': step_manoobra, 'balance': balance, 'total': total,'step_estimate':step_estimate})
+                   'step_parte': step_parte, 'step_manoobra': step_manoobra, 'balance': balance, 'total': total,'step_estimate':step_estimate, 'payment':payment})
 
 
-class step8(TemplateView):
-    template_name='Presupuestos/new-estimate-8-confirm.html'
+def step8(request):
+    if request.method == 'POST':
+        check_Invoice(request.session['presupuesto_id'])
+        request.session["messages"] = ["New Estimate is Added."]
+        return redirect('Presupuestos:presupuestos')
 
-
+    return render(request,'Presupuestos/new-estimate-8-confirm.html', )
 
 def addPay(request, pk):
     extra_forms = 1
@@ -236,8 +211,9 @@ def addPay(request, pk):
                     presupuesto.total_paid += model_instance.cantidad_pagada
                     model_instance.save()
             presupuesto.save()
-        request.session["messages"] = ["Payment is Added"]
-        return redirect('Presupuestos:presupuestos')
+            check_Invoice(pk)
+            request.session["messages"] = ["Payment is Added"]
+            return redirect('Presupuestos:presupuestos')
     else:
         formset = ParteFormSet()
     return render(request, 'Presupuestos/estimate-add-payment.html', {
@@ -310,7 +286,7 @@ def addLabor(request, pk):
 
 
 def presupuestosIndex(request):
-    presupuestos_all = Presupuestos.objects.all()
+    presupuestos_all = Presupuestos.objects.exclude(status='PAID')
     send_data = {'presupuestos': presupuestos_all}
 
     if request.session.get("messages"):
@@ -372,4 +348,15 @@ def download_pdf(request,pk):
     content = "attachment; filename=%s" % filename
     response['Content-Disposition'] = content
     return response
+
+def check_Invoice(id):
+    presupuestos = Presupuestos.objects.get(pk=id)
+    if presupuestos.total_paid >= (presupuestos.total_parte + presupuestos.total_manaobra):
+        presupuestos.status = "paid"
+        invoice_instance = Invoices()
+        invoice_instance.estimate = presupuestos
+        invoice_instance.amount = presupuestos.total_paid
+        invoice_instance.status = "paid"
+        invoice_instance.save()
+    presupuestos.save()
 

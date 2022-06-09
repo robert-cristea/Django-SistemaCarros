@@ -22,7 +22,5 @@ dashboard_chart_options.grid = {
       opacity: 0.5
     },
 };
-
-
-  var chart = new ApexCharts(document.querySelector("#chart"), dashboard_chart_options);
-  chart.render();
+var chart = new ApexCharts(document.querySelector("#chart"), dashboard_chart_options);
+chart.render();

@@ -70,14 +70,11 @@ class EditClassView(SuccessMessageMixin,UpdateView):
         car_range=[]
         for temp in presupuestos_per_car:
             car_range.append(temp[0])
-        print(presupuestos_per_car)
-        print(presupuestos_per_car[0])
-        print(car_range)
         invoices_per_car=[]
         # for presupuesto in presupuestos_per_car:
         #     invoices_per_car.append(Invoices.objects.filter(estimate_id=presupuesto.id).first())
         context['invoices'] = Invoices.objects.filter(estimate_id__in=car_range)
-        print(context['invoices'])
+
 
         return context
 #

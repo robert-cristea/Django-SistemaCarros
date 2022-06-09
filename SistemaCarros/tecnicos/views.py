@@ -21,8 +21,8 @@ def tecnico_list(request):
         return render(request,'tecnicos/list.html',{'tecnicos':searchresult})
 
     else:
-        displaydata = Tecnicos.objects.all()
-    return render(request, 'tecnicos/list.html', {'tecnicos': displaydata})
+        disreplaydata = Tecnicos.objects.all()
+    return render(request, 'tecnicos/list.html', {'tecnicos': disreplaydata})
 
 
 

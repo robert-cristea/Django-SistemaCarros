@@ -99,15 +99,18 @@ function multiplicar(event){
 function descuentoTotalParteFuncion(){
 
     const total_form_count = Number.parseInt($("#id_form-TOTAL_FORMS").val());
+
     let total_value = 0;
     for(let i = 0; i < total_form_count; i ++) {
         if($("#id_form-" + i + "-DELETE").prop('checked') == false && $("#id_form-" + i + "-comprado_cliente").prop('checked') == false) {
             total_value += Number.parseFloat($("#id_form-" + i + "-total_price").val());
+            console.log(total_value)
         }
     }
     const total_discount = Number.parseFloat($("#id_descuentoTotal_parte").val());
     if($("#id_descuento_parte_0").prop("checked"))  total_value -= total_discount;
     else total_value = total_value * total_discount / 100;
+
 
     $("#id_total_parte").val(total_value);
     //$("#id_total_parte").val(total_value * discount_total / 100);

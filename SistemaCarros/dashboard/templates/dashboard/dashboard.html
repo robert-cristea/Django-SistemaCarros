@@ -117,12 +117,14 @@
                                         <div class="mt-3">
                                             <script type="text/javascript">
                                                 var dashboard_chart_options = {
-                                                    series: [{
-                                                      name: "Sales",
-                                                      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-                                                    }],
-                                                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-                                                };
+                                                        series: [{
+                                                          name: "Sales",
+                                                          data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+                                                        }],
+                                                        xaxis: {
+                                                            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+                                                        }
+                                                    };
                                             </script>
                                             <div id="chart" class="apex-charts" dir="ltr"></div>
                                         </div>

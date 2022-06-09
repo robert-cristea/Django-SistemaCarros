@@ -26,7 +26,7 @@ class Parte(models.Model):
     tax_free=models.BooleanField(blank=True, null=True)
     # descuentoTotal= models.IntegerField()
     descuento_parte = models.IntegerField(default=100)
-    comprado_cliente=models.BooleanField(default='0')
+    comprado_cliente=models.BooleanField(blank=True, default=False)
     estimate_id=models.ForeignKey(Presupuestos, on_delete=models.SET_NULL, null=True)
     # total=models.IntegerField()
 

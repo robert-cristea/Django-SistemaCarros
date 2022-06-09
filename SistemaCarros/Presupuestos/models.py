@@ -10,22 +10,17 @@ class Presupuestos(models.Model):
     PRESUPUESTO_STATUS = (
         ('PENDING', 'pending'),
         ('CANCELED', 'canceled'),
+        ('PAID', 'paid'),
     )
     cliente= models.ForeignKey(Clientes, on_delete=models.SET_NULL, null=True)
     carro=models.ForeignKey(Carro, on_delete=models.SET_NULL, null=True)
-    # mano_obra=models.ForeignKey(ManoObra, on_delete=models.SET_NULL, null=True)
-    # parte=models.ForeignKey(Parte, on_delete=models.SET_NULL, null=True)
     garantia=models.CharField(max_length=255,default=0)
-    # pago = models.ForeignKey(Pagos, on_delete=models.SET_NULL, null=True)
-    # foto = models.ForeignKey(Foto, on_delete=models.SET_NULL, null=True)
     tecnicos=models.ForeignKey(Tecnicos, on_delete=models.SET_NULL, null=True)
-    #descuento_parte=models.CharField(max_length=255,default="0")
     total_parte=models.FloatField(null=True,blank=True)
-    descuentoTotal_parte= models.FloatField(null=True,blank=True)
-    #descuento_manaobra=models.CharField(max_length=255,default="0")
+    descuentoTotal_parte= models.FloatField(default=0, null=True)
     total_manaobra=models.FloatField(null=True,blank=True)
-    descuentoTotal_manaobra= models.FloatField(null=True,blank=True)
-    total_paid = models.FloatField(default=0, blank=True, null=True)
+    descuentoTotal_manaobra= models.FloatField(default=0, null=True)
+    total_paid = models.FloatField(default=0,null=True,)
     status = models.CharField(choices=PRESUPUESTO_STATUS,default="PENDING", max_length=10)
     resumen=models.CharField(max_length=255,blank=True)
     register_time=models.DateTimeField(auto_now=True)

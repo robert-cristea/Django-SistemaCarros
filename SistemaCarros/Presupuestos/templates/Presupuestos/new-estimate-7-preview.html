@@ -97,7 +97,7 @@
                                                                         <hr>                                                                   
     
                                                                         <div class="invoice-title">
-                                                                            <h4 class="float-end font-size-16">Estimate #0001 <span class="badge bg-success font-size-12 ms-2">Paid</span></h4>
+                                                                            <h4 class="float-end font-size-16">Estimate #{{ step_estimate.id }} <span class="badge bg-warning font-size-12 ms-2">Pending</span></h4>
                                                                             <div class="mb-4">
                                                                                 <strong>LOGO</strong>
                                                                             </div>
@@ -116,7 +116,7 @@
                                                                             <div class="col-sm-4">
                                                                                 <div class="text-muted">
                                                                                     <h5 class="font-size-16 mb-3">Customer information:</h5>
-                                                                                    <h5 class="font-size-15 mb-2">{{step_client.titulo}}.{{step_client.apellido}}{{step_client.nombre}}</h5>
+                                                                                    <h5 class="font-size-15 mb-2">{{step_client.titulo}}{{step_client.apellido}}{{step_client.nombre}}</h5>
                                                                                     <!--<p>License: <strong>KLJFD838F88</strong></p>-->
                                                                                     <p class="mb-1">{{step_client.correo}}</p>
                                                                                     <p>{{step_client.tel}}</p>
@@ -163,30 +163,27 @@
                                                                                 <table class="table table-nowrap table-centered mb-0">
                                                                                     <thead>
                                                                                         <tr>
-                                                                                            <th>Code</th>
                                                                                             <th>Description</th>
                                                                                             <th>Labor rate</th>
                                                                                             <th>Hours:Min</th>
-                                                                                            <th class="text-end" style="width: 120px;">Total</th>
+                                                                                            <th>Tax Free</th>
+                                                                                            <th class="text-end" >Total</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
                                                                                     {% for labor in step_manoobra%}
                                                                                         <tr>
-                                                                                            <td class="first-column">{{labor.codigo}}</td>
                                                                                             <td>{{labor.descripcion}}</td>
                                                                                             <td>{{labor.tarifa}}</td>
                                                                                             <td>{{labor.horas}}:{{labor.minutos}}</td>
+                                                                                            <td >{{labor.libre_impuestos}}</td>
                                                                                             <td class="text-end">{{labor.tarifa_total}}</td>
                                                                                         </tr>
                                                                                     {% endfor %}
 
                                                                                         <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount</th>
-                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuentoTotal_manaobra}}</h5></td>
-                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuento_manaobra}}</h5></td>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{request.session.total_manaobra}}</h4></td>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end">Total</th>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_manaobra}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -203,7 +200,6 @@
                                                                                 <table class="table table-nowrap table-centered mb-0">
                                                                                     <thead>
                                                                                         <tr>
-                                                                                            <th>Code</th>
                                                                                             <th>Description</th>
                                                                                             <th>Price</th>
                                                                                             <th>Quantity</th>
@@ -214,7 +210,6 @@
                                                                                     <tbody>
                                                                                         {% for parte in step_parte %}
                                                                                         <tr>
-                                                                                            <th class="quantity-column">{{parte.codigo}}</th>
                                                                                             <td>{{parte.descripcion}}</td>
                                                                                             <td>{{parte.unit_price}}</td>
                                                                                             <td>{{parte.quantity}}</td>
@@ -222,19 +217,30 @@
                                                                                             <td class="text-end">${{parte.total_price}}</td>
                                                                                         </tr>
                                                                                         {% endfor %}
-                                                                                      <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Discount</th>
-                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuentoTotal_parte}}</h5></td>
-                                                                                            <td class="border-0 text-end"><h5 class="m-0">{{request.session.discuento_parte}}</h5></td>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{request.session.total_parte}}</h4></td>
+                                                                                        <tr>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end">Total</th>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_parte}}</h4></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>
+                                                                                            <th colspan="4">
+                                                                                               <strong>*</strong> Part supplied by the insurance company or the customer.
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end"><strong>Total: </strong></th>
                                                                                             <td class="border-0 text-end"><strong>${{total}}</strong></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end">Discount: </th>
+                                                                                                <td class="border-0 text-end">- ${{step_estimate.descuentoTotal_parte|add:step_estimate.descuentoTotal_manaobra}}</td>
+                                                                                            </tr>
+                                                                                        <tr>
+                                                                                        <tr>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end">Total Paid: </th>
+                                                                                                <td class="border-0 text-end">- ${{payment}}</td>
+                                                                                            </tr>
+                                                                                        <tr>
+                                                                                            <th scope="row" colspan="4" class="border-0 text-end"><h4>Balance due</h4></th>
                                                                                             <td class="border-0 text-end"><h4 class="m-0">${{balance}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
