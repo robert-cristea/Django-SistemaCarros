@@ -57,7 +57,7 @@ def step2(request):
     if request.method == 'POST':
         if presupuestosvehiculosform.is_valid():
             cd = presupuestosvehiculosform.cleaned_data
-            same_car = Carro.objects.filter(modelo=cd['modelo'], placas=cd['placas'])
+            same_car = Carro.objects.filter(placas=cd['placas'])
             if same_car:
                 current_car = same_car[0]
             else:
@@ -180,11 +180,11 @@ def step7(request):
     total = step_estimate.total_parte + step_estimate.total_manaobra
     balance = total - payment
     if request.method=='POST':
-        step_estimate.tecnicos = Tecnicos.objects.get(pk=request.POST['technican_select'])
-        step_estimate.save()
-        return redirect('Presupuestos:step8')
-    else:
-        return render(request, 'Presupuestos/new-estimate-7-preview.html',
+        if request.POST['technican_select']:
+            step_estimate.tecnicos = Tecnicos.objects.get(pk=request.POST['technican_select'])
+            step_estimate.save()
+            return redirect('Presupuestos:step8')
+    return render(request, 'Presupuestos/new-estimate-7-preview.html',
                   {'technicans': technicans, 'step_client': step_client, 'step_vehicle': step_vehicle,
                    'step_parte': step_parte, 'step_manoobra': step_manoobra, 'balance': balance, 'total': total,'step_estimate':step_estimate, 'payment':payment})
 
@@ -332,7 +332,7 @@ def detail_in_pdf(request, pk):
 
 def cancel_presupuestos(request, pk):
     presupuesto = Presupuestos.objects.get(pk=pk)
-    presupuesto.status = "canceled"
+    presupuesto.status = "CANCELED"
     presupuesto.save()
     request.session["messages"] = ["Estimate is canceled"]
     return redirect('Presupuestos:presupuestos')
@@ -352,11 +352,11 @@ def download_pdf(request,pk):
 def check_Invoice(id):
     presupuestos = Presupuestos.objects.get(pk=id)
     if presupuestos.total_paid >= (presupuestos.total_parte + presupuestos.total_manaobra):
-        presupuestos.status = "paid"
+        presupuestos.status = "PAID"
         invoice_instance = Invoices()
         invoice_instance.estimate = presupuestos
         invoice_instance.amount = presupuestos.total_paid
-        invoice_instance.status = "paid"
+        invoice_instance.status = "PAID"
         invoice_instance.save()
     presupuestos.save()
 

@@ -75,7 +75,6 @@ class EditClassView(SuccessMessageMixin,UpdateView):
         #     invoices_per_car.append(Invoices.objects.filter(estimate_id=presupuesto.id).first())
         context['invoices'] = Invoices.objects.filter(estimate_id__in=car_range)
 
-
         return context
 #
 class create_carros(SuccessMessageMixin,CreateView):

@@ -48,8 +48,8 @@
                                         <div class="span-container d-flex">
 
                                                 {% csrf_token %}
-                                                <input type="date" name="fromdate" class="form-control" data-date-inline-picker="true">
-                                                <input type="date" name="todate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" value="1999-01-01" name="fromdate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" value="1999-01-01" name="todate" class="form-control" data-date-inline-picker="true">
                                                 <input type="submit" value="Search" class="btn btn-secondary">
 
 
@@ -114,10 +114,12 @@
                                                 </td>
 
                                                 <td>
-                                                    {% if presupuesto.status == "pending" %}
-                                                        <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                    {% elif presupuesto.status == "canceled" %}
-                                                        <div class="badge bg-soft-danger font-size-12">Canceled</div>
+                                                    {% if presupuesto.status == "PENDING" %}
+                                                        <span class="badge bg-soft-warning font-size-12">Pending</span>
+                                                    {% elif presupuesto.status == "CANCELED" %}
+                                                        <span class="badge bg-soft-danger font-size-12">Canceled</span>
+                                                    {% else %}
+                                                        <span class="badge bg-soft-success font-size-12">Paid</span>
                                                     {% endif %}
                                                 </td>
 

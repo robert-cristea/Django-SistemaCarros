@@ -72,53 +72,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for estimate in estimates %}
 
-                                            <tr>
-                                                <td>1</td>
-                                                <td>31 jan, 2022</td>
-                                                <td>Technician Name 1</td>
-                                                <td>$999.00</td>
-                                                <td><strong>456785</strong></td>
-                                                <td>Labor Name</td>
-                                                <td>10%</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td><div class="badge bg-soft-success font-size-12">Paid</div></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansAddPayment'%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansViewPayment'%}"><i class="uil uil-search"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>30 jan, 2022</td>
-                                                <td>Technician Name 2</td>
-                                                <td>$999.00</td>
-                                                <td><strong>456785</strong></td>
-                                                <td>Labor Name</td>
-                                                <td>10%</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td><div class="badge bg-soft-warning font-size-12">Pending</div></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansAddPayment'%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansViewPayment'%}"><i class="uil uil-search"></i></a></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ estimate.presupuesto.register_time}}</td>
+                                                    <td>{{ estimate.labour.tecnico }}</td>
+                                                    <td>${{ estimate.presupuesto.total_parte|add:estimate.presupuesto.total_manaobra}}</td>
+                                                    <td><strong>#MN{{ estimate.presupuesto.id }}</strong></td>
+                                                    <td>{{ estimate.labour.codigo}}</td>
+                                                    <td>10%</td>
+                                                    <td>$999.00</td>
+                                                    <td>$999.00</td>
+                                                    <td>$999.00</td>
+                                                    <td>
+                                                        {% if estimate.presupuesto.status == "PENDING" %}
+                                                            <span class="badge bg-soft-warning font-size-12 ">Pending</span>
+                                                        {% elif estimate.presupuesto.status == "CANCELED" %}
+                                                            <span class="badge bg-soft-danger font-size-12 ">Canceled</span>
+                                                        {% else %}
+                                                            <span class="badge bg-soft-success font-size-12">Paid</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><a href="{% url 'ReporteGanancias:techniciansAddPayment'%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
+                                                    <td><a href="{% url 'ReporteGanancias:techniciansViewPayment'%}"><i class="uil uil-search"></i></a></td>
+                                                </tr>
+                                            {% endfor %}
 
-                                            <tr>
-                                                <td>7</td>
-                                                <td>25 jan, 2022</td>
-                                                <td>Technician Name 5</td>
-                                                <td>$999.00</td>
-                                                <td><strong>456785</strong></td>
-                                                <td>Labor Name</td>
-                                                <td>10%</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td>$999.00</td>
-                                                <td><div class="badge bg-soft-success font-size-12">Paid</div></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansAddPayment'%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                <td><a href="{% url 'ReporteGanancias:techniciansViewPayment'%}"><i class="uil uil-search"></i></a></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

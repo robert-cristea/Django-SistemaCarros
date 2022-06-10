@@ -174,10 +174,22 @@ def ViewInvoice(request,pk):
     print(Presupuestos.objects.values_list('carro_id').annotate(truck_count=Count('carro_id')).order_by('-truck_count'))
     return render(request,'ReporteGanancias/reports-invoice-detail.html',{'invoice':invoice,'presupuesto':presupuesto})
 class Technicians(ListView):
-    model=ReporteGanancias
+    model=Presupuestos
     template_name = 'ReporteGanancias/reports-technicians.html'
-    # context_object_name='technicians'
-    queryset=ReporteGanancias.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tech_estimates = []
+        estimates = Presupuestos.objects.all()
+        for estimate in estimates:
+            for labour in estimate.manoobra_set.values():
+                tech_estimates.append({
+                    "presupuesto":estimate,
+                    "labour":ManoObra.objects.get(pk=labour['id'])
+                })
+
+        context['estimates'] = tech_estimates
+        return context
+    # queryset=Presupuestos.objects.all()
 
 
 class Workshops(ListView):
@@ -212,6 +224,7 @@ class techniciansAddPayment(TemplateView):
 
 class techniciansViewPayment(TemplateView):
     template_name='ReporteGanancias/reports-technicians-view-payment.html'
+
 
 
  
