@@ -13,7 +13,7 @@ from carros.models import Carro
 from invoices.models import Invoices
 from .forms import ReporteGananciasForm
 from django.db.models import Count
-
+from django.contrib import  messages
 # Create your views here.
 from .models import ReporteGanancias
 from .models import Parte
@@ -26,22 +26,13 @@ class IndexReporteGanancias(TemplateView):
 
 def reportsDebtors(request):
     if request.method =='POST':
-        fromdate=request.POST['fromdate']
-        todate=request.POST['todate']
-        presupuestos_all=Presupuestos.objects.filter(register_time__range=(fromdate,todate))
+        fromdate=request.POST['fromdate'] + " 00:00:00"
+        todate=request.POST['todate'] + " 23:59:59"
+        presupuestos_all=Presupuestos.objects.filter(register_time__range=(fromdate,todate), status="PENDING")
     else:
-        presupuestos_all = Presupuestos.objects.all()
-    send_data = {'presupuestos': presupuestos_all}
-
-    if request.session.get("messages"):
-        send_data = {
-            'presupuestos': presupuestos_all,
-            'messages': request.session.get("messages")
-        }
-        request.session.pop("messages")
-
+        presupuestos_all = Presupuestos.objects.filter(status="PENDING")
     return render(request, "ReporteGanancias/reports-debtors.html",
-                  send_data)
+                  {'presupuestos': presupuestos_all})
 
 def send_email(request,pk):
     presupuesto = Presupuestos.objects.get(pk=pk)
@@ -50,8 +41,9 @@ def send_email(request,pk):
         {'presupuesto': presupuesto}
     )
     email_subject = 'Your Estimate!'
-    to_list = 'customer@dinh.mail.com'
+    to_list = request.user.email
     send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
+    messages.success(request, "Updated Estimate is sent by Email")
     return redirect('ReporteGanancias:debtors')
 def addPay(request, pk):
     extra_forms = 1
@@ -67,7 +59,8 @@ def addPay(request, pk):
                     presupuesto.total_paid += model_instance.cantidad_pagada
                     model_instance.save()
             presupuesto.save()
-        request.session["messages"] = ["Payment is Added"]
+        check_Invoice(pk)
+        messages.success(request, "Payment is Added")
         return redirect('ReporteGanancias:debtors')
     else:
         formset = ParteFormSet()
@@ -99,7 +92,7 @@ def addPart(request, pk):
                 presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
             presupuestos.total_parte += float(request.POST['total_parte'])
             presupuestos.save()
-            request.session["messages"] = ["part is Added"]
+            messages.success(request, "part is Added")
         return redirect('ReporteGanancias:debtors')
     else:
         formset = ParteFormSet()
@@ -131,7 +124,7 @@ def addLabor(request, pk):
                 presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
             presupuestos.total_manaobra += float(request.POST['total_manaobra'])
             presupuestos.save()
-            request.session["messages"] = ["Labour is Added"]
+            messages.success(request, "Labour is Added")
         return redirect('ReporteGanancias:debtors')
     else:
         formset = ManoObraFormSet()
@@ -166,7 +159,12 @@ class Records(TemplateView):
     template_name = 'ReporteGanancias/reports-records.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invoices'] = Invoices.objects.all()
+        invoices = []
+        carros_list = Invoices.objects.values('estimate__carro__id').distinct()
+        for carros in carros_list:
+            for invoice in Invoices.objects.filter(estimate__carro__id = carros['estimate__carro__id']):
+                invoices.append(invoice)
+        context['invoices'] = invoices
         return context
 def ViewInvoice(request,pk):
     invoice=Invoices.objects.get(pk=pk)
@@ -217,14 +215,21 @@ class Workshops(ListView):
         context['parts']=parts
         return context
 
-
-
 class techniciansAddPayment(TemplateView):
     template_name='ReporteGanancias/reports-technicians-add-payment.html'
 
 class techniciansViewPayment(TemplateView):
     template_name='ReporteGanancias/reports-technicians-view-payment.html'
 
-
+def check_Invoice(id):
+    presupuestos = Presupuestos.objects.get(pk=id)
+    if presupuestos.total_paid >= (presupuestos.total_parte + presupuestos.total_manaobra):
+        presupuestos.status = "PAID"
+        invoice_instance = Invoices()
+        invoice_instance.estimate = presupuestos
+        invoice_instance.amount = presupuestos.total_paid
+        invoice_instance.status = "PAID"
+        invoice_instance.save()
+    presupuestos.save()
 
  

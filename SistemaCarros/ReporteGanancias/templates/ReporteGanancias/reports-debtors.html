@@ -106,11 +106,11 @@
                                                     {{presupuesto.cliente.nombre}}
                                                 </td>
                                                 <td>
-                                                    ${{presupuesto.total_parte|add:presupuesto.total_manaobra|sub:presupuesto.total_paid}}
+                                                    ${{presupuesto.total_parte|addition:presupuesto.total_manaobra|sub:presupuesto.total_paid}}
                                                 </td>
 
                                                 <td>
-                                                    ${{ presupuesto.total_parte|add:presupuesto.total_manaobra }}
+                                                    ${{ presupuesto.total_parte|addition:presupuesto.total_manaobra }}
                                                 </td>
 
                                                 <td>
@@ -140,7 +140,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{% url 'Presupuestos:detail-in-pdf' presupuesto.id %}"><i class="uil uil-search font-size-18"></i></a>
+                                                    <a href="{% url 'Presupuestos:detail' presupuesto.id %}"><i class="uil uil-search font-size-18"></i></a>
 
                                                     <a href="{% url 'ReporteGanancias:send-email' presupuesto.id %}"><i class="uil uil-mailbox-alt font-size-18"></i></a>
                                                 </td>

@@ -9,12 +9,6 @@ from Clientes.models import Clientes
 
 class Invoices(models.Model):
 
-    # invoiceId= models.CharField(max_length=255,default=0)
-    # fechaInvoice=models.CharField(max_length=255,default=0)
-    # cuentaInvoice=models.IntegerField(default=0)
-    # cantidadInvoice=models.CharField(max_length=255,default=0)
-    # statusInvoice = models.CharField(max_length=255, default=0)
-    # fecha_registro = models.DateTimeField(default=datetime.now)
     estimate = models.ForeignKey(Presupuestos, on_delete=models.SET_NULL, null=True)
     date_register=models.DateTimeField(default=datetime.now)
     amount=models.FloatField(default=0)

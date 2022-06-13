@@ -79,11 +79,11 @@
                                                <td>{{ invoice.estimate.resumen}}</td>
                                                <td>${{ invoice.amount}}</td>
                                                <td>
-                                                    {% if invoice.status == "pending" %}
+                                                    {% if invoice.status == "PENDING" %}
                                                         <div class="badge bg-soft-warning font-size-12">Pending</div>
-                                                    {% elif invoice.status == "canceled" %}
+                                                    {% elif invoice.status == "CANCELED" %}
                                                         <div class="badge bg-soft-danger font-size-12">Canceled</div>
-                                                    {% elif invoice.status == "paid" %}
+                                                    {% elif invoice.status == "PAID" %}
                                                         <div class="badge bg-soft-primary font-size-12">paid</div>
                                                     {% endif %}
                                                 </td>

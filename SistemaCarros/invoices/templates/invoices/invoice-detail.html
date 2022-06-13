@@ -52,9 +52,9 @@
 
                                                         <div class="invoice-title">
                                                             <h4 class="float-end font-size-16">Estimate #MN{{ presupuesto.id }}
-                                                                {% if presupuesto.status == 0 %}
+                                                                {% if presupuesto.status == "PENDING" %}
                                                                     <span class="badge bg-warning font-size-12 ms-2">Pending</span>
-                                                                {% elif presupuesto.status == 1 %}
+                                                                {% elif presupuesto.status == "CANCELED" %}
                                                                     <span class="badge bg-danger font-size-12 ms-2">Canceled</span>
                                                                 {% else %}
                                                                     <span class="badge bg-success font-size-12 ms-2">Paid</span>
@@ -66,8 +66,8 @@
                                                                 <strong>LOGO</strong>
                                                             </div>
                                                             <div class="text-muted">
-                                                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> email@domain.com</p>
-                                                                <p class="mb-1"><i class="uil uil-phone me-1"></i> 012-345-6789</p>
+                                                                {% load static %}
+                                                                <img src="{% get_media_prefix %}{{presupuesto.carro.new_name}}" height="68"/>
                                                             </div>
                                                         </div>
 
@@ -205,11 +205,11 @@
 
                                                                         <tr>
                                                                         <th scope="row" colspan="5" class="border-0 text-end">Discount: </th>
-                                                                            <td class="border-0 text-end">- ${{presupuesto.descuentoTotal_parte|add:presupuesto.descuentoTotal_manaobra}}</td>
+                                                                            <td class="border-0 text-end">- ${{presupuesto.descuentoTotal_parte|addition:presupuesto.descuentoTotal_manaobra}}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="text-end">Total sum: </th>
-                                                                            <td class="text-end">${{ presupuesto.total_manaobra|add:presupuesto.total_parte }}</td>
+                                                                            <td class="text-end">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte }}</td>
                                                                         </tr>
 
                                                                         <tr>
@@ -226,7 +226,7 @@
 {#                                                                        </tr>#}
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|add:presupuesto.total_parte|sub:presupuesto.total_paid }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|sub:presupuesto.total_paid }}</h4></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>

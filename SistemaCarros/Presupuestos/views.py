@@ -3,8 +3,8 @@ import datetime
 from django.forms import formset_factory, modelform_factory
 from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 from django.template import loader
-from django.views.generic import TemplateView
 
+from django.contrib import messages
 from Clientes.models import Clientes
 from ManoObra.models import ManoObra
 from Parte.models import Parte
@@ -19,13 +19,14 @@ from .models import Presupuestos
 from django.shortcuts import render, redirect
 from django_xhtml2pdf.utils import generate_pdf
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 # Create your views here.
 
 
 
 
 def step1(request):
-    presupuestosclientesform = PresupuestosClientesForm(request.POST or None)
+    presupuestosclientesform = PresupuestosClientesForm(request.POST)
     if request.method == 'POST':
         if presupuestosclientesform.is_valid():
             same_cliente = Clientes.objects.filter(correo=presupuestosclientesform.cleaned_data['correo'])
@@ -41,8 +42,6 @@ def step1(request):
             request.session['presupuesto_id'] = presupuesto_instance.id
             request.session['client_id']=current_customer.id
             return redirect('Presupuestos:step2')
-    else:
-        presupuestosclientesform = PresupuestosClientesForm(request.POST or None)
 
     return render(request,'Presupuestos/new-estimate-1-customer-details.html',{
         'presupuestosclientesform':presupuestosclientesform,
@@ -126,18 +125,19 @@ def step4(request):
             presupuesto_instance.save()
             return redirect('Presupuestos:step5')
     else:
-        manoobra_formset = ManoObraFormSet()
+        formset = ManoObraFormSet()
     return render(request, 'Presupuestos/new-estimate-4-labor.html', {
-        'formset': manoobra_formset,
+        'formset': formset,
 
     })
 
 def step5(request):
     Vehicle=Carro.objects.get(pk=request.session['car_id'])
     if request.method == 'POST':
+        if request.POST['fotoscarro']:
             Vehicle.fotosCarro=request.POST['fotoscarro']
             Vehicle.save()
-            return redirect('Presupuestos:step6')
+        return redirect('Presupuestos:step6')
     return render(request, 'Presupuestos/new-estimate-5-pictures.html')
 
 
@@ -156,6 +156,9 @@ def step6(request):
                     presupuesto_instance.total_paid += model_instance.cantidad_pagada
                     presupuesto_instance.save()
                     model_instance.save()
+            if presupuesto_instance.total_paid >= (presupuesto_instance.total_parte + presupuesto_instance.total_manaobra):
+                presupuesto_instance.status = "PAID"
+                presupuesto_instance.save()
             return redirect('Presupuestos:step7')
     else:
         formset = ParteFormSet(prefix='form')
@@ -192,7 +195,8 @@ def step7(request):
 def step8(request):
     if request.method == 'POST':
         check_Invoice(request.session['presupuesto_id'])
-        request.session["messages"] = ["New Estimate is Added."]
+        #request.session["messages"] = ["New Estimate is Added."]
+        messages.success(request, "New Estimate is Added.")
         return redirect('Presupuestos:presupuestos')
 
     return render(request,'Presupuestos/new-estimate-8-confirm.html', )
@@ -212,7 +216,7 @@ def addPay(request, pk):
                     model_instance.save()
             presupuesto.save()
             check_Invoice(pk)
-            request.session["messages"] = ["Payment is Added"]
+            messages.success(request, "Payment is Added.")
             return redirect('Presupuestos:presupuestos')
     else:
         formset = ParteFormSet()
@@ -244,7 +248,7 @@ def addPart(request, pk):
                 presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
             presupuestos.total_parte += float(request.POST['total_parte'])
             presupuestos.save()
-            request.session["messages"] = ["part is Added"]
+            messages.success(request, "Part is Added.")
         return redirect('Presupuestos:presupuestos')
     else:
         formset = ParteFormSet()
@@ -276,7 +280,7 @@ def addLabor(request, pk):
                 presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
             presupuestos.total_manaobra += float(request.POST['total_manaobra'])
             presupuestos.save()
-            request.session["messages"] = ["Labour is Added"]
+            messages.success(request, "Labour is Added.")
         return redirect('Presupuestos:presupuestos')
     else:
         formset = ManoObraFormSet()
@@ -287,17 +291,8 @@ def addLabor(request, pk):
 
 def presupuestosIndex(request):
     presupuestos_all = Presupuestos.objects.exclude(status='PAID')
-    send_data = {'presupuestos': presupuestos_all}
-
-    if request.session.get("messages"):
-        send_data = {
-            'presupuestos': presupuestos_all,
-            'messages':request.session.get("messages")
-        }
-        request.session.pop("messages")
-
     return render(request, "Presupuestos/presupuestos.html",
-                      send_data)
+                  {'presupuestos': presupuestos_all})
 
 
 def detail_presupuestos(request, pk):
@@ -308,23 +303,13 @@ def detail_presupuestos(request, pk):
             {'presupuesto': presupuesto}
         )
         email_subject = 'Your Updated Estimate!'
-        to_list = 'customer@dinh.mail.com'
+        to_list = request.user.email
         send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
-        request.session["messages"] = ["Updated Estimate is sent by Email"]
+        messages.success(request, "Updated Estimate is sent by Email")
         return redirect('Presupuestos:presupuestos')
     else:
         return render(request, "Presupuestos/presupuestos-detail.html",
                   {'presupuesto': presupuesto})
-def send_email(request,pk):
-    presupuesto = Presupuestos.objects.get(pk=pk)
-    html_message = loader.render_to_string(
-        'Presupuestos/estimate-pdf.html',
-        {'presupuesto': presupuesto}
-    )
-    email_subject = 'Your Estimate!'
-    to_list = 'customer@dinh.mail.com'
-    send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
-    return render(request,"ReporteGanacias/reports-debtors.html")
 
 def detail_in_pdf(request, pk):
     presupuesto = Presupuestos.objects.get(pk=pk)
@@ -334,7 +319,7 @@ def cancel_presupuestos(request, pk):
     presupuesto = Presupuestos.objects.get(pk=pk)
     presupuesto.status = "CANCELED"
     presupuesto.save()
-    request.session["messages"] = ["Estimate is canceled"]
+    messages.success(request, "Estimate is canceled")
     return redirect('Presupuestos:presupuestos')
 def download_pdf(request,pk):
     # presupuesto = Presupuestos.objects.get(pk=pk)

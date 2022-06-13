@@ -35,9 +35,7 @@
                                                     <div class="card-body">
 
                                                         <div class="estimatepreview align-items-center">
-                                                            <form method="post">
-                                                                <button href="" class="btn btn-success" type="submit">Send</button>
-                                                            </form>
+
 
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" id="formCheck2">
@@ -52,9 +50,9 @@
 
                                                         <div class="invoice-title">
                                                             <h4 class="float-end font-size-16">Invoice #MN{{ invoice.id }}
-                                                                {% if invoice.status == 0 %}
+                                                                {% if invoice.status == "PENDING" %}
                                                                     <span class="badge bg-warning font-size-12 ms-2">Pending</span>
-                                                                {% elif invoice.status == 1 %}
+                                                                {% elif invoice.status == "CANCELED" %}
                                                                     <span class="badge bg-danger font-size-12 ms-2">Canceled</span>
                                                                 {% else %}
                                                                     <span class="badge bg-success font-size-12 ms-2">Paid</span>
@@ -66,8 +64,8 @@
                                                                 <strong>LOGO</strong>
                                                             </div>
                                                             <div class="text-muted">
-                                                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> email@domain.com</p>
-                                                                <p class="mb-1"><i class="uil uil-phone me-1"></i> 012-345-6789</p>
+                                                                {% load static %}
+                                                                <img src="{% get_media_prefix %}{{presupuesto.carro.new_name}}" height="68"/>
                                                             </div>
                                                         </div>
 

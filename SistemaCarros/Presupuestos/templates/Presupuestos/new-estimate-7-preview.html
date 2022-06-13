@@ -97,14 +97,22 @@
                                                                         <hr>                                                                   
     
                                                                         <div class="invoice-title">
-                                                                            <h4 class="float-end font-size-16">Estimate #{{ step_estimate.id }} <span class="badge bg-warning font-size-12 ms-2">Pending</span></h4>
+                                                                            <h4 class="float-end font-size-16">Estimate #{{ step_estimate.id }}
+                                                                                {% if step_estimate.status == "PENDING" %}
+                                                                                    <span class="badge bg-warning font-size-12 ms-2">Pending</span>
+                                                                                {% elif step_estimate.status == "CANCELED" %}
+                                                                                    <span class="badge bg-danger font-size-12 ms-2">Canceled</span>
+                                                                                {% else %}
+                                                                                    <span class="badge bg-success font-size-12 ms-2">Paid</span>
+                                                                                {% endif %}
                                                                             <div class="mb-4">
                                                                                 <strong>LOGO</strong>
                                                                             </div>
+                                                                            </h4>
 
                                                                             <div class="text-muted">
                                                                                 {% load static %}
-                                                                                <img src="{% get_media_prefix %}{{step_vehicle.new_name}}" height="68"></div>
+                                                                                <img src="{% get_media_prefix %}{{step_vehicle.new_name}}" height="68"/>
                                                                                 <!--<p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestosclientes}}</p>-->
                                                                                 <!--<p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> {{presupuestoscarros}}</p>-->
                                                                             </div>
@@ -266,11 +274,12 @@
                                                                 </div>
                                                         </div>
 
-
+                                                        </div>
                                                         <a href="{% url 'Presupuestos:step6' %}" class="btn btn-secondary">Previous</a>
                                                         <a href="{% url 'Presupuestos:step8' %}"><button class="btn btn-primary" type="submit">Next</button></a>
-    
+
                                                     </form>
+
                                                 </section>
 
 

@@ -8,6 +8,9 @@ from django_xhtml2pdf.utils import generate_pdf
 from django.views.generic import TemplateView, UpdateView, CreateView, DeleteView, DetailView
 from Presupuestos.models import Presupuestos
 from invoices.models import Invoices
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User
 from tecnicos.models import Tecnicos
 
 
@@ -25,11 +28,12 @@ def detail_invoices(request, pk):
             'invoices/invoice-pdf.html',
             {'presupuesto': presupuesto}
         )
-        email_subject = 'Your Updated Estimate!'
-        to_list = 'customer@dinh.mail.com'
+        email_subject = 'Your Updated Invoice!'
+        to_list = request.user.email
         send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
-        request.session["messages"] = ["Updated Estimate is sent by Email"]
-        return redirect('Invoices:list')
+
+        messages.success(request,"Updated Invoice is sent by Email" )
+        return redirect('invoices:list')
     else:
         return render(request, "invoices/invoice-detail.html",
                   {'presupuesto': presupuesto})
@@ -44,6 +48,8 @@ def download_pdf(request,pk):
     content = "attachment; filename=%s" % filename
     response['Content-Disposition'] = content
     return response
-class delete_invoice(DeleteView):
+class delete_invoice(SuccessMessageMixin, DeleteView):
     model = Invoices
-    success_url=reverse_lazy('invoices:list')
+    template_name = "Invoices/invoices_confirm_delete.html"
+    success_url = reverse_lazy("invoices:list")
+    success_message =  "Invoice was deleted successfully."

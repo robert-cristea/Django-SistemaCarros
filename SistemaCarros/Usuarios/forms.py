@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 
 #registro
 class RegisterForm(UserCreationForm):
-    user=forms.CharField(label="Usuario",widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username=forms.CharField(label="Usuario",widget=forms.TextInput(attrs={'class': 'form-control'}))
     email=forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     phone1=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     phone2=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
