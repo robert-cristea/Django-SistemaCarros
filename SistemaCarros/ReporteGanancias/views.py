@@ -17,7 +17,7 @@ from django.contrib import  messages
 # Create your views here.
 from .models import ReporteGanancias
 from .models import Parte
-
+from datetime import datetime
 
 class IndexReporteGanancias(TemplateView):
     template_name='ReporteGanancias/list.html'
@@ -89,7 +89,10 @@ def addPart(request, pk):
             if (request.POST['descuento_parte'] == "Quantity"):
                 presupuestos.descuentoTotal_parte += float(request.POST['descuentoTotal_parte'])
             elif(request.POST['descuento_parte'] == "Percentage"):
-                presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
+                if not float(request.POST['descuento_parte']) == 0:
+                    presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
+                else:
+                    presupuestos.descuentoTotal_parte = 0
             presupuestos.total_parte += float(request.POST['total_parte'])
             presupuestos.save()
             messages.success(request, "part is Added")
@@ -121,7 +124,10 @@ def addLabor(request, pk):
             if (request.POST['descuento_manaobra'] == "Quantity"):
                 presupuestos.descuentoTotal_manaobra += float(request.POST['descuentoTotal_manaobra'])
             elif(request.POST['descuento_manaobra'] == "Percentage"):
-                presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
+                if not float(request.POST['descuentoTotal_manaobra']) == 0:
+                    presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
+                else:
+                    presupuestos.descuentoTotal_manaobra = 0
             presupuestos.total_manaobra += float(request.POST['total_manaobra'])
             presupuestos.save()
             messages.success(request, "Labour is Added")
@@ -190,30 +196,36 @@ class Technicians(ListView):
     # queryset=Presupuestos.objects.all()
 
 
-class Workshops(ListView):
-    model=ReporteGanancias
+def Workshops(request):
     template_name = 'ReporteGanancias/reports-workshops.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    if request.method =='POST':
+        fromdate=request.POST['fromdate'] + " 00:00:00"
+        todate=request.POST['todate'] + " 23:59:59"
+        carros = Presupuestos.objects.filter(register_time__range=(fromdate, todate)).values_list('carro_id').annotate(
+            truck_count=Count('carro_id')).order_by('-truck_count')[:10]
+        manoobras = ManoObra.objects.filter(estimate_ids__register_time__range=(fromdate, todate)).values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[
+                    :10]
+        partes = Parte.objects.filter(estimate_id__register_time__range=(fromdate, todate)).values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[:10]
+    else:
         carros = Presupuestos.objects.values_list('carro_id').annotate(truck_count=Count('carro_id')).order_by('-truck_count')[:10]
-        cars=[]
-        for carro in carros:
-            if carro[0]==None:
-                break
-            cars.append(Carro.objects.get(pk=carro[0]))
-        context['cars']=cars
-        manoobras=ManoObra.objects.values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[:10]
-        labors=[]
-        for manoobra in manoobras:
-            labors.append(ManoObra.objects.filter(codigo=manoobra[0])[0])
-        context['labors']=labors
-        partes=Parte.objects.values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[:10]
-        parts=[]
-        for part in partes:
-            parts.append(Parte.objects.filter(codigo=part[0])[0])
-        context['parts']=parts
-        return context
+        manoobras = ManoObra.objects.values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[:10]
+        partes = Parte.objects.values_list('codigo').annotate(truck_count1=Count('id')).order_by('-truck_count1')[:10]
+        fromdate = datetime.now().date().strftime("%Y-%m-%d") + " 00:00:00"
+        todate = datetime.now().date().strftime("%Y-%m-%d") + " 00:00:00"
+    cars=[]
+    for carro in carros:
+        if carro[0]==None:
+            break
+        cars.append(Carro.objects.get(pk=carro[0]))
+
+    labors=[]
+    for manoobra in manoobras:
+        labors.append(ManoObra.objects.filter(codigo=manoobra[0])[0])
+    parts=[]
+    for part in partes:
+        parts.append(Parte.objects.filter(codigo=part[0])[0])
+    return render(request, "ReporteGanancias/reports-workshops.html", { 'cars':cars, 'labors':labors, 'parts':parts, 'fromdate':fromdate, 'todate':todate})
 
 class techniciansAddPayment(TemplateView):
     template_name='ReporteGanancias/reports-technicians-add-payment.html'

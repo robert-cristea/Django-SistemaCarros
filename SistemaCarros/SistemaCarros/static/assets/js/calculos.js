@@ -79,7 +79,8 @@ function deleteForm(e) {
 
 function calculate_total_price(quantity, price, discount, tax_free) {
     let total_price = quantity * price;
-    total_price = total_price * discount / 100;
+    console.log(discount);
+    total_price = discount != 0 ? total_price * discount / 100: total_price;
     total_price = tax_free ? total_price*0.025 : total_price;
     return total_price;
 }
@@ -104,12 +105,11 @@ function descuentoTotalParteFuncion(){
     for(let i = 0; i < total_form_count; i ++) {
         if($("#id_form-" + i + "-DELETE").prop('checked') == false && $("#id_form-" + i + "-comprado_cliente").prop('checked') == false) {
             total_value += Number.parseFloat($("#id_form-" + i + "-total_price").val());
-            console.log(total_value)
         }
     }
     const total_discount = Number.parseFloat($("#id_descuentoTotal_parte").val());
     if($("#id_descuento_parte_0").prop("checked"))  total_value -= total_discount;
-    else total_value = total_value * total_discount / 100;
+    else if(total_discount!=0) total_value = total_value * total_discount / 100;
 
 
     $("#id_total_parte").val(total_value);
@@ -147,7 +147,7 @@ function descuentoTotalManaobraFuncion() {
     }
     const total_discount = Number.parseFloat($("#id_descuentoTotal_manaobra").val());
     if($("#id_descuento_manaobra_0").prop("checked"))  total_value -= total_discount;
-    else total_value = total_value * total_discount / 100;
+    else if(total_discount!=0) total_value = total_value * total_discount / 100;
     $("#id_total_manaobra").val(total_value);
 }
 

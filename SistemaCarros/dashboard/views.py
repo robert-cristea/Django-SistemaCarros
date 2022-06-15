@@ -31,7 +31,7 @@ def dashboard(request):
 
     workshop_count = InformacionTiendas.objects.count()
     customer_count = Clientes.objects.count()
-    estimate_count = Presupuestos.objects.count()
+    estimate_count = Presupuestos.objects.exclude(status="PAID").count()
 
     invoice_count = Invoices.objects.count()
 
@@ -76,7 +76,7 @@ def dashboard(request):
                 graph_data.append(data)
         elif fromdate_month != todate_month:
             for x in range(fromdate_month, todate_month + 1):
-                graph_labels.append(x)
+                graph_labels.append(str(fromdate_year) + "/" + str(x))
                 #data = Invoices.objects.filter(date_register__month=x).aggregate(Sum('amount'))['amount__sum']
                 data = Invoices.objects.filter(date_register__month=x).count()
                 if data == None:
@@ -85,7 +85,7 @@ def dashboard(request):
                 graph_data.append(data)
         else:
             for x in range(fromdate_day, todate_day + 1):
-                graph_labels.append(x)
+                graph_labels.append(str(fromdate_month) + "/" + str(x))
 
                 #data = Invoices.objects.filter(date_register__day=x).aggregate(Sum('amount'))['amount__sum']
                 data = Invoices.objects.filter(date_register__day=x).count()
