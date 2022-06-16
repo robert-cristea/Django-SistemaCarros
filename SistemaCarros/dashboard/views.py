@@ -11,24 +11,9 @@ from Presupuestos.models import Presupuestos
 from invoices.models import Invoices
 
 
-# class dashboard(TemplateView):
-#
-#     template_name = 'dashboard/dashboard.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         # Add in a QuerySet of all the books
-#         context['workshop_count'] = InformacionTiendas.objects.count()
-#         context['customer_count'] = Clientes.objects.count()
-#         context['estimate_count'] = Presupuestos.objects.count()
-#         invoices=Invoices.objects.all()
-#         total_Revenu=0
-#         for invoice in invoices:
-#             total_Revenu+=invoice.amount
-#         context['total_Revenu']=total_Revenu
-#         return context
 def dashboard(request):
 
+    month_name = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     workshop_count = InformacionTiendas.objects.count()
     customer_count = Clientes.objects.count()
     estimate_count = Presupuestos.objects.exclude(status="PAID").count()
@@ -85,7 +70,7 @@ def dashboard(request):
                 graph_data.append(data)
         else:
             for x in range(fromdate_day, todate_day + 1):
-                graph_labels.append(str(fromdate_month) + "/" + str(x))
+                graph_labels.append(month_name[fromdate_month - 1] + " " + str(x))
 
                 #data = Invoices.objects.filter(date_register__day=x).aggregate(Sum('amount'))['amount__sum']
                 data = Invoices.objects.filter(date_register__day=x).count()

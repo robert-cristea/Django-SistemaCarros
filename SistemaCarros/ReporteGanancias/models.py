@@ -13,8 +13,8 @@ from Pagos.models import Pagos
 from Parte.models import Parte
 from carros.models import Carro
 from inventory.models import Inventory
-
-
+from Presupuestos.models import Presupuestos
+from tecnicos.models import Tecnicos
 class ReporteGanancias(models.Model):
 
     cliente= models.ForeignKey(Clientes, on_delete=models.CASCADE)
@@ -29,6 +29,14 @@ class ReporteGanancias(models.Model):
     def __str__(self):
         #return f'{self.cliente} {self.presupuesto} {self.mano_obra} {self.parte} {self.subcontratar_trabajos} {self.otros_costos} {self.descuento}'
         return f'{self.cliente} {self.carro}{self.mano_obra} {self.parte}{self.garantia}{self.pago}{self.foto}'
+
+
+class ReporteTechnician(models.Model):
+    estimate = models.ForeignKey(Presupuestos, on_delete=models.CASCADE)
+    technician = models.ForeignKey(Tecnicos, on_delete=models.CASCADE)
+    content = models.CharField(max_length=255, blank=False)
+    quantity = models.FloatField(default=0, null=False)
+    register_time=models.DateTimeField(auto_now=True)
 
 
 

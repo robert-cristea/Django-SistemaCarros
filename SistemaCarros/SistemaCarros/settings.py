@@ -192,16 +192,16 @@ django_heroku.settings(locals())
 
 #EMAIL DEV CONFIG
 #EMAIL_USE_TLS = True
-EMAIL_HOST = 'dinh.smtp.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'admin@dinh.mail.com'
-EMAIL_HOST_PASSWORD = 'admin'
-DEFAULT_FROM_EMAIL = 'admin@dinh.mail.com'
-
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'dinh.smtp.com'
 # EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'me@gmail.com'
-# EMAIL_HOST_PASSWORD = 'password'
+# EMAIL_HOST_USER = 'admin@dinh.mail.com'
+# EMAIL_HOST_PASSWORD = 'admin'
+# DEFAULT_FROM_EMAIL = 'admin@dinh.mail.com'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'server@gmail.com' #server email address
+EMAIL_HOST_PASSWORD = 'password' #server email password
 
 

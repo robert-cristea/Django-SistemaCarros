@@ -107,7 +107,8 @@ function descuentoTotalParteFuncion(){
             total_value += Number.parseFloat($("#id_form-" + i + "-total_price").val());
         }
     }
-    const total_discount = Number.parseFloat($("#id_descuentoTotal_parte").val());
+    let total_discount = Number.parseFloat($("#id_descuentoTotal_parte").val());
+    if(isNaN(total_discount)) total_discount = 0;
     if($("#id_descuento_parte_0").prop("checked"))  total_value -= total_discount;
     else if(total_discount!=0) total_value = total_value * total_discount / 100;
 
@@ -145,7 +146,8 @@ function descuentoTotalManaobraFuncion() {
             total_value += Number.parseFloat($("#id_form-" + i + "-tarifa_total").val());
         }
     }
-    const total_discount = Number.parseFloat($("#id_descuentoTotal_manaobra").val());
+    let total_discount = Number.parseFloat($("#id_descuentoTotal_manaobra").val());
+    if(isNaN(total_discount)) total_discount = 0;
     if($("#id_descuento_manaobra_0").prop("checked"))  total_value -= total_discount;
     else if(total_discount!=0) total_value = total_value * total_discount / 100;
     $("#id_total_manaobra").val(total_value);
@@ -163,5 +165,25 @@ function cancelEstimate(evt) {
     window.location.href="/estimates/cancel/" + id;
 }
 
+function setTotalReports(id) {
 
+    percentValue = Number.parseFloat($("#tech_percent_" + id).val());
+    deductValue = Number.parseFloat($("#tech_deduct_" + id).val());
+    adjustValue = Number.parseFloat($("#tech_adjust_" + id).val());
+    if(isNaN(percentValue)) percentValue = 100;
+    if(isNaN(deductValue)) deductValue = 0;
+    if(isNaN(adjustValue)) adjustValue = 0;
+
+    total = percentValue * Number.parseFloat($("#tech_payment_"+id).html()) / 100  - deductValue + adjustValue;
+    $("#tech_total_" + id).html(total.toFixed(2));
+
+}
+
+function technicianReportDetail(index, estimate_id, tech_id) {
+    console.log(index);
+    percent = Number.parseFloat($("#tech_percent_" + index).html());
+    total = Number.parseFloat($("#tech_total_" + index).html());
+    if(isNaN(percent)) percent = 100;
+    window.location.href="/reports/reports-technicians-view-payment/" + estimate_id + "/" + tech_id + "/" + percent + "/" + total;
+}
 

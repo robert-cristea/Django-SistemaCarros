@@ -1,5 +1,6 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
+{% load mathfilters %}
 {% block content %}
 
             <!-- ============================================================== -->
@@ -73,30 +74,32 @@
                                         </thead>
                                         <tbody>
                                             {% for estimate in estimates %}
+                                                {% for labour in estimate.labours %}
+                                                    <tr>
 
-                                                <tr>
-                                                    <td>{{ forloop.counter }}</td>
-                                                    <td>{{ estimate.presupuesto.register_time}}</td>
-                                                    <td>{{ estimate.labour.tecnico }}</td>
-                                                    <td>${{ estimate.presupuesto.total_parte|add:estimate.presupuesto.total_manaobra}}</td>
-                                                    <td><strong>#MN{{ estimate.presupuesto.id }}</strong></td>
-                                                    <td>{{ estimate.labour.codigo}}</td>
-                                                    <td>10%</td>
-                                                    <td>$999.00</td>
-                                                    <td>$999.00</td>
-                                                    <td>$999.00</td>
-                                                    <td>
-                                                        {% if estimate.presupuesto.status == "PENDING" %}
-                                                            <span class="badge bg-soft-warning font-size-12 ">Pending</span>
-                                                        {% elif estimate.presupuesto.status == "CANCELED" %}
-                                                            <span class="badge bg-soft-danger font-size-12 ">Canceled</span>
-                                                        {% else %}
-                                                            <span class="badge bg-soft-success font-size-12">Paid</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td><a href="{% url 'ReporteGanancias:techniciansAddPayment'%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                    <td><a href="{% url 'ReporteGanancias:techniciansViewPayment'%}"><i class="uil uil-search"></i></a></td>
-                                                </tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ estimate.presupuesto.register_time}}</td>
+                                                        <td>{{ labour.labour.0.tecnico }}</td>
+                                                        <td >$<span id="tech_payment_{{ forloop.counter }}">{{ labour.sum|floatformat:2}}</span ></td>
+                                                        <td><strong>#MN{{ estimate.presupuesto.id }}</strong></td>
+                                                        <td>{{ labour.labour.0.codigo}}</td>
+                                                        <td><input id="tech_percent_{{ forloop.counter }}" class="form-control" type="number" min="0" max="100" placeholder="%" onchange="setTotalReports({{ forloop.counter }})"></td>
+                                                        <td><input id="tech_deduct_{{ forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ forloop.counter }})"></td>
+                                                        <td><input id="tech_adjust_{{ forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ forloop.counter }})"></td>
+                                                        <td >$<span id="tech_total_{{ forloop.counter }}">{{ labour.sum|floatformat:2}}</span></td>
+                                                        <td>
+                                                            {% if estimate.presupuesto.status == "PENDING" %}
+                                                                <span class="badge bg-soft-warning font-size-12 ">Pending</span>
+                                                            {% elif estimate.presupuesto.status == "CANCELED" %}
+                                                                <span class="badge bg-soft-danger font-size-12 ">Canceled</span>
+                                                            {% else %}
+                                                                <span class="badge bg-soft-success font-size-12">Paid</span>
+                                                            {% endif %}
+                                                        </td>
+                                                       <td><a href="{% url 'ReporteGanancias:techniciansAddPayment' estimate.presupuesto.id labour.labour.0.tecnico.id%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
+                                                       <td><a onclick="technicianReportDetail({{ forloop.counter }},{{ estimate.presupuesto.id }}, {{ labour.labour.0.tecnico.id }})"><i class="uil uil-search"></i></a></td>
+                                                    </tr>
+                                                {% endfor %}
                                             {% endfor %}
 
                                         </tbody>

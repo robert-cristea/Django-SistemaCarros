@@ -1,8 +1,20 @@
 from django import forms
-from .models import ReporteGanancias
+from .models import ReporteTechnician
 
-
-class ReporteGananciasForm(forms.ModelForm):
+class ReporteTechnicianForm(forms.ModelForm):
     class Meta:
-        model=ReporteGanancias
-        fields='__all__'
+        model = ReporteTechnician
+        fields = ["content", "quantity"]
+        widgets={
+            'content': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'quantity': forms.NumberInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+        }
+

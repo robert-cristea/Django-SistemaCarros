@@ -79,11 +79,11 @@
                                                     {{presupuesto.cliente.nombre}}
                                                 </td>
                                                 <td>
-                                                    ${{presupuesto.total_parte|addition:presupuesto.total_manaobra|sub:presupuesto.total_paid}}
+                                                    ${{presupuesto.total_parte|addition:presupuesto.total_manaobra|sub:presupuesto.total_paid|floatformat:2}}
                                                 </td>
 
                                                 <td>
-                                                    ${{ presupuesto.total_parte|addition:presupuesto.total_manaobra }}
+                                                    ${{ presupuesto.total_parte|addition:presupuesto.total_manaobra|floatformat:2 }}
                                                 </td>
 
                                                 <td>

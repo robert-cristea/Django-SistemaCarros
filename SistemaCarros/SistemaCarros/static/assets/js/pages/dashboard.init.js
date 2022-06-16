@@ -4,7 +4,29 @@ dashboard_chart_options.chart =  {
     type: 'line',
     zoom: {
       enabled: false
-    }
+    },
+    csv:{
+                filename:"hi"
+            },
+            svg: {
+                filename: "hi",
+            },
+            png: {
+                filename: "hi",
+            },
+    toolbar: {
+        export: {
+            csv:{
+                filename:"hi"
+            },
+            svg: {
+                filename: "hi",
+            },
+            png: {
+                filename: "hi",
+            },
+        },
+    },
   };
 dashboard_chart_options.dataLabels =  {
     enabled: false

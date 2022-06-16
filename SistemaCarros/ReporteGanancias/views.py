@@ -11,11 +11,12 @@ from Presupuestos.forms import PresupuestosPagosForm, PresupuestosParteForm, Pre
 from Presupuestos.models import Presupuestos
 from carros.models import Carro
 from invoices.models import Invoices
-from .forms import ReporteGananciasForm
-from django.db.models import Count
+from tecnicos.models import Tecnicos
+from .forms import ReporteTechnicianForm
+from django.db.models import Count, Sum
 from django.contrib import  messages
 # Create your views here.
-from .models import ReporteGanancias
+from .models import ReporteGanancias, ReporteTechnician
 from .models import Parte
 from datetime import datetime
 
@@ -175,7 +176,6 @@ class Records(TemplateView):
 def ViewInvoice(request,pk):
     invoice=Invoices.objects.get(pk=pk)
     presupuesto =  Presupuestos.objects.get(pk=invoice.estimate_id)
-    print(Presupuestos.objects.values_list('carro_id').annotate(truck_count=Count('carro_id')).order_by('-truck_count'))
     return render(request,'ReporteGanancias/reports-invoice-detail.html',{'invoice':invoice,'presupuesto':presupuesto})
 class Technicians(ListView):
     model=Presupuestos
@@ -185,11 +185,23 @@ class Technicians(ListView):
         tech_estimates = []
         estimates = Presupuestos.objects.all()
         for estimate in estimates:
+            technicians_ids = []
+            technicians = []
             for labour in estimate.manoobra_set.values():
-                tech_estimates.append({
-                    "presupuesto":estimate,
-                    "labour":ManoObra.objects.get(pk=labour['id'])
-                })
+                id = ManoObra.objects.get(pk=labour['id']).tecnico.id
+                if not id in technicians_ids:
+                    technicians_ids.append(id)
+            for tech_id in technicians_ids:
+                technicians_mano = []
+                sum = 0
+                for labour in estimate.manoobra_set.filter(tecnico__id=tech_id).values():
+                    technicians_mano.append(ManoObra.objects.get(pk=labour['id']))
+                    sum += labour["tarifa_total"]
+                technicians.append({'labour':technicians_mano, 'sum':sum})
+            tech_estimates.append({
+                "presupuesto": estimate,
+                "labours": technicians
+            })
 
         context['estimates'] = tech_estimates
         return context
@@ -227,11 +239,36 @@ def Workshops(request):
         parts.append(Parte.objects.filter(codigo=part[0])[0])
     return render(request, "ReporteGanancias/reports-workshops.html", { 'cars':cars, 'labors':labors, 'parts':parts, 'fromdate':fromdate, 'todate':todate})
 
-class techniciansAddPayment(TemplateView):
-    template_name='ReporteGanancias/reports-technicians-add-payment.html'
+def techniciansAddPayment(request, estimate, technico):
+    technicianForm = ReporteTechnicianForm(request.POST)
+    if request.method=="POST":
+        if technicianForm.is_valid():
+            cd = technicianForm.cleaned_data
+            technician_instance = ReporteTechnician()
+            technician_instance.estimate = Presupuestos.objects.get(pk=estimate)
+            technician_instance.technician = Tecnicos.objects.get(pk=technico)
+            technician_instance.content = cd["content"]
+            technician_instance.quantity = cd["quantity"]
+            technician_instance.save()
+            return redirect('ReporteGanancias:technicians')
+    return render(request, 'ReporteGanancias/reports-technicians-add-payment.html', {'technicianForm':technicianForm})
 
-class techniciansViewPayment(TemplateView):
-    template_name='ReporteGanancias/reports-technicians-view-payment.html'
+def techniciansViewPayment(request, estimate, technico, percent, total):
+    estimate_instance = Presupuestos.objects.get(pk=estimate)
+    technician = Tecnicos.objects.get(pk=technico)
+    reports_payment = ReporteTechnician.objects.filter(estimate__id=estimate, technician__id=technico)
+
+    labours = []
+    for labour in estimate_instance.manoobra_set.filter(tecnico__id=technico).values():
+        labours.append(ManoObra.objects.get(pk=labour['id']))
+    sum = 0
+    for payment in reports_payment:
+        sum += payment.quantity
+    return render(request, "ReporteGanancias/reports-technicians-view-payment.html", {
+        "estimate":estimate_instance,
+        "technician":technician, "paymentlist":reports_payment, "labours":labours, "percent":percent, "total":total, "sum":sum
+    })
+
 
 def check_Invoice(id):
     presupuestos = Presupuestos.objects.get(pk=id)
@@ -244,4 +281,9 @@ def check_Invoice(id):
         invoice_instance.save()
     presupuestos.save()
 
+def DeletePayment(request, id):
+    print(id)
+    ReporteTechnician.objects.get(pk=id).delete()
+    messages.success("Payment is Deleted successfully.")
+    return redirect("ReporteGanancias:technicians")
  
