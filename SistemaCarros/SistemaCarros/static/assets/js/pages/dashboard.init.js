@@ -1,32 +1,16 @@
 
 dashboard_chart_options.chart =  {
+    id:"sales",
     height: 350,
     type: 'line',
     zoom: {
       enabled: false
     },
-    csv:{
-                filename:"hi"
-            },
-            svg: {
-                filename: "hi",
-            },
-            png: {
-                filename: "hi",
-            },
-    toolbar: {
-        export: {
-            csv:{
-                filename:"hi"
-            },
-            svg: {
-                filename: "hi",
-            },
-            png: {
-                filename: "hi",
-            },
+    export:{
+        svg:{
+            filename: "hello"
         },
-    },
+    }
   };
 dashboard_chart_options.dataLabels =  {
     enabled: false

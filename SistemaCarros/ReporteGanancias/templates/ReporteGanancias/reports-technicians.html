@@ -37,7 +37,18 @@
                                         <label class="m-0">Date range:&nbsp;&nbsp;</label>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" />
+                                        <form method="post">
+                                        <div class="span-container d-flex">
+
+                                                {% csrf_token %}
+                                                <input type="date" value={{ fromdate }} name="fromdate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" value={{ todate }} name="todate" class="form-control" data-date-inline-picker="true">
+                                                <input type="submit" value="Search" class="btn btn-secondary">
+
+
+                           <!--                                                <input type="text" name="daterange" value="12/01/2021 - 12/31/2021" class="form-control" id="id_date_range"/>-->
+                                        </div>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -76,17 +87,16 @@
                                             {% for estimate in estimates %}
                                                 {% for labour in estimate.labours %}
                                                     <tr>
-
-                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ estimate.labour_count|add:forloop.counter }}</td>
                                                         <td>{{ estimate.presupuesto.register_time}}</td>
                                                         <td>{{ labour.labour.0.tecnico }}</td>
-                                                        <td >$<span id="tech_payment_{{ forloop.counter }}">{{ labour.sum|floatformat:2}}</span ></td>
+                                                        <td >$<span id="tech_payment_{{ estimate.labour_count|add:forloop.counter }}">{{ labour.sum|floatformat:2}}</span ></td>
                                                         <td><strong>#MN{{ estimate.presupuesto.id }}</strong></td>
                                                         <td>{{ labour.labour.0.codigo}}</td>
-                                                        <td><input id="tech_percent_{{ forloop.counter }}" class="form-control" type="number" min="0" max="100" placeholder="%" onchange="setTotalReports({{ forloop.counter }})"></td>
-                                                        <td><input id="tech_deduct_{{ forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ forloop.counter }})"></td>
-                                                        <td><input id="tech_adjust_{{ forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ forloop.counter }})"></td>
-                                                        <td >$<span id="tech_total_{{ forloop.counter }}">{{ labour.sum|floatformat:2}}</span></td>
+                                                        <td><input id="tech_percent_{{ estimate.labour_count|add:forloop.counter }}" class="form-control" type="number" min="0" max="100" placeholder="%" onchange="setTotalReports({{ estimate.labour_count|add:forloop.counter }})"></td>
+                                                        <td><input id="tech_deduct_{{ estimate.labour_count|add:forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ estimate.labour_count|add:forloop.counter }})"></td>
+                                                        <td><input id="tech_adjust_{{ estimate.labour_count|add:forloop.counter }}"class="form-control" type="text" placeholder="$" onchange="setTotalReports({{ estimate.labour_count|add:forloop.counter }})"></td>
+                                                        <td >$<span id="tech_total_{{ estimate.labour_count|add:forloop.counter }}">{{ labour.sum|floatformat:2}}</span></td>
                                                         <td>
                                                             {% if estimate.presupuesto.status == "PENDING" %}
                                                                 <span class="badge bg-soft-warning font-size-12 ">Pending</span>
@@ -97,7 +107,7 @@
                                                             {% endif %}
                                                         </td>
                                                        <td><a href="{% url 'ReporteGanancias:techniciansAddPayment' estimate.presupuesto.id labour.labour.0.tecnico.id%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                       <td><a onclick="technicianReportDetail({{ forloop.counter }},{{ estimate.presupuesto.id }}, {{ labour.labour.0.tecnico.id }})"><i class="uil uil-search"></i></a></td>
+                                                       <td><a onclick="technicianReportDetail({{ forloop.counterestimate.labour_count|add:forloop.counter }},{{ estimate.presupuesto.id }}, {{ labour.labour.0.tecnico.id }})"><i class="uil uil-search"></i></a></td>
                                                     </tr>
                                                 {% endfor %}
                                             {% endfor %}

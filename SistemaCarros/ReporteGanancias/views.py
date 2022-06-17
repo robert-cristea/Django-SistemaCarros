@@ -179,34 +179,41 @@ def ViewInvoice(request,pk):
     invoice=Invoices.objects.get(pk=pk)
     presupuesto =  Presupuestos.objects.get(pk=invoice.estimate_id)
     return render(request,'ReporteGanancias/reports-invoice-detail.html',{'invoice':invoice,'presupuesto':presupuesto})
-class Technicians(ListView):
-    model=Presupuestos
-    template_name = 'ReporteGanancias/reports-technicians.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        tech_estimates = []
-        estimates = Presupuestos.objects.all()
-        for estimate in estimates:
-            technicians_ids = []
-            technicians = []
-            for labour in estimate.manoobra_set.values():
-                id = ManoObra.objects.get(pk=labour['id']).tecnico.id
-                if not id in technicians_ids:
-                    technicians_ids.append(id)
-            for tech_id in technicians_ids:
-                technicians_mano = []
-                sum = 0
-                for labour in estimate.manoobra_set.filter(tecnico__id=tech_id).values():
-                    technicians_mano.append(ManoObra.objects.get(pk=labour['id']))
-                    sum += labour["tarifa_total"]
-                technicians.append({'labour':technicians_mano, 'sum':sum})
-            tech_estimates.append({
-                "presupuesto": estimate,
-                "labours": technicians
-            })
+def Technicians(request):
 
-        context['estimates'] = tech_estimates
-        return context
+    if request.method=="POST":
+        fromdate = request.POST['fromdate'] + " 00:00:00"
+        todate = request.POST['todate'] + " 23:59:59"
+        estimates = Presupuestos.objects.filter(register_time__range=(fromdate, todate))
+    else:
+        estimates = Presupuestos.objects.all()
+        fromdate = datetime.now().date().strftime("%Y-%m-%d") + " 00:00:00"
+        todate = datetime.now().date().strftime("%Y-%m-%d") + " 00:00:00"
+    tech_estimates = []
+    count = 0
+    for estimate in estimates:
+        technicians_ids = []
+        technicians = []
+        for labour in estimate.manoobra_set.values():
+            id = ManoObra.objects.get(pk=labour['id']).tecnico.id
+            if not id in technicians_ids:
+                technicians_ids.append(id)
+        for tech_id in technicians_ids:
+            technicians_mano = []
+            sum = 0
+            for labour in estimate.manoobra_set.filter(tecnico__id=tech_id).values():
+                technicians_mano.append(ManoObra.objects.get(pk=labour['id']))
+                sum += labour["tarifa_total"]
+            technicians.append({'labour':technicians_mano, 'sum':sum, 'count':count})
+
+        tech_estimates.append({
+            "presupuesto": estimate,
+            "labours": technicians,
+            'labour_count':count,
+        })
+        count += len(technicians)
+
+    return render(request, "ReporteGanancias/reports-technicians.html", {"estimates":tech_estimates, "fromdate":fromdate, "todate":todate})
     # queryset=Presupuestos.objects.all()
 
 
