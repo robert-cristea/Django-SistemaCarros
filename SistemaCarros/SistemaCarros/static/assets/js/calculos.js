@@ -94,7 +94,7 @@ function multiplicar(event){
     let tax_fee = $("#" + 'id_form-'+formId+'-tax_free').prop("checked")?true:false;
 
     const multiplicar_total_price = calculate_total_price(quantity, unit_price, descuentoPartes, tax_fee);
-    $(total_price).val(multiplicar_total_price);
+    $(total_price).val(multiplicar_total_price.toFixed(2));
     descuentoTotalParteFuncion();
 }
 function descuentoTotalParteFuncion(){
@@ -108,12 +108,15 @@ function descuentoTotalParteFuncion(){
         }
     }
     let total_discount = Number.parseFloat($("#id_descuentoTotal_parte").val());
-    if(isNaN(total_discount)) total_discount = 0;
+    if(isNaN(total_discount)) {
+        total_discount = 0;
+        $("#id_descuentoTotal_parte").val(0);
+    }
     if($("#id_descuento_parte_0").prop("checked"))  total_value -= total_discount;
     else if(total_discount!=0) total_value = total_value * total_discount / 100;
 
 
-    $("#id_total_parte").val(total_value);
+    $("#id_total_parte").val(total_value.toFixed(2));
     //$("#id_total_parte").val(total_value * discount_total / 100);
 
 }
@@ -133,8 +136,7 @@ function convTarifa(evt){
     let tax_fee = $("#" + 'id_form-'+formId+'-libre_impuestos').prop("checked")?true:false;
     const total_value =calculate_total_rate(rate, horas, minute, tax_fee);
 
-    $(tarifa_total).val(total_value);
-    console.log(formId);
+    $(tarifa_total).val(total_value.toFixed(2));
     descuentoTotalManaobraFuncion()
 }
 
@@ -147,13 +149,14 @@ function descuentoTotalManaobraFuncion() {
         }
     }
     let total_discount = Number.parseFloat($("#id_descuentoTotal_manaobra").val());
-    if(isNaN(total_discount)) total_discount = 0;
+    if(isNaN(total_discount)) {
+        total_discount = 0;
+        $("#id_descuentoTotal_manaobra").val(0);
+    }
     if($("#id_descuento_manaobra_0").prop("checked"))  total_value -= total_discount;
     else if(total_discount!=0) total_value = total_value * total_discount / 100;
-    $("#id_total_manaobra").val(total_value);
+    $("#id_total_manaobra").val(total_value.toFixed(2));
 }
-
-
 //ESTIMATE MODAL
 function showCancelEstimateModal(evt) {
     $("#modal-estimate-id").html("Estimate No. #MN" + $(evt).data("id"));

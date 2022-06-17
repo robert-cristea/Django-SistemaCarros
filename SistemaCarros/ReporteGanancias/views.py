@@ -32,8 +32,10 @@ def reportsDebtors(request):
         presupuestos_all=Presupuestos.objects.filter(register_time__range=(fromdate,todate), status="PENDING")
     else:
         presupuestos_all = Presupuestos.objects.filter(status="PENDING")
+        fromdate = datetime.now().date().strftime("%Y-%m-%d")
+        todate = datetime.now().date().strftime("%Y-%m-%d")
     return render(request, "ReporteGanancias/reports-debtors.html",
-                  {'presupuestos': presupuestos_all})
+                  {'presupuestos': presupuestos_all, 'fromdate':fromdate, 'todate':todate})
 
 def send_email(request,pk):
     presupuesto = Presupuestos.objects.get(pk=pk)
@@ -57,7 +59,7 @@ def addPay(request, pk):
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
                     model_instance.estimate = Presupuestos.objects.get(pk=pk)
-                    presupuesto.total_paid += model_instance.cantidad_pagada
+                    presupuesto.total_paid += round(model_instance.cantidad_pagada,2 )
                     model_instance.save()
             presupuesto.save()
         check_Invoice(pk)
@@ -90,11 +92,12 @@ def addPart(request, pk):
             if (request.POST['descuento_parte'] == "Quantity"):
                 presupuestos.descuentoTotal_parte += float(request.POST['descuentoTotal_parte'])
             elif(request.POST['descuento_parte'] == "Percentage"):
-                if not float(request.POST['descuento_parte']) == 0:
+                if not float(request.POST['descuentoTotal_parte']) == 0:
                     presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
-                else:
-                    presupuestos.descuentoTotal_parte = 0
+            print(float(request.POST['total_parte']))
             presupuestos.total_parte += float(request.POST['total_parte'])
+            presupuestos.descuentoTotal_parte = round(presupuestos.descuentoTotal_parte, 2)
+
             presupuestos.save()
             messages.success(request, "part is Added")
         return redirect('ReporteGanancias:debtors')
@@ -127,9 +130,8 @@ def addLabor(request, pk):
             elif(request.POST['descuento_manaobra'] == "Percentage"):
                 if not float(request.POST['descuentoTotal_manaobra']) == 0:
                     presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
-                else:
-                    presupuestos.descuentoTotal_manaobra = 0
             presupuestos.total_manaobra += float(request.POST['total_manaobra'])
+            presupuestos.descuentoTotal_manaobra = round(presupuestos.descuentoTotal_manaobra, 2)
             presupuestos.save()
             messages.success(request, "Labour is Added")
         return redirect('ReporteGanancias:debtors')
@@ -248,7 +250,7 @@ def techniciansAddPayment(request, estimate, technico):
             technician_instance.estimate = Presupuestos.objects.get(pk=estimate)
             technician_instance.technician = Tecnicos.objects.get(pk=technico)
             technician_instance.content = cd["content"]
-            technician_instance.quantity = cd["quantity"]
+            technician_instance.quantity = round(cd["quantity"],2)
             technician_instance.save()
             return redirect('ReporteGanancias:technicians')
     return render(request, 'ReporteGanancias/reports-technicians-add-payment.html', {'technicianForm':technicianForm})
@@ -284,6 +286,6 @@ def check_Invoice(id):
 def DeletePayment(request, id):
     print(id)
     ReporteTechnician.objects.get(pk=id).delete()
-    messages.success("Payment is Deleted successfully.")
+    messages.success(request, "Payment is Deleted successfully.")
     return redirect("ReporteGanancias:technicians")
  

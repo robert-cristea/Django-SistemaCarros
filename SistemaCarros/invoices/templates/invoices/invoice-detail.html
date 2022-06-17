@@ -216,17 +216,9 @@
                                                                             <th scope="row" colspan="5" class="text-end">Paid Amount: </th>
                                                                             <td class="text-end">${{ presupuesto.total_paid }}</td>
                                                                         </tr>
-{#                                                                        <tr>#}
-{#                                                                            <th scope="row" colspan="5" class="border-0 text-end">Tax 9.5% :</th>#}
-{#                                                                            <td class="border-0 text-end">$24.12</td>#}
-{#                                                                        </tr>#}
-{#                                                                        <tr>#}
-{#                                                                            <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>#}
-{#                                                                            <td class="border-0 text-end"><strong>$478.67</strong></td>#}
-{#                                                                        </tr>#}
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|sub:presupuesto.total_paid }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|sub:presupuesto.total_paid|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>

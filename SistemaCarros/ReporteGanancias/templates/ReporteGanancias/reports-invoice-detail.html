@@ -224,7 +224,7 @@
 {#                                                                        </tr>#}
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|add:presupuesto.total_parte|sub:presupuesto.total_paid }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|add:presupuesto.total_parte|sub:presupuesto.total_paid|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>

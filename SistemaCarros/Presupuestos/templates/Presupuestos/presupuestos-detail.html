@@ -140,17 +140,17 @@
                                                                             <td>{{ labour.tarifa}}</td>
                                                                             <td>{{ labour.horas }}:{{ labour.minutos }}</td>
                                                                             <td >{{labour.libre_impuestos}}</td>
-                                                                            <td class="text-end">{{labour.tarifa_total}}</td>
+                                                                            <td class="text-end">{{labour.tarifa_total|floatformat:2}}</td>
                                                                         </tr>
                                                                         {% endfor %}
                                                                         <tr>
                                                                             <th scope="row" colspan="4" class="border-0 text-end">Discount</th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.descuentoTotal_manaobra }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.descuentoTotal_manaobra|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                         <tr>
 
                                                                             <th scope="row" colspan="4" class="border-0 text-end">Total</th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -183,17 +183,17 @@
                                                                             <td>{{ parte.unit_price }}</td>
                                                                             <td>{{ parte.descuento_parte }}</td>
                                                                             <td>{{ parte.tax_free }}</td>
-                                                                            <td class="text-end">${{ parte.total_price }}</td>
+                                                                            <td class="text-end">${{ parte.total_price|floatformat:2 }}</td>
                                                                         </tr>
                                                                     {% endfor %}
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="border-0 text-end">Discount</th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.descuentoTotal_parte }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.descuentoTotal_parte|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                         <tr>
 
                                                                             <th scope="row" colspan="5" class="border-0 text-end">Total</th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_parte }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_parte|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th colspan="5">
@@ -205,28 +205,20 @@
 
                                                                         <tr>
                                                                         <th scope="row" colspan="5" class="border-0 text-end">Discount: </th>
-                                                                            <td class="border-0 text-end">- ${{presupuesto.descuentoTotal_parte|addition:presupuesto.descuentoTotal_manaobra}}</td>
+                                                                            <td class="border-0 text-end">- ${{presupuesto.descuentoTotal_parte|addition:presupuesto.descuentoTotal_manaobra|floatformat:2}}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="text-end">Total sum: </th>
-                                                                            <td class="text-end">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte }}</td>
+                                                                            <td class="text-end">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|floatformat:2 }}</td>
                                                                         </tr>
 
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="text-end">Paid Amount: </th>
-                                                                            <td class="text-end">${{ presupuesto.total_paid }}</td>
+                                                                            <td class="text-end">-${{ presupuesto.total_paid|floatformat:2 }}</td>
                                                                         </tr>
-{#                                                                        <tr>#}
-{#                                                                            <th scope="row" colspan="5" class="border-0 text-end">Tax 9.5% :</th>#}
-{#                                                                            <td class="border-0 text-end">$24.12</td>#}
-{#                                                                        </tr>#}
-{#                                                                        <tr>#}
-{#                                                                            <th scope="row" colspan="5" class="border-0 text-end"><strong>Total: </strong></th>#}
-{#                                                                            <td class="border-0 text-end"><strong>$478.67</strong></td>#}
-{#                                                                        </tr>#}
                                                                         <tr>
                                                                             <th scope="row" colspan="5" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|sub:presupuesto.total_paid }}</h4></td>
+                                                                            <td class="border-0 text-end"><h4 class="m-0">${{ presupuesto.total_manaobra|addition:presupuesto.total_parte|sub:presupuesto.total_paid|floatformat:2 }}</h4></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>

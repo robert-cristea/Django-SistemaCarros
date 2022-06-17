@@ -48,8 +48,8 @@
                                         <div class="span-container d-flex">
 
                                                 {% csrf_token %}
-                                                <input type="date" value="1999-01-01" name="fromdate" class="form-control" data-date-inline-picker="true">
-                                                <input type="date" value="1999-01-01" name="todate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" value={{ fromdate }} name="fromdate" class="form-control" data-date-inline-picker="true">
+                                                <input type="date" value={{ todate }} name="todate" class="form-control" data-date-inline-picker="true">
                                                 <input type="submit" value="Search" class="btn btn-secondary">
 
 

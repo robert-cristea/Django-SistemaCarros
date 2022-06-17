@@ -1,6 +1,6 @@
 {% extends 'SistemaCarros/base.html' %}
 {% load widget_tweaks %}
-{#{% load mathe %}#}
+{% load mathfilters %}
 
 
 {% block content %}
@@ -185,13 +185,13 @@
                                                                                             <td>{{labor.tarifa}}</td>
                                                                                             <td>{{labor.horas}}:{{labor.minutos}}</td>
                                                                                             <td >{{labor.libre_impuestos}}</td>
-                                                                                            <td class="text-end">{{labor.tarifa_total}}</td>
+                                                                                            <td class="text-end">{{labor.tarifa_total|floatformat:2}}</td>
                                                                                         </tr>
                                                                                     {% endfor %}
 
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_manaobra}}</h4></td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_manaobra|floatformat:2}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -222,12 +222,12 @@
                                                                                             <td>{{parte.unit_price}}</td>
                                                                                             <td>{{parte.quantity}}</td>
                                                                                             <td>{{parte.descuento_parte}}</td>
-                                                                                            <td class="text-end">${{parte.total_price}}</td>
+                                                                                            <td class="text-end">${{parte.total_price|floatformat:2}}</td>
                                                                                         </tr>
                                                                                         {% endfor %}
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end">Total</th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_parte}}</h4></td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{step_estimate.total_parte|floatformat:2}}</h4></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th colspan="4">
@@ -236,20 +236,20 @@
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end"><strong>Total: </strong></th>
-                                                                                            <td class="border-0 text-end"><strong>${{total}}</strong></td>
+                                                                                            <td class="border-0 text-end"><strong>${{total|floatformat:2}}</strong></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end">Discount: </th>
-                                                                                                <td class="border-0 text-end">- ${{step_estimate.descuentoTotal_parte|add:step_estimate.descuentoTotal_manaobra}}</td>
+                                                                                                <td class="border-0 text-end">- ${{step_estimate.descuentoTotal_parte|addition:step_estimate.descuentoTotal_manaobra|floatformat:2}}</td>
                                                                                             </tr>
                                                                                         <tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end">Total Paid: </th>
-                                                                                                <td class="border-0 text-end">- ${{payment}}</td>
+                                                                                                <td class="border-0 text-end">- ${{payment|floatformat:2}}</td>
                                                                                             </tr>
                                                                                         <tr>
                                                                                             <th scope="row" colspan="4" class="border-0 text-end"><h4>Balance due</h4></th>
-                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{balance}}</h4></td>
+                                                                                            <td class="border-0 text-end"><h4 class="m-0">${{balance|floatformat:2}}</h4></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>

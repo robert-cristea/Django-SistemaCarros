@@ -90,14 +90,13 @@ def step3(request):
             presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
             presupuesto_instance.resumen = request.POST['resumen']
             if (request.POST['descuento_parte'] == "Quantity"):
-                presupuesto_instance.descuentoTotal_parte = float(request.POST['descuentoTotal_parte'])
+                presupuesto_instance.descuentoTotal_parte += float(request.POST['descuentoTotal_parte'])
             elif (request.POST['descuento_parte'] == "Percentage"):
                 if not float(request.POST['descuentoTotal_parte']) == 0:
-                    presupuesto_instance.descuentoTotal_parte = (100 - float(request.POST['descuentoTotal_parte'])) * float(
+                    presupuesto_instance.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(
                         request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
-                else:
-                    presupuesto_instance.descuentoTotal_parte = 0
-            presupuesto_instance.total_parte = request.POST['total_parte']
+            presupuesto_instance.descuentoTotal_parte = round(presupuesto_instance.descuentoTotal_parte, 2)
+            presupuesto_instance.total_parte += float(request.POST['total_parte'])
             presupuesto_instance.save()
             return redirect('Presupuestos:step4')
     else:
@@ -121,14 +120,12 @@ def step4(request):
 
             presupuesto_instance = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
             if (request.POST['descuento_manaobra'] == "Quantity"):
-
                 presupuesto_instance.descuentoTotal_manaobra += float(request.POST['descuentoTotal_manaobra'])
             elif(request.POST['descuento_manaobra'] == "Percentage"):
-                if not float(request.POST['descuentoTotal_parte']) == 0:
+                if not float(request.POST['descuentoTotal_manaobra']) == 0:
                     presupuesto_instance.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
-                else:
-                    presupuesto_instance.descuentoTotal_manaobra = 0
-            presupuesto_instance.total_manaobra = request.POST['total_manaobra']
+            presupuesto_instance.descuentoTotal_manaobra = round(presupuesto_instance.descuentoTotal_manaobra, 2)
+            presupuesto_instance.total_manaobra += float(request.POST['total_manaobra'])
             presupuesto_instance.save()
             return redirect('Presupuestos:step5')
     else:
@@ -160,7 +157,7 @@ def step6(request):
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
                     model_instance.estimate = Presupuestos.objects.get(pk=request.session['presupuesto_id'])
-                    presupuesto_instance.total_paid += model_instance.cantidad_pagada
+                    presupuesto_instance.total_paid += round(float(model_instance.cantidad_pagada), 2)
                     presupuesto_instance.save()
                     model_instance.save()
             if presupuesto_instance.total_paid >= (presupuesto_instance.total_parte + presupuesto_instance.total_manaobra):
@@ -219,7 +216,7 @@ def addPay(request, pk):
                 if not form.cleaned_data["DELETE"]:
                     model_instance = form.save(commit=False)
                     model_instance.estimate = Presupuestos.objects.get(pk=pk)
-                    presupuesto.total_paid += model_instance.cantidad_pagada
+                    presupuesto.total_paid += round(float(model_instance.cantidad_pagada),2)
                     model_instance.save()
             presupuesto.save()
             check_Invoice(pk)
@@ -254,9 +251,8 @@ def addPart(request, pk):
             elif(request.POST['descuento_parte'] == "Percentage"):
                 if not (float(request.POST['descuentoTotal_parte']) == 0):
                     presupuestos.descuentoTotal_parte += (100 - float(request.POST['descuentoTotal_parte'])) * float(request.POST['total_parte']) / float(request.POST['descuentoTotal_parte'])
-                else:
-                    presupuestos.descuentoTotal_parte = 0
             presupuestos.total_parte += float(request.POST['total_parte'])
+            presupuestos.descuentoTotal_parte = round(presupuestos.descuentoTotal_parte, 2)
             presupuestos.save()
             messages.success(request, "Part is Added.")
         return redirect('Presupuestos:presupuestos')
@@ -289,9 +285,10 @@ def addLabor(request, pk):
             elif(request.POST['descuento_manaobra'] == "Percentage"):
                 if not float(request.POST['descuentoTotal_manaobra']) == 0:
                     presupuestos.descuentoTotal_manaobra += (100 - float(request.POST['descuentoTotal_manaobra'])) * float(request.POST['total_manaobra'])/float(request.POST['descuentoTotal_manaobra'])
-                else:
-                    presupuestos.descuentoTotal_manaobra = 0
             presupuestos.total_manaobra += float(request.POST['total_manaobra'])
+
+            presupuestos.descuentoTotal_manaobra = round(presupuestos.descuentoTotal_manaobra, 2)
+
             presupuestos.save()
             messages.success(request, "Labour is Added.")
         return redirect('Presupuestos:presupuestos')

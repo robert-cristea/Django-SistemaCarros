@@ -297,7 +297,7 @@ class PresupuestosPagosForm(forms.ModelForm):
             ),
             'numero_transaccion': forms.NumberInput(
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
                 }
             ),
 
