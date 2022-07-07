@@ -107,7 +107,7 @@
                                                             {% endif %}
                                                         </td>
                                                        <td><a href="{% url 'ReporteGanancias:techniciansAddPayment' estimate.presupuesto.id labour.labour.0.tecnico.id%}" class="px-3 text-success"><i class="uil uil-plus-circle font-size-18"></i></a></td>
-                                                       <td><a onclick="technicianReportDetail({{ forloop.counterestimate.labour_count|add:forloop.counter }},{{ estimate.presupuesto.id }}, {{ labour.labour.0.tecnico.id }})"><i class="uil uil-search"></i></a></td>
+                                                       <td><a onclick="technicianReportDetail({{ estimate.labour_count|add:forloop.counter }},{{ estimate.presupuesto.id }}, {{ labour.labour.0.tecnico.id }})"><i class="uil uil-search"></i></a></td>
                                                     </tr>
                                                 {% endfor %}
                                             {% endfor %}

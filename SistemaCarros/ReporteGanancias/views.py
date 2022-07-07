@@ -44,7 +44,7 @@ def send_email(request,pk):
         {'presupuesto': presupuesto}
     )
     email_subject = 'Your Estimate!'
-    to_list = request.user.email
+    to_list = presupuesto.presupuesto.cliente.correo
     send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
     messages.success(request, "Updated Estimate is sent by Email")
     return redirect('ReporteGanancias:debtors')

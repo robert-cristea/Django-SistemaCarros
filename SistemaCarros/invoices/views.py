@@ -29,7 +29,7 @@ def detail_invoices(request, pk):
             {'presupuesto': presupuesto}
         )
         email_subject = 'Your Updated Invoice!'
-        to_list = request.user.email
+        to_list = presupuesto.cliente.correo
         send_mail(email_subject, 'message', None, [to_list], fail_silently=False, html_message=html_message)
 
         messages.success(request,"Updated Invoice is sent by Email" )
